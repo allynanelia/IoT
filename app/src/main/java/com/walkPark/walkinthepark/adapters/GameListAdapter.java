@@ -29,6 +29,8 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
     private RequestManager glide;
     private List<Game> gameList;
 
+    //Check
+
     public GameListAdapter(RequestManager glide, List<Game> gameList) {
         this.glide = glide;
         this.gameList = gameList;
