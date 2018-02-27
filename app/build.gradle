@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.example.walkinthepark"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'jp.wasabeef:glide-transformations:2.0.1'
+    compile 'com.afollestad.material-dialogs:core:0.9.4.1'
+    compile 'org.parceler:parceler-api:1.1.6'
+    annotationProcessor 'org.parceler:parceler:1.1.6'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+    compile 'me.relex:circleindicator:1.2.2@aar'
+    compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+    compile 'com.theartofdev.edmodo:android-image-cropper:2.3.1'
+    compile 'com.azoft.carousellayoutmanager:carousel:1.2.1'
+    compile 'com.jcminarro:RoundKornerLayouts:0.3.1'
+
+}

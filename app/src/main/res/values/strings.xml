@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">WalkInThePark</string>
+
+    <!-- Basically this page stores all the naming.
+    Even if it's static please please keep it here-->
+    <string name="fragment_title_home1">Home</string>
+    <string name="fragment_title_home2">Home2</string>
+    <string name="fragment_title_home3">Home3</string>
+    <string name="fragment_title_home4">Home4</string>
+
+</resources>
