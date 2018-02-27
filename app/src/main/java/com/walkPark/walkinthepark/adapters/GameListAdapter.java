@@ -47,7 +47,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (gameList != null) {
-            glide.load(gameList.get(position).getGame_image()).placeholder(R.color.placeholder)
+            glide.load(gameList.get(position).getGame_image_url()).placeholder(R.color.placeholder)
                     .centerCrop().into(holder.image);
             holder.text.setVisibility(View.VISIBLE);
             holder.text.setText(gameList.get(position).getGame_name());
