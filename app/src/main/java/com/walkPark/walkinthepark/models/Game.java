@@ -1,5 +1,7 @@
 package com.walkPark.walkinthepark.models;
 
+import java.util.ArrayList;
+
 /**
  * Created by Boon Sing on 16-Feb-18.
  */
@@ -7,11 +9,13 @@ package com.walkPark.walkinthepark.models;
 public class Game {
     String game_id;
     String game_name;
-    String game_image;
-    String game_hint;
+    String game_image_url;
     String game_description;
+    String game_est_steps;
+    ArrayList<String> checkpoints;
 
     public Game() {
+
     }
 
     public String getGame_id() {
@@ -30,20 +34,12 @@ public class Game {
         this.game_name = game_name;
     }
 
-    public String getGame_image() {
-        return game_image;
+    public String getGame_image_url() {
+        return game_image_url;
     }
 
-    public void setGame_image(String game_image) {
-        this.game_image = game_image;
-    }
-
-    public String getGame_hint() {
-        return game_hint;
-    }
-
-    public void setGame_hint(String game_hint) {
-        this.game_hint = game_hint;
+    public void setGame_image_url(String game_image_url) {
+        this.game_image_url = game_image_url;
     }
 
     public String getGame_description() {
@@ -54,4 +50,19 @@ public class Game {
         this.game_description = game_description;
     }
 
+    public String getGame_est_steps() {
+        return game_est_steps;
+    }
+
+    public void setGame_est_steps(String game_est_steps) {
+        this.game_est_steps = game_est_steps;
+    }
+
+    public ArrayList<String> getCheckpoints() {
+        return checkpoints;
+    }
+
+    public void setCheckpoints(ArrayList<String> checkpoints) {
+        this.checkpoints = checkpoints;
+    }
 }

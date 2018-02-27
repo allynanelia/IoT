@@ -25,7 +25,7 @@
         <TextView
             android:id="@+id/textTitle"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_centerInParent="true"
             tools:text="Activity Title"
@@ -49,33 +49,112 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/gameImage"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:background="@color/black"
                     />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-32dp">
+
+                    <Button
+                        android:id="@+id/startButton"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/background_button"
+                        android:textSize="22sp"
+                        android:text="Start"
+                        />
+
+
+                </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/margin_32"
+                android:layout_marginRight="@dimen/margin_32"
+                android:layout_marginTop="@dimen/margin_32"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    tools:text="DESCRIPTION"
+                    fontPath="fonts/DINNextLTPro-Bold.otf"
+                    android:textStyle="bold"
+                    tools:ignore="MissingPrefix"
+                    />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-32dp"
-                    android:paddingLeft="@dimen/margin_16"
-                    android:paddingRight="@dimen/margin_16"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    >
                     <ImageView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/margin_16"
-                        android:paddingLeft="@dimen/margin_16"
-                        android:background="@drawable/background_button"
-                        android:layout_gravity="center"/>
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:background="@drawable/ic_info"/>
 
+                    <TextView
+                        android:id="@+id/info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:textSize="20sp"
+                        android:text="@color/black"
+                        tools:text="Aspirin can be a fatal poison. People are used to taking aspirin whenever they feel pain. It is true that aspirin is an efficacious pain-killer for example in headache cases. However, aspirin is like any other medicine can be dangerously harmful."
+                        fontPath="fonts/DINNextLTPro-Bold.otf"
+                        android:textStyle="bold"
+                        tools:ignore="MissingPrefix"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:background="@drawable/slipper_icon"/>
+
+                    <TextView
+                        android:id="@+id/steps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:textSize="20sp"
+                        android:text="@color/black"
+                        tools:text="600,900 steps"
+                        fontPath="fonts/DINNextLTPro-Bold.otf"
+                        android:textStyle="bold"
+                        tools:ignore="MissingPrefix"
+                        />
 
 
                 </LinearLayout>
 
 
+
+
+
             </LinearLayout>
+</LinearLayout>
 
 
 
