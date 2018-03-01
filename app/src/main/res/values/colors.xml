@@ -12,6 +12,8 @@
     <color name="green_dark">#036647</color>
     <color name="green_darker">#043C1F</color>
 
+    <color name="gray_separator">#BDBDBD</color>
+
     <color name="red">#f03f30 </color>
     <color name="red_dark">#c03226</color>
     <color name="placeholder">#a0a0a0</color>

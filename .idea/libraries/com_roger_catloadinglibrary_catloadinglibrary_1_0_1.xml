@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.roger.catloadinglibrary:catloadinglibrary-1.0.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/catloadinglibrary-1.0.1.aar/72239910334ce5b521244b45081f6f68/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/catloadinglibrary-1.0.1.aar/72239910334ce5b521244b45081f6f68/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.roger.catloadinglibrary/catloadinglibrary/1.0.1/23385548fbc4a2c0a103aab808bea58ffcb5e9f7/catloadinglibrary-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

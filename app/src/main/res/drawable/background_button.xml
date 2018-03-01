@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <size
-        android:height="64dp"
+        android:height="56dp"
         />
 
     <padding
-        android:left="64dp"
-        android:right="64dp"
+        android:left="56dp"
+        android:right="56dp"
         />
 
     <solid android:color="@color/green_light"
