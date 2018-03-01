@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
 
         initData();
 
-        initUI();
+        //initUI();
 
         return root;
     }
@@ -90,6 +90,8 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         if (adapter == null) {
+//            Toast.makeText(getContext(), "Routelist date >>" + routeList.get(0).getName(),
+//                    Toast.LENGTH_SHORT).show();
             adapter = new GameListAdapter(Glide.with(this), routeList);
             recyclerView.setAdapter(adapter);
         } else {
@@ -109,6 +111,9 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<RouteResponse> call, Response<RouteResponse> response) {
                 if (response.isSuccessful()) {
                     routeList.addAll(response.body().getRoute());
+                    Toast.makeText(getContext(), "Routelist date >>" + routeList.get(0).getName(),
+                            Toast.LENGTH_SHORT).show();
+                    initUI();
                 } else {
                     Toast.makeText(getContext(), "Error loading",
                             Toast.LENGTH_SHORT).show();
