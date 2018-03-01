@@ -50,7 +50,8 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
             glide.load(gameList.get(position).getGame_image()).placeholder(R.color.placeholder)
                     .centerCrop().into(holder.image);
             holder.text.setVisibility(View.VISIBLE);
-            holder.text.setText(gameList.get(position).getGame_name());
+            //holder.text.setText(gameList.get(position).getGame_name());
+            holder.text.setText("Around SMU");
         }
     }
 
