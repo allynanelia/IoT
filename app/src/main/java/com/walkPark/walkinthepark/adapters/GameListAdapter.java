@@ -1,6 +1,5 @@
 package com.walkPark.walkinthepark.adapters;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.RequestManager;
 import com.example.walkinthepark.R;
 import com.walkPark.walkinthepark.events.GameTriggerEvent;
-import com.walkPark.walkinthepark.models.Game;
+import com.walkPark.walkinthepark.models.Route;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -27,15 +26,17 @@ import butterknife.ButterKnife;
 public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHolder> {
     private final String TAG = getClass().getName();
     private RequestManager glide;
-    private List<Game> gameList;
+    private List<Route> routeList;
 
-    public GameListAdapter(RequestManager glide, List<Game> gameList) {
+    //Check
+
+    public GameListAdapter(RequestManager glide, List<Route> routeList) {
         this.glide = glide;
-        this.gameList = gameList;
+        this.routeList = routeList;
     }
 
-    public void setGameList(List<Game> gameList) {
-        this.gameList = gameList;
+    public void setRouteList(List<Route> routeList) {
+        this.routeList = routeList;
     }
 
     @Override
@@ -46,19 +47,18 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if (gameList != null) {
-            glide.load(gameList.get(position).getGame_image()).placeholder(R.color.placeholder)
+        if (routeList != null) {
+            glide.load(routeList.get(position).getImage_url()).placeholder(R.color.placeholder)
                     .centerCrop().into(holder.image);
             holder.text.setVisibility(View.VISIBLE);
-            //holder.text.setText(gameList.get(position).getGame_name());
-            holder.text.setText("Around SMU");
+            holder.text.setText(routeList.get(position).getName());
         }
     }
 
     @Override
     public int getItemCount() {
-        if (gameList != null) {
-            return gameList.size();
+        if (routeList != null) {
+            return routeList.size();
         }
         return 0;
     }
@@ -76,9 +76,9 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    gameList.get(getAdapterPosition());
+                    routeList.get(getAdapterPosition());
                     EventBus.getDefault().post(new GameTriggerEvent(
-                            gameList.get(getAdapterPosition())
+                            routeList.get(getAdapterPosition())
                     ));
                 }
             });

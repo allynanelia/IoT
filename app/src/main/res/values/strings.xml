@@ -3,9 +3,16 @@
 
     <!-- Basically this page stores all the naming.
     Even if it's static please please keep it here-->
-    <string name="fragment_title_home1">Home</string>
-    <string name="fragment_title_home2">Home2</string>
-    <string name="fragment_title_home3">Home3</string>
-    <string name="fragment_title_home4">Home4</string>
+    <string name="fragment_leaderboard">Leaderboard</string>
+    <string name="fragment_routes">Routes</string>
+    <string name="fragment_account_settings">Account</string>
 
+    <string name="app_bottom_bar_leaderboard">Leaderboard</string>
+    <string name="app_bottom_bar_route">Routes</string>
+    <string name="app_bottom_bar_account">Account</string>
+
+
+    <string name="toast_permission_granted">Permission granted, please try again</string>
+    <string name="toast_permission_denied">WalkInThePark requires permission to continue!</string>
+    <string name="toast_denied_checkpoints">Please complete current checkpoint to unlock</string>
 </resources>

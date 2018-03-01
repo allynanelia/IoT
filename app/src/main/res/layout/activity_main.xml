@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_standard_2">
+    android:background="@color/black">
 
         <RelativeLayout
             android:id="@+id/layoutTopBar"
@@ -14,19 +14,9 @@
             android:layout_height="?actionBarSize"
             android:background="@color/white">
 
-            <ImageView
-                android:id="@+id/buttonRight"
-                android:layout_width="@dimen/button_standard"
-                android:layout_height="@dimen/button_standard"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="?selectableItemBackgroundBorderless"
-                android:padding="12dp"
-                android:src="@drawable/ic_share" />
-
             <TextView
                 android:id="@+id/textTitle"
-                fontPath="fonts/DINNextLTPro-Medium.otf"
+                fontPath="fonts/DINNextLTPro-Bold.otf"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
@@ -41,49 +31,106 @@
     <LinearLayout
         android:id="@+id/layoutBottomBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_bottom_bar"
-        android:background="@color/white"
-        android:layout_alignParentBottom="true">
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/buttonHome"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?selectableItemBackground"
-            android:src="@drawable/ic_tab_4"
-            android:padding="@dimen/padding_16"
+    <LinearLayout
+        android:id="@+id/buttonLeaderboard"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="?selectableItemBackground"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_bottom_bar_image">
+
+            <ImageView
+                android:id="@+id/imageLeaderboard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_leaderboard_active"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textLeaderboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="@string/app_bottom_bar_leaderboard"
+            android:gravity="center"
             />
 
-        <ImageView
-            android:id="@+id/buttonHome2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?selectableItemBackground"
-            android:src="@drawable/ic_tab_4"
-            android:padding="@dimen/padding_16"
-            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonRoute"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="?selectableItemBackground"
+        android:orientation="vertical"
+        android:gravity="center">
 
         <ImageView
-            android:id="@+id/buttonHome3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?selectableItemBackground"
-            android:src="@drawable/ic_tab_4"
-            android:padding="@dimen/padding_16"
+            android:id="@+id/imageRoute"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_bottom_bar_image"
+            android:src="@drawable/ic_routes_active"
             />
 
-        <ImageView
-            android:id="@+id/buttonHome4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?selectableItemBackground"
-            android:src="@drawable/ic_tab_4"
-            android:padding="@dimen/padding_16"
+        <TextView
+            android:id="@+id/textRoute"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="@string/app_bottom_bar_route"
+            android:gravity="center"
             />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonAccount"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="?selectableItemBackground"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_bottom_bar_image">
+
+            <ImageView
+                android:id="@+id/imageAccount"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_account_active"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="@string/app_bottom_bar_account"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
 
     </LinearLayout>
 

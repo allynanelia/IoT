@@ -1,20 +1,19 @@
 package com.walkPark.walkinthepark.events;
 
-import com.walkPark.walkinthepark.models.Game;
+import com.walkPark.walkinthepark.models.Route;
 
 /**
  * Created by Boon Sing on 19-Feb-18.
  */
 
 public class GameTriggerEvent {
-    private final Game game;
+    private final Route route;
 
-
-    public GameTriggerEvent(Game game) {
-        this.game = game;
+    public GameTriggerEvent(Route route) {
+        this.route = route;
     }
 
-    public Game getGame() {
-        return game;
+    public Route getRoute() {
+        return route;
     }
 }

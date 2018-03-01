@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/gray">
+
+        <ImageView
+            android:id="@+id/buttonLeft"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back"
+            android:padding="12dp"
+            android:background="?selectableItemBackgroundBorderless"
+            />
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            tools:text="Activity Title"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            fontPath="fonts/DINNextLTPro-Medium.otf"
+            tools:ignore="MissingPrefix"
+
+            />
+
+    </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/progressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:orientation="vertical"
+            android:layout_below="@+id/titleBar"
+            android:background="@drawable/bg_image_checkpoints">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                tools:text="ROUTE PROGRESS"
+                fontPath="fonts/DINNextLTPro-Bold.otf"
+                android:textStyle="bold"
+                tools:ignore="MissingPrefix"
+                />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/textTimeLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:text="00:00"
+                    fontPath="fonts/OpenSans-Bold.ttf"
+                    tools:ignore="MissingPrefix"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:id="@+id/hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textTimeLeft"
+                    android:textColor="@color/white"
+                    android:textAllCaps="true"
+                    android:text="HOURS"
+                    android:textSize="10sp"
+                    />
+
+                <TextView
+                    android:id="@+id/minutes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textTimeLeft"
+                    android:layout_alignRight="@id/textTimeLeft"
+                    android:textColor="@color/white"
+                    android:textAllCaps="true"
+                    android:text="MINUTES"
+                    android:textSize="10sp"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/totalpoints"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="Total Points: "
+                    android:textSize="10sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/totalpoints"
+                    android:textColor="@color/white"
+                    android:text=" 430 Points"
+                    android:textSize="10sp"
+                    />
+
+            </RelativeLayout>
+
+            <com.github.lzyzsd.circleprogress.ArcProgress
+                android:id="@+id/progressDuration"
+                android:layout_height="180dp"
+                android:layout_width="180dp"
+                android:layout_marginTop="18dp"
+                android:layout_gravity="center"
+                app:arc_stroke_width="14dp"
+                app:arc_max="100"
+                app:arc_progress="70"
+                app:arc_bottom_text="Completed"
+                app:arc_finished_color="@color/colorPrimary"
+                app:arc_unfinished_color="@color/white"
+                app:arc_text_color="@android:color/white"
+                />
+
+        </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progressLayout"
+        android:scrollbars="none">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            />
+
+    </ScrollView>
+
+</LinearLayout>
