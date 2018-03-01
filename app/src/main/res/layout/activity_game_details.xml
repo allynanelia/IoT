@@ -17,7 +17,7 @@
             android:layout_width="@dimen/button_standard"
             android:layout_height="@dimen/button_standard"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_back"
+            android:src="@drawable/ic_back_white"
             android:padding="@dimen/padding_toolbar"
             android:background="?selectableItemBackgroundBorderless"
             />
@@ -70,7 +70,6 @@
                         android:text="Start"
                         />
 
-
                 </RelativeLayout>
 
             <LinearLayout
@@ -79,8 +78,7 @@
                 android:orientation="vertical"
                 android:layout_marginLeft="@dimen/margin_32"
                 android:layout_marginRight="@dimen/margin_32"
-                android:layout_marginTop="@dimen/margin_32"
-                >
+                android:layout_marginTop="@dimen/margin_32">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -97,19 +95,20 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
+                    android:orientation="horizontal">
+
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_marginTop="@dimen/margin_16"
-                        android:background="@drawable/ic_info"/>
+                        android:background="@drawable/ic_info"
+                        />
 
                     <TextView
                         android:id="@+id/info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_marginTop="@dimen/margin_8"
                         android:layout_marginLeft="@dimen/margin_16"
                         android:textSize="20sp"
                         android:text="@color/black"
@@ -124,20 +123,21 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
+                    android:orientation="horizontal">
+
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_marginTop="@dimen/margin_16"
-                        android:background="@drawable/slipper_icon"/>
+                        android:background="@drawable/ic_slipper_icon"
+                        />
 
                     <TextView
                         android:id="@+id/steps"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_16"
-                        android:layout_marginLeft="@dimen/margin_16"
+                        android:layout_marginLeft="@dimen/margin_8"
                         android:textSize="20sp"
                         android:text="@color/black"
                         tools:text="600,900 steps"
@@ -146,21 +146,12 @@
                         tools:ignore="MissingPrefix"
                         />
 
-
                 </LinearLayout>
 
-
-
-
-
             </LinearLayout>
-</LinearLayout>
 
+        </LinearLayout>
 
-
-        </ScrollView>
-
-
-
+    </ScrollView>
 
 </LinearLayout>

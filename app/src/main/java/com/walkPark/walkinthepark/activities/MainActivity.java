@@ -1,51 +1,66 @@
 package com.walkPark.walkinthepark.activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.walkinthepark.R;
+import com.walkPark.walkinthepark.Constants;
 import com.walkPark.walkinthepark.Prefs;
 import com.walkPark.walkinthepark.events.GameTriggerEvent;
-import com.walkPark.walkinthepark.events.UpdateBottomBarEvent;
 import com.walkPark.walkinthepark.fragments.HomeFragment;
 import com.walkPark.walkinthepark.models.UserInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.layoutBottomBar) View layoutBottomBar;
-    @BindView(R.id.buttonRight) Button buttonRight;
     @BindView(R.id.textTitle) TextView textTitle;
     @BindView(R.id.layoutTopBar) View layoutTopBar;
-    @BindView(R.id.buttonHome) ImageView buttonHome;
-    @BindView(R.id.buttonHome2) ImageView buttonHome2;
-    @BindView(R.id.buttonHome3) ImageView buttonHome3;
-    @BindView(R.id.buttonHome4) ImageView buttonHome4;
+
+    @BindView(R.id.buttonAccount) View buttonAccount;
+    @BindView(R.id.buttonRoute) View buttonRoute;
+    @BindView(R.id.buttonLeaderboard) View buttonLeaderboard;
+
+    @BindView(R.id.imageAccount) ImageView imageAccount;
+    @BindView(R.id.imageRoute) ImageView imageRoute;
+    @BindView(R.id.imageLeaderboard) ImageView imageLeaderboard;
+
+    @BindView(R.id.textAccount) TextView textAccount;
+    @BindView(R.id.textLeaderboard) TextView textLeaderboard;
+    @BindView(R.id.textRoute) TextView textRoute;
+
 
     private boolean doubleBackToExitPressedOnce = false;
     private List<Fragment> fragmentList = new ArrayList<>();
+    private List<String> fragmentNameList = new ArrayList<>();
 
     private UserInfo user;
 
+    private final String TAG = getClass().getName();
+
+    private Typeface regularTypeface;
+    private Typeface lightTypeface;
+    private Typeface boldTypeface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +70,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ButterKnife.bind(this);
 
-        initUI();
+        user = Prefs.getUserProfile();
+        //Setup font
+        boldTypeface = TypefaceUtils.load(getAssets(), "fonts/DINNextLTPro-Bold.otf");
+        lightTypeface = TypefaceUtils.load(getAssets(), "fonts/DINNextLTPro-Medium.otf");
+        regularTypeface = TypefaceUtils.load(getAssets(), "fonts/DINNextLTPro-Regular.otf");
 
         initFragments();
 
-        user = Prefs.getUserProfile();
+        initUI();
     }
 
     @Override
@@ -93,100 +112,128 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initUI() {
-        buttonRight.setOnClickListener(this);
-        buttonHome.setOnClickListener(this);
-        buttonHome2.setOnClickListener(this);
-        buttonHome3.setOnClickListener(this);
-        buttonHome4.setOnClickListener(this);
+        changeFragment(1);
+        textRoute.setTypeface(boldTypeface);
+        textAccount.setTypeface(regularTypeface);
+        textLeaderboard.setTypeface(regularTypeface);
+
+        imageAccount.setImageDrawable(ContextCompat
+                .getDrawable(MainActivity.this, R.drawable.ic_account_inactive));
+        imageLeaderboard.setImageDrawable(ContextCompat
+                .getDrawable(MainActivity.this, R.drawable.ic_leaderboard_inactive));
+        imageRoute.setImageDrawable(ContextCompat
+                .getDrawable(MainActivity.this, R.drawable.ic_routes_active));
+
     }
 
     private void initFragments() {
-        fragmentList.add(HomeFragment.newInstance(null)); // 0
-        fragmentList.add(HomeFragment.newInstance(null)); // 1
-        fragmentList.add(HomeFragment.newInstance(null)); // 2
-        fragmentList.add(HomeFragment.newInstance(null)); // 3
-    }
+        fragmentList.add(HomeFragment.newInstance(null)); // Leaderboard
+        fragmentList.add(HomeFragment.newInstance(null)); // Routes
+        fragmentList.add(HomeFragment.newInstance(null)); // Account Settings
 
-    private Fragment getFragment(int fragmentId) {
-        switch (fragmentId) {
-            case R.string.fragment_title_home1:
-                return fragmentList.get(0);
-            case R.string.fragment_title_home2:
-                return fragmentList.get(1);
-            case R.string.fragment_title_home3:
-                return fragmentList.get(2);
-            case R.string.fragment_title_home4:
-                return fragmentList.get(3);
-            default:
-                return null;
-        }
+        fragmentNameList.add(getString(R.string.fragment_leaderboard));
+        fragmentNameList.add(getString(R.string.fragment_routes));
+        fragmentNameList.add(getString(R.string.fragment_account_settings));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         user = Prefs.getUserProfile();
     }
 
-    private void changeFragment(int fragmentId, boolean addToBackStack) {
-        Fragment fragment = getFragment(fragmentId);
-        String fragmentName = getString(fragmentId);
-
-        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(fragmentName);
-
-        if (currentFragment == null || !currentFragment.isVisible()) {
-            if (addToBackStack) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.layoutContent, fragment, fragmentName)
-                        .commit();
-            } else {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.layoutContent, fragment, fragmentName)
-                        .commit();
-            }
-        }
+    private void changeFragment(int position) {
+        Toast.makeText(MainActivity.this, "Loaded is " + position +" << is",
+                Toast.LENGTH_SHORT).show();
+        //Debugging
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.layoutContent,
+                        fragmentList.get(position),
+                        fragmentNameList.get(position))
+                .commit();
     }
 
-    private void updateBottomSelector(String fragment_title) {
-        switch (fragment_title) {
-            case "Home":
-                buttonHome.setImageDrawable(
-                        ContextCompat.getDrawable(this, R.drawable.ic_share));
-                //E.g.
-                break;
-            case "Home2":
-                break;
-            case "Home3":
-                break;
-            case "Home4":
-                break;
+    @OnClick(R.id.buttonAccount)
+    public void goToAccount() {
+        changeFragment(0);
+        imageAccount.setImageDrawable(
+                ContextCompat.getDrawable(MainActivity.this,
+                        R.drawable.ic_account_active));
+        imageRoute.setImageDrawable(
+                ContextCompat.getDrawable(MainActivity.this,
+                        R.drawable.ic_routes_inactive));
+        imageLeaderboard.setImageDrawable(
+                ContextCompat.getDrawable(MainActivity.this,
+                        R.drawable.ic_leaderboard_inactive));
 
-        }
+        textAccount.setTypeface(boldTypeface);
+        textLeaderboard.setTypeface(regularTypeface);
+        textRoute.setTypeface(regularTypeface);
+
+        textAccount.setTextColor(
+                ContextCompat.getColor(MainActivity.this, R.color.black));
+        textLeaderboard.setTextColor(
+                ContextCompat.getColor(MainActivity.this, R.color.pink_dark));
+        textRoute.setTextColor(
+                ContextCompat.getColor(MainActivity.this, R.color.pink_dark));
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v == buttonHome) {
-            changeFragment(R.string.fragment_title_home1, true);
-        } else if (v == buttonHome2) {
-            changeFragment(R.string.fragment_title_home2, true);
-        } else if (v == buttonHome3) {
-            changeFragment(R.string.fragment_title_home3, true);
-        } else if (v == buttonHome4) {
-            changeFragment(R.string.fragment_title_home4, true);
-        }
+    @OnClick(R.id.buttonRoute)
+    public void goToRoute() {
+        changeFragment(1);
+        imageAccount.setImageDrawable(
+                ContextCompat.getDrawable(MainActivity.this,
+                        R.drawable.ic_account_inactive));
+        imageRoute.setImageDrawable(
+                ContextCompat.getDrawable(MainActivity.this,
+                        R.drawable.ic_routes_active));
+        imageLeaderboard.setImageDrawable(
+                ContextCompat.getDrawable(MainActivity.this,
+                        R.drawable.ic_leaderboard_inactive));
+
+        textAccount.setTypeface(regularTypeface);
+        textLeaderboard.setTypeface(regularTypeface);
+        textRoute.setTypeface(boldTypeface);
+
+        textAccount.setTextColor(
+                ContextCompat.getColor(MainActivity.this, R.color.pink_dark));
+        textLeaderboard.setTextColor(
+                ContextCompat.getColor(MainActivity.this, R.color.pink_dark));
+        textRoute.setTextColor(
+                ContextCompat.getColor(MainActivity.this, R.color.black));
     }
 
-    @Subscribe
-    public void onEvent(UpdateBottomBarEvent event) {
-        updateBottomSelector(event.getFragment_title());
+    @OnClick(R.id.buttonLeaderboard)
+    public void goToLeaderBoard() {
+        changeFragment(2);
+        imageAccount.setImageDrawable(
+                ContextCompat.getDrawable(MainActivity.this,
+                        R.drawable.ic_account_inactive));
+        imageRoute.setImageDrawable(
+                ContextCompat.getDrawable(MainActivity.this,
+                        R.drawable.ic_routes_inactive));
+        imageLeaderboard.setImageDrawable(
+                ContextCompat.getDrawable(MainActivity.this,
+                        R.drawable.ic_leaderboard_active));
+
+        textAccount.setTypeface(regularTypeface);
+        textLeaderboard.setTypeface(boldTypeface);
+        textRoute.setTypeface(regularTypeface);
+
+        textAccount.setTextColor(
+                ContextCompat.getColor(MainActivity.this, R.color.pink_dark));
+        textLeaderboard.setTextColor(
+                ContextCompat.getColor(MainActivity.this, R.color.black));
+        textRoute.setTextColor(
+                ContextCompat.getColor(MainActivity.this, R.color.pink_dark));
     }
 
     @Subscribe
     public void onEvent(GameTriggerEvent event) {
-        startActivity(new Intent(MainActivity.this, GameDetailsActivity.class));
+        Intent intent = new Intent(MainActivity.this, GameDetailsActivity.class);
+        intent.putExtra(Constants.INTENT_GAME_SELECTED, Parcels.wrap(event.getRoute()));
+        startActivity(intent);
     }
 }

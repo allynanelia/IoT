@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:id="@+id/titleBar"
@@ -35,17 +38,13 @@
 
     </RelativeLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/titleBar"
-        android:scrollbars="none">
-
         <LinearLayout
+            android:id="@+id/progressLayout"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="320dp"
             android:orientation="vertical"
-            android:background="@color/black">
+            android:layout_below="@+id/titleBar"
+            android:background="@drawable/bg_image_checkpoints">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -116,7 +115,6 @@
                     android:textSize="10sp"
                     />
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -128,13 +126,35 @@
 
             </RelativeLayout>
 
-
-
-
-
+            <com.github.lzyzsd.circleprogress.ArcProgress
+                android:id="@+id/progressDuration"
+                android:layout_height="180dp"
+                android:layout_width="180dp"
+                android:layout_marginTop="18dp"
+                android:layout_gravity="center"
+                app:arc_stroke_width="14dp"
+                app:arc_max="100"
+                app:arc_progress="70"
+                app:arc_bottom_text="Completed"
+                app:arc_finished_color="@color/colorPrimary"
+                app:arc_unfinished_color="@color/white"
+                app:arc_text_color="@android:color/white"
+                />
 
         </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progressLayout"
+        android:scrollbars="none">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            />
 
     </ScrollView>
 

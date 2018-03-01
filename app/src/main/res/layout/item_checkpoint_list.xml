@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_margin="@dimen/margin_4"
+    android:background="@color/white"
+    app:corner_radius="16dp">
+
+    <RelativeLayout
+        android:id="@+id/checkPointLock"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/gray">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_16">
+
+
+        <TextView
+            android:id="@+id/buttonIndicator"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/background_blue_circle_indicator"
+            android:textStyle="italic"
+            android:text="1"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/margin_4"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/checkPointTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="Singapore Museum"
+            android:layout_toRightOf="@+id/buttonIndicator"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:textColor="@color/black"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/buttonIndicator"
+            android:layout_below="@id/checkPointTitle"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/buttonCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="-16dp"
+                android:paddingRight="-16dp"
+                android:visibility="visible"
+                android:src="@drawable/ic_check_btn"
+                />
+
+            <ImageView
+                android:id="@+id/buttonHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_hint_btn"
+                android:paddingLeft="-16dp"
+                android:visibility="visible"
+                android:paddingRight="-16dp"
+                />
+
+            <ImageView
+                android:id="@+id/buttonInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="-16dp"
+                android:paddingRight="-16dp"
+                android:visibility="visible"
+                android:src="@drawable/ic_info_btn"/>
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_lock"/>
+
+
+    </RelativeLayout>
+
+
+</com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>

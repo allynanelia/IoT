@@ -22,7 +22,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
@@ -39,5 +38,10 @@ dependencies {
     compile 'com.theartofdev.edmodo:android-image-cropper:2.3.1'
     compile 'com.azoft.carousellayoutmanager:carousel:1.2.1'
     compile 'com.jcminarro:RoundKornerLayouts:0.3.1'
+    compile 'com.github.lzyzsd:circleprogress:1.2.1'
+    compile 'com.github.iammert:ScalingLayout:1.2'
+    compile 'com.github.rajeefmk:runtimepermissionhandler:1.0.3'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
 
 }

@@ -1,45 +1,48 @@
 package com.walkPark.walkinthepark.fragments;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.OvershootInterpolator;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.walkinthepark.R;
 import com.walkPark.walkinthepark.adapters.GameListAdapter;
-import com.walkPark.walkinthepark.models.Game;
+import com.walkPark.walkinthepark.backend.RouteInterface;
+import com.walkPark.walkinthepark.backend.WalkInTheParkRetrofit;
+import com.walkPark.walkinthepark.models.Route;
+import com.walkPark.walkinthepark.models.RouteResponse;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Boon Sing on 16-Feb-18.
  */
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment {
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.progressBar) ProgressBar progressBar;
 
-    private List<Game> gamesList;
+    private List<Route> routeList = new ArrayList<>();
+    private final String TAG = getClass().getName();
     private GameListAdapter adapter;
     private Unbinder unbinder;
 
@@ -57,6 +60,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, root);
 
+        initData();
+
         initUI();
 
         return root;
@@ -71,7 +76,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        EventBus.getDefault().register(this);
+        //EventBus.getDefault().register(this);
     }
 
     @Override
@@ -85,16 +90,39 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         if (adapter == null) {
-            adapter = new GameListAdapter(Glide.with(this), gamesList);
+            adapter = new GameListAdapter(Glide.with(this), routeList);
             recyclerView.setAdapter(adapter);
         } else {
-            adapter.setGameList(gamesList);
+            adapter.setRouteList(routeList);
             adapter.notifyDataSetChanged();
         }
     }
 
-    @Override
-    public void onClick(View v) {
+    private void initData() {
+        final RouteInterface routeInterface = WalkInTheParkRetrofit
+                .getInstance()
+                .create(RouteInterface.class);
 
+        Call<RouteResponse> call = routeInterface.getAllRoutes();
+        call.enqueue(new Callback<RouteResponse>() {
+            @Override
+            public void onResponse(Call<RouteResponse> call, Response<RouteResponse> response) {
+                if (response.isSuccessful()) {
+                    routeList.addAll(response.body().getRoute());
+                } else {
+                    Toast.makeText(getContext(), "Error loading",
+                            Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, response.errorBody().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RouteResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "Error loading API",
+                        Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
     }
+
 }

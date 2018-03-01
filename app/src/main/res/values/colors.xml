@@ -26,6 +26,9 @@
     <color name="gray_light">#EEEEEE</color>
     <color name="black_transparent">#CC000000</color>
 
+    <color name="pink_dark">#FF1493</color>
+    <color name="pink_light">#FFC0CB</color>
+
 </resources>
 
 <!-- To note BS!: Change below for special preferences.
