@@ -1,6 +1,7 @@
 package com.walkPark.walkinthepark.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.walkinthepark.R;
+import com.roger.catloadinglibrary.CatLoadingView;
 import com.walkPark.walkinthepark.adapters.GameListAdapter;
 import com.walkPark.walkinthepark.backend.RouteInterface;
 import com.walkPark.walkinthepark.backend.WalkInTheParkRetrofit;
@@ -39,7 +41,9 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
-    @BindView(R.id.progressBar) ProgressBar progressBar;
+    //@BindView(R.id.progressBar) ProgressBar progressBar;
+
+    CatLoadingView mView;
 
     private List<Route> routeList = new ArrayList<>();
     private final String TAG = getClass().getName();
@@ -60,7 +64,15 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, root);
 
-        initData();
+        mView = new CatLoadingView();
+        mView.show(getChildFragmentManager(), "");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initData();
+            }
+        }, 1000);
+        //initData();
 
         //initUI();
 
@@ -88,16 +100,16 @@ public class HomeFragment extends Fragment {
     private void initUI() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        //progressBar.setVisibility(View.GONE);
         if (adapter == null) {
-//            Toast.makeText(getContext(), "Routelist date >>" + routeList.get(0).getName(),
-//                    Toast.LENGTH_SHORT).show();
             adapter = new GameListAdapter(Glide.with(this), routeList);
             recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         } else {
             adapter.setRouteList(routeList);
             adapter.notifyDataSetChanged();
         }
+        mView.dismiss();
     }
 
     private void initData() {
@@ -111,8 +123,6 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<RouteResponse> call, Response<RouteResponse> response) {
                 if (response.isSuccessful()) {
                     routeList.addAll(response.body().getRoute());
-                    Toast.makeText(getContext(), "Routelist date >>" + routeList.get(0).getName(),
-                            Toast.LENGTH_SHORT).show();
                     initUI();
                 } else {
                     Toast.makeText(getContext(), "Error loading",

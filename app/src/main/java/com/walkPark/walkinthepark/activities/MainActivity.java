@@ -143,9 +143,6 @@ public class MainActivity extends BaseActivity {
     }
 
     private void changeFragment(int position) {
-        Toast.makeText(MainActivity.this, "Loaded is " + position +" << is",
-                Toast.LENGTH_SHORT).show();
-        //Debugging
         getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)

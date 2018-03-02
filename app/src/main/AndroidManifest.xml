@@ -36,6 +36,12 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
 
+        <activity
+            android:name="com.walkPark.walkinthepark.activities.GameDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            />
+
     </application>
 
 </manifest>

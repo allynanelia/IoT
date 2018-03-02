@@ -56,7 +56,7 @@ public class GameDetailsActivity extends BaseActivity {
 
         textTitle.setText(route.getName());
         info.setText(route.getDescription());
-        steps.setText(route.getEstimated_steps());
+        steps.setText(route.getEstimated_steps() + " steps");
 
     }
 

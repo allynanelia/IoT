@@ -1,11 +1,13 @@
 package com.walkPark.walkinthepark.models;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
 /**
  * Created by Boon Sing on 16-Feb-18.
  */
-
+@Parcel
 public class Route {
     String _id;
     String name;
