@@ -24,15 +24,14 @@
         tools:text="2"
     />
 
-    <ImageView
+    <!-- HELP -->
+    <View
         android:id="@+id/separator"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/position"
         android:layout_toRightOf="@+id/position"
-        android:paddingRight="@dimen/dp_10"
-        android:paddingEnd="@dimen/dp_10"
-        android:src="@drawable/separator"/>
+        android:background="@drawable/separator"/>
 
     <LinearLayout
         android:layout_width="wrap_content"

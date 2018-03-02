@@ -16,6 +16,7 @@ import com.walkPark.walkinthepark.Constants;
 import com.walkPark.walkinthepark.Prefs;
 import com.walkPark.walkinthepark.events.GameTriggerEvent;
 import com.walkPark.walkinthepark.fragments.HomeFragment;
+import com.walkPark.walkinthepark.fragments.LeaderboardFragment;
 import com.walkPark.walkinthepark.models.UserInfo;
 
 import org.greenrobot.eventbus.EventBus;
@@ -127,7 +128,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initFragments() {
-        fragmentList.add(HomeFragment.newInstance(null)); // Leaderboard
+        fragmentList.add(LeaderboardFragment.newInstance(null)); // Leaderboard
         fragmentList.add(HomeFragment.newInstance(null)); // Routes
         fragmentList.add(HomeFragment.newInstance(null)); // Account Settings
 
