@@ -16,19 +16,18 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_centerVertical="true"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:paddingStart="@dimen/dp_20"
-        android:paddingEnd="@dimen/dp_20"
+        android:paddingLeft="@dimen/dp_20"
         tools:text="2"
     />
 
-    <!-- HELP -->
     <View
         android:id="@+id/separator"
-        android:layout_width="1dp"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="200dp"
         android:layout_toEndOf="@+id/position"
         android:layout_toRightOf="@+id/position"
         android:background="@drawable/separator"/>
