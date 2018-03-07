@@ -48,7 +48,6 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        System.out.print("Hello!" + routeList.get(position).getName());
         if (routeList != null) {
             glide.load(routeList.get(position).getImage_url()).placeholder(R.color.placeholder)
                     .centerCrop().into(holder.image);

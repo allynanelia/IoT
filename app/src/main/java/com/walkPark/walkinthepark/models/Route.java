@@ -9,21 +9,21 @@ import java.util.List;
  */
 @Parcel
 public class Route {
-    String _id;
+    String id;
     String name;
     String image_url;
     String description;
     String estimated_steps;
-    List<String> checkpoints;
+    List<CheckPoint> checkpoints;
 
     public Route() {}
 
     public String get_id() {
-        return _id;
+        return id;
     }
 
     public void set_id(String _id) {
-        this._id = _id;
+        this.id = _id;
     }
 
     public String getName() {
@@ -58,11 +58,11 @@ public class Route {
         this.estimated_steps = estimated_steps;
     }
 
-    public List<String> getCheckpoints() {
+    public List<CheckPoint> getCheckpoints() {
         return checkpoints;
     }
 
-    public void setCheckpoints(List<String> checkpoints) {
+    public void setCheckpoints(List<CheckPoint> checkpoints) {
         this.checkpoints = checkpoints;
     }
 }

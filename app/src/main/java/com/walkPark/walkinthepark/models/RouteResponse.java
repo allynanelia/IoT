@@ -7,7 +7,7 @@ import java.util.List;
  */
 
 public class RouteResponse {
-    private List<Route> routes;
+    private List<Route> route;
 
-    public List<Route> getRoute() { return routes; }
+    public List<Route> getRoute() { return route; }
 }

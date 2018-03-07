@@ -47,4 +47,6 @@
 
     <dimen name="size_12" >20dp</dimen>
 
+    <dimen name="radius_button_corner">8dp</dimen>
+
 </resources>

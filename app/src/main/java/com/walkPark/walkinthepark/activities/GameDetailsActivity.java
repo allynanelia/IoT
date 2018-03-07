@@ -2,11 +2,16 @@ package com.walkPark.walkinthepark.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.walkinthepark.R;
 import com.walkPark.walkinthepark.Constants;
 import com.walkPark.walkinthepark.models.CheckPoint;
@@ -28,10 +33,11 @@ import butterknife.OnClick;
 public class GameDetailsActivity extends BaseActivity {
     @BindView(R.id.buttonLeft) ImageView buttonLeft;
     @BindView(R.id.textTitle) TextView textTitle;
-    @BindView(R.id.gameImage) ImageView gameImage;
+    @BindView(R.id.gameImage) View gameImage;
     @BindView(R.id.startButton) Button startButton;
     @BindView(R.id.info) TextView info;
     @BindView(R.id.steps) TextView steps;
+
 
     private Route route;
 
@@ -39,7 +45,7 @@ public class GameDetailsActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_game_details);
+        setContentView(R.layout.activity_game_detail);
 
         ButterKnife.bind(this);
 
@@ -52,11 +58,27 @@ public class GameDetailsActivity extends BaseActivity {
     private void initUI() {
         Glide.with(this)
                 .load(route.getImage_url())
-                .into(gameImage);
+                .into(new SimpleTarget<GlideDrawable>() {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource,
+                                                GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        gameImage.setBackground(resource);
+                    }
+                });
 
         textTitle.setText(route.getName());
         info.setText(route.getDescription());
         steps.setText(route.getEstimated_steps() + " steps");
+
+        if (route.getCheckpoints().get(0).getId().equals("1")) {
+            if (route.getCheckpoints().get(0).getStatus().equals("0")) {
+                startButton.setText("Start");
+            } else {
+                startButton.setText("Resume");
+            }
+        } else {
+            startButton.setText("Resume");
+        }
 
     }
 
@@ -67,20 +89,11 @@ public class GameDetailsActivity extends BaseActivity {
 
     @OnClick(R.id.startButton)
     public void startButtonClick() {
-        //TODO
-        //Call API and return the list of checkpoints to next page
-        List<CheckPoint> checkPoints = new ArrayList<>();
         Intent intent = new Intent(GameDetailsActivity.this,
                 CheckpointActivity.class);
-        intent.putExtra(Constants.INTENT_CHECKPOINTS_RETURN, Parcels.wrap(checkPoints));
+        intent.putExtra(Constants.INTENT_CHECKPOINTS_RETURN, Parcels.wrap(route));
+        startActivity(intent);
         finish();
     }
-
-
-
-
-
-
-
 
 }

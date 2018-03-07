@@ -8,51 +8,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
-        android:id="@+id/titleBar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/gray">
+            android:id="@+id/progressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_image_checkpoints">
 
         <ImageView
             android:id="@+id/buttonLeft"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_back"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_back_white"
             android:padding="12dp"
-            android:background="?selectableItemBackgroundBorderless"
             />
+
         <TextView
             android:id="@+id/textTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_centerInParent="true"
             tools:text="Activity Title"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            fontPath="fonts/DINNextLTPro-Medium.otf"
+            android:layout_centerHorizontal="true"
+            android:textSize="26sp"
+            android:layout_marginTop="@dimen/margin_16"
+            fontPath="fonts/DINNextLTPro-Bold.otf"
             tools:ignore="MissingPrefix"
-
             />
 
-    </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/progressLayout"
-            android:layout_width="match_parent"
-            android:layout_height="320dp"
-            android:orientation="vertical"
-            android:layout_below="@+id/titleBar"
-            android:background="@drawable/bg_image_checkpoints">
-
-            <TextView
+        <TextView
+            android:id="@+id/routeProgress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_16"
                 android:textSize="20sp"
-                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
                 android:textColor="@color/white"
+                android:layout_below="@+id/textTitle"
                 tools:text="ROUTE PROGRESS"
                 fontPath="fonts/DINNextLTPro-Bold.otf"
                 android:textStyle="bold"
@@ -60,51 +53,72 @@
                 />
 
             <RelativeLayout
+                android:id="@+id/layoutDigits"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/routeProgress"
+                android:layout_centerHorizontal="true">
+
+               <TextView
+                   android:id="@+id/textMinutes"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="20sp"
+                   android:textColor="@color/white"
+                   android:text="12"/>
+
+                <TextView
+                    android:id="@+id/colon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_toRightOf="@+id/textMinutes"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="@dimen/margin_8"
+                    android:layout_marginRight="@dimen/margin_8"
+                    android:text=":"/>
+
+                <TextView
+                    android:id="@+id/textSeconds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/colon"
+                    android:text="12"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutWords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutDigits"
                 android:layout_gravity="center">
-
-                <TextView
-                    android:id="@+id/textTimeLeft"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="40sp"
-                    android:text="00:00"
-                    fontPath="fonts/OpenSans-Bold.ttf"
-                    tools:ignore="MissingPrefix"
-                    android:layout_centerHorizontal="true"
-                    />
-
-                <TextView
-                    android:id="@+id/hours"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textTimeLeft"
-                    android:textColor="@color/white"
-                    android:textAllCaps="true"
-                    android:text="HOURS"
-                    android:textSize="10sp"
-                    />
 
                 <TextView
                     android:id="@+id/minutes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/textTimeLeft"
-                    android:layout_alignRight="@id/textTimeLeft"
                     android:textColor="@color/white"
                     android:textAllCaps="true"
-                    android:text="MINUTES"
+                    android:text="MINUTES    SECONDS"
                     android:textSize="10sp"
+                    android:layout_centerHorizontal="true"
                     />
 
             </RelativeLayout>
 
+
             <RelativeLayout
+                android:id="@+id/layoutPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/layoutWords">
 
                 <TextView
                     android:id="@+id/totalpoints"
@@ -116,6 +130,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/textPoint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/totalpoints"
@@ -131,7 +146,8 @@
                 android:layout_height="180dp"
                 android:layout_width="180dp"
                 android:layout_marginTop="18dp"
-                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/layoutPoints"
                 app:arc_stroke_width="14dp"
                 app:arc_max="100"
                 app:arc_progress="70"
@@ -141,7 +157,7 @@
                 app:arc_text_color="@android:color/white"
                 />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"

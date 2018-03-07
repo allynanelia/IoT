@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -53,7 +54,32 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        if (checkPointList != null) {
+            holder.buttonIndicator.setText(checkPointList.get(position).getId());
+            if (checkPointList.get(position).getStatus().equals("0")) {
+                holder.checkPointLock.setVisibility(View.VISIBLE);
+                holder.buttonCheck.setVisibility(View.GONE);
+                holder.buttonInfo.setVisibility(View.GONE);
+                holder.buttonHint.setVisibility(View.GONE);
+                holder.lockIcon.setVisibility(View.VISIBLE);
+                holder.checkPointTitle.setText("Checkpoint " +
+                        checkPointList.get(position).getId());
+            } else if (checkPointList.get(position).getStatus().equals("1")) {
+                holder.checkPointLock.setVisibility(View.GONE);
+                holder.buttonCheck.setVisibility(View.VISIBLE);
+                holder.buttonHint.setVisibility(View.VISIBLE);
+                holder.buttonInfo.setVisibility(View.GONE);
+                holder.lockIcon.setVisibility(View.GONE);
+                holder.checkPointTitle.setText(checkPointList.get(position).getTitle());
+            } else {
+                holder.checkPointLock.setVisibility(View.GONE);
+                holder.buttonCheck.setVisibility(View.GONE);
+                holder.buttonHint.setVisibility(View.GONE);
+                holder.buttonInfo.setVisibility(View.VISIBLE);
+                holder.lockIcon.setVisibility(View.GONE);
+                holder.checkPointTitle.setText(checkPointList.get(position).getTitle());
+            }
+        }
     }
 
     @Override
@@ -70,6 +96,9 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.Vi
         @BindView(R.id.buttonCheck) ImageView buttonCheck;
         @BindView(R.id.buttonHint) ImageView buttonHint;
         @BindView(R.id.buttonInfo) ImageView buttonInfo;
+        @BindView(R.id.checkPointTitle) TextView checkPointTitle;
+        @BindView(R.id.buttonIndicator) TextView buttonIndicator;
+        @BindView(R.id.lockIcon) ImageView lockIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);

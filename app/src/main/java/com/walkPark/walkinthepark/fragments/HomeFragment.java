@@ -117,7 +117,7 @@ public class HomeFragment extends Fragment {
                 .getInstance()
                 .create(RouteInterface.class);
 
-        Call<RouteResponse> call = routeInterface.getAllRoutes();
+        Call<RouteResponse> call = routeInterface.getAllRoutes(1);
         call.enqueue(new Callback<RouteResponse>() {
             @Override
             public void onResponse(Call<RouteResponse> call, Response<RouteResponse> response) {
