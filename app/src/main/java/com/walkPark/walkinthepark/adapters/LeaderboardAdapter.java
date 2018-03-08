@@ -75,8 +75,6 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
             super(itemView);
 
             ButterKnife.bind(this, itemView);
-
-
         }
 
         public void showDialog(String image) {

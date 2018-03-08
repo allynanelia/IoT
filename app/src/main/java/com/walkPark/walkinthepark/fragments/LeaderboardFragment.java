@@ -47,7 +47,6 @@ public class LeaderboardFragment extends Fragment {
     @BindView(R.id.rank) TextView tvTopRank;
     @BindView(R.id.spinner) MaterialSpinner spinner;
 
-
     CatLoadingView mView;
 
     private LeaderboardAdapter adapter;
@@ -122,12 +121,11 @@ public class LeaderboardFragment extends Fragment {
                 .getInstance()
                 .create(RouteInterface.class);
 
-        Call<RouteResponse> call = routeInterface.getAllRoutes();
+        Call<RouteResponse> call = routeInterface.getAllRoutes(1);
         call.enqueue(new Callback<RouteResponse>() {
             @Override
             public void onResponse(Call<RouteResponse> call, Response<RouteResponse> response) {
                 if (response.isSuccessful()) {
-
                     initUI();
                 } else {
                     Toast.makeText(getContext(), "Error loading",

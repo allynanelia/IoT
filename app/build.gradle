@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.example.walkinthepark"
-        minSdkVersion 16
+        minSdkVersion 23
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -45,4 +45,6 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.roger.catloadinglibrary:catloadinglibrary:1.0.1'
     compile 'com.jaredrummler:material-spinner:1.2.4'
+
+    compile 'org.altbeacon:android-beacon-library:2+'
 }
