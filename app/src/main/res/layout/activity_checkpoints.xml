@@ -10,7 +10,7 @@
     <RelativeLayout
             android:id="@+id/progressLayout"
             android:layout_width="match_parent"
-            android:layout_height="360dp"
+            android:layout_height="400dp"
             android:orientation="vertical"
             android:background="@drawable/bg_image_checkpoints">
 
@@ -139,13 +139,51 @@
                     android:textSize="10sp"
                     />
 
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutSteps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/layoutWords">
+
+                <TextView
+                    android:id="@+id/textSteps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutStepsDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/layoutWords">
+
+                <TextView
+                    android:id="@+id/steps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/white"
+                    android:text="Number of steps taken"
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <com.github.lzyzsd.circleprogress.ArcProgress
                 android:id="@+id/progressDuration"
                 android:layout_height="180dp"
                 android:layout_width="180dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="64dp"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/layoutPoints"
                 app:arc_stroke_width="14dp"

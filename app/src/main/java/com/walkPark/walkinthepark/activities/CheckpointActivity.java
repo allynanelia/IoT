@@ -2,8 +2,13 @@ package com.walkPark.walkinthepark.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,9 +27,12 @@ import com.example.walkinthepark.R;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.walkPark.walkinthepark.Constants;
 import com.walkPark.walkinthepark.adapters.CheckPointAdapter;
+import com.walkPark.walkinthepark.backend.RouteInterface;
+import com.walkPark.walkinthepark.backend.WalkInTheParkRetrofit;
 import com.walkPark.walkinthepark.dialogs.CheckPointDialog;
 import com.walkPark.walkinthepark.events.CompleteCheckPointEvent;
 import com.walkPark.walkinthepark.models.CheckPoint;
+import com.walkPark.walkinthepark.models.CheckpointDetails;
 import com.walkPark.walkinthepark.models.Route;
 
 import org.altbeacon.beacon.Beacon;
@@ -50,7 +58,7 @@ import butterknife.OnClick;
  * Created by nanelia on 27/2/18.
  */
 
-public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
+public class CheckpointActivity extends BaseActivity implements BeaconConsumer, SensorEventListener {
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.textTitle) TextView textTitle;
@@ -58,6 +66,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     @BindView(R.id.progressDuration) ArcProgress progressDuration;
     @BindView(R.id.textMinutes) TextView textMinutes;
     @BindView(R.id.textSeconds) TextView textSeconds;
+    @BindView(R.id.textSteps) TextView textSteps;
 
     private CheckPointAdapter adapter;
     private List<CheckPoint> checkPoints = new ArrayList<>();
@@ -72,11 +81,16 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
 
     private ArrayList<Region> regions = new ArrayList<>();
 
+    private SensorManager sensorManager;
+    private Sensor sSensor;
+    private long steps = 0;
+
     private String currentCheckPointBeacon;
     private int checkPointEntry;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_checkpoints);
@@ -105,6 +119,14 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
         }
 
         retrieveCurrentCheckPointBeacon();
+
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+
+        sensorManager.registerListener(this, sSensor, SensorManager.SENSOR_DELAY_FASTEST);
+
+
 
         initUI();
 
@@ -148,6 +170,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     private void initUI() {
         textTitle.setText(route.getName());
         textPoint.setText(route.getCheckpoints().get(0).getPoints());
+        textSteps.setText((int) steps + "");
 
         double counterDValue = calculateCheckPointsDone(route);
         Double d = new Double(counterDValue);
@@ -200,6 +223,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
             final long minsLeft = workTime / 60;
             final long secsLeft = workTime % 60;
 
+
             textMinutes.setText(String.format("%02d", minsLeft));
             textSeconds.setText(String.format("%02d", secsLeft));
 
@@ -211,6 +235,14 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     @Subscribe
     public void onEvent(CompleteCheckPointEvent event) {
         //TODO
+
+        final RouteInterface routeInterface = WalkInTheParkRetrofit
+                .getInstance()
+                .create(RouteInterface.class);
+
+        CheckpointDetails checkpointDetails = new CheckpointDetails(route.get_id(),"12345","12345", Long.toString(steps), Integer.toString(workTime));
+        Call<Route> call = routeInterface.checkpointComplete(checkpointDetails);
+
     }
 
     @OnClick(R.id.buttonLeft)
@@ -260,5 +292,35 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                 beaconManager.startMonitoringBeaconsInRegion(region);
             }
         } catch (RemoteException e) {   }
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        Sensor sensor = event.sensor;
+        float[] values = event.values;
+        int value = -1;
+
+        if (values.length > 0) {
+            value = (int) values[0];
+        }
+
+
+        if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
+            steps++;
+        }
+
+        textSteps.setText((int) steps + "");
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        sensorManager.unregisterListener(this, sSensor);
+
     }
 }

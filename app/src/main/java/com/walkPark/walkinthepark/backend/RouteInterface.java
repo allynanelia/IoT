@@ -1,8 +1,11 @@
 package com.walkPark.walkinthepark.backend;
 
+import com.walkPark.walkinthepark.models.CheckpointDetails;
 import com.walkPark.walkinthepark.models.RouteResponse;
+import com.walkPark.walkinthepark.models.Route;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -16,4 +19,7 @@ public interface RouteInterface {
     Call<RouteResponse> getAllRoutes(@Path("id") int playerID);
 
 
+
+    @POST("api/player/checkpoint/status")
+    Call<Route> checkpointComplete(@Body CheckpointDetails checkpointDetails);
 }
