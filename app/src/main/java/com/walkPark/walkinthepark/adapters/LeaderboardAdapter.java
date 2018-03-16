@@ -33,7 +33,12 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     }
 
     @Override
-    public LeaderboardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public int getItemCount() {
+        return userList.size();
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new LeaderboardAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.item_leaderboard_positions, parent, false));
     }
@@ -48,11 +53,6 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 
             holder.name.setVisibility(View.VISIBLE);
             holder.name.setText(user.getPlayer_name());
-    }
-
-    @Override
-    public int getItemCount() {
-        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

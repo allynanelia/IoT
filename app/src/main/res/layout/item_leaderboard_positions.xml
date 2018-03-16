@@ -5,8 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
-    android:layout_height="160px"
-    android:layout_margin="@dimen/margin_16"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     app:corner_radius="16dp">
 
@@ -27,7 +26,8 @@
     <View
         android:id="@+id/separator"
         android:layout_width="40dp"
-        android:layout_height="200dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
         android:layout_toEndOf="@+id/position"
         android:layout_toRightOf="@+id/position"
         android:background="@drawable/separator"/>
@@ -38,15 +38,16 @@
         android:layout_toEndOf="@+id/separator"
         android:layout_toRightOf="@+id/separator"
         android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/neg_margin_16"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/name"
-            fontPath="fonts/DINNextLTPro-Bold.otf"
+            fontPath="fonts/DINNextLTPro-Regular.otf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="25sp"
             tools:ignore="MissingPrefix"
             android:text="Ai Chai" />
 
@@ -57,21 +58,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_16"
+        android:layout_centerInParent="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:background="@color/yellow"
-        app:corner_radius="20dp">
-
-        <ImageView
-            android:id="@+id/step_image"
-            android:layout_width="160px"
-            android:layout_height="120px"
-            tools:background="@color/yellow"
-            />
+        app:corner_radius="16dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
             android:orientation="vertical"
             android:layout_centerInParent="true">
 
@@ -81,6 +77,7 @@
                 android:layout_width="wrap_content"
                 android:textSize="15sp"
                 android:textColor="@color/black"
+                android:layout_gravity="center"
                 android:text="12,000"
                 fontPath="fonts/DINNextLTPro-Bold.otf"
                 tools:ignore="MissingPrefix"
@@ -91,6 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_16"
                 android:textSize="10sp"
                 android:textColor="@color/black"
                 android:text="POINTS"

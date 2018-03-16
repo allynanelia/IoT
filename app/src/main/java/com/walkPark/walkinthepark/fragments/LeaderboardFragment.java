@@ -110,7 +110,7 @@ public class LeaderboardFragment extends Fragment {
         List<UserInfo> userList = userListByRoutes.get(1);
         tvStepsNum.setText(userList.get(0).getPoints());
         tvTopName.setText(userList.get(0).getPlayer_name());
-        userList.remove(1);
+        userList.remove(0);
 
         adapter = new LeaderboardAdapter(getContext(), userList);
         recyclerView.setHasFixedSize(true);
@@ -137,7 +137,6 @@ public class LeaderboardFragment extends Fragment {
                     }
                     spinner.setItems(routeNameList);
                     tvRouteName.setText(routeNameList.get(0));
-                    tvText.setText("Top walkers on route:");
                     spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
                         @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
