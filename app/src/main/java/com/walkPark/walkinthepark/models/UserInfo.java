@@ -5,30 +5,30 @@ package com.walkPark.walkinthepark.models;
  */
 
 public class UserInfo {
-    String user_token;
-    String user_name;
+    String player_id;
+    String player_name;
     String user_photo;
     String user_age;
     String user_step;
-    String user_anything;
+    String points;
 
     public UserInfo() {
     }
 
-    public String getUser_token() {
-        return user_token;
+    public String getPlayer_id() {
+        return player_id;
     }
 
-    public void setUser_token(String user_token) {
-        this.user_token = user_token;
+    public void setPlayer_id(String player_id) {
+        this.player_id = player_id;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getPlayer_name() {
+        return player_name;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setPlayer_name(String player_name) {
+        this.player_name = player_name;
     }
 
     public String getUser_photo() {
@@ -55,11 +55,11 @@ public class UserInfo {
         this.user_step = user_step;
     }
 
-    public String getUser_anything() {
-        return user_anything;
+    public String getPoints() {
+        return points;
     }
 
-    public void setUser_anything(String user_anything) {
-        this.user_anything = user_anything;
+    public void setPoints(String points) {
+        this.points = points;
     }
 }
