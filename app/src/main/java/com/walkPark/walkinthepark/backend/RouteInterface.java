@@ -4,6 +4,7 @@ import com.walkPark.walkinthepark.models.RouteResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -13,4 +14,6 @@ import retrofit2.http.Path;
 public interface RouteInterface {
     @GET("routes/player/{id}")
     Call<RouteResponse> getAllRoutes(@Path("id") int playerID);
+
+
 }

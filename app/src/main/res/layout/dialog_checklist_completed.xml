@@ -5,16 +5,30 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/viewKonfetti"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <ImageView
         android:id="@+id/imageHintOrSuccess"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="500dp"
         android:layout_marginLeft="@dimen/margin_8"
         android:layout_marginRight="@dimen/margin_8"
         android:layout_marginTop="@dimen/margin_32"
-        android:layout_marginBottom="@dimen/margin_32"
         tools:background="@color/gray"
         />
+
+    <TextView
+        android:id="@+id/textHintOrSuccess"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="@dimen/margin_32"
+        android:layout_marginLeft="@dimen/margin_8"
+        android:layout_marginRight="@dimen/margin_8"
+        android:textColor="@color/white"
+        android:layout_below="@+id/imageHintOrSuccess"/>
 
     <ImageView
         android:id="@+id/buttonClose"

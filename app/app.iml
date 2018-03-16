@@ -132,6 +132,7 @@
     <orderEntry type="library" name="com.github.iammert:ScalingLayout-1.2" level="project" />
     <orderEntry type="library" name="com.android.support:support-compat-26.1.0" level="project" />
     <orderEntry type="library" name="com.squareup.okhttp3:okhttp:3.8.0@jar" level="project" />
+    <orderEntry type="library" name="nl.dionsegijn:konfetti-1.1.0" level="project" />
     <orderEntry type="library" name="com.jakewharton:butterknife-8.5.1" level="project" />
     <orderEntry type="library" name="com.roger.catloadinglibrary:catloadinglibrary-1.0.1" level="project" />
     <orderEntry type="library" name="android.arch.core:common:1.0.0@jar" level="project" />

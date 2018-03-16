@@ -117,12 +117,13 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.Vi
             buttonCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO call beacon API.
-                    String image = "";
+                    //Not sure how to check, trying luck to use event bus.
                     if (true) {
-                        showDialog(image);
+                        showDialog(checkPointList.get(getAdapterPosition()).getImage_url_found(),
+                                checkPointList.get(getAdapterPosition()).getFound_description());
                     } else {
-                        showDialog(image);
+                        showDialog(checkPointList.get(getAdapterPosition()).getImage_url_hint(),
+                                checkPointList.get(getAdapterPosition()).getHint_description());
                     }
                 }
             });
@@ -130,25 +131,23 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.Vi
             buttonHint.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO get the checkpoint hint
-                    String image = "";
-                    showDialog(image);
+                    showDialog(checkPointList.get(getAdapterPosition()).getImage_url_hint(),
+                            checkPointList.get(getAdapterPosition()).getHint_description());
                 }
             });
 
             buttonInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO get the info
-                    String image = "";
-                    showDialog(image);
+                    showDialog(checkPointList.get(getAdapterPosition()).getImage_url_found(),
+                            checkPointList.get(getAdapterPosition()).getFound_description());
                 }
             });
         }
-        public void showDialog(String image) {
-            CheckPointDialog.newInstance(image)
+        public void showDialog(String image, String desc) {
+            CheckPointDialog.newInstance(image, desc)
                     .show(((AppCompatActivity)context).getSupportFragmentManager() ,
-                    "dialog_advertisement");
+                    "dialog_checkpoint");
         }
     }
 }

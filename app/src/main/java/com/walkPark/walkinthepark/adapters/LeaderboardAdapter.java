@@ -78,7 +78,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         }
 
         public void showDialog(String image) {
-            CheckPointDialog.newInstance(image)
+            CheckPointDialog.newInstance(image, image)
                     .show(((AppCompatActivity)context).getSupportFragmentManager() ,
                             "dialog_advertisement");
         }
