@@ -42,6 +42,7 @@ import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.jetbrains.annotations.Nullable;
 import org.parceler.Parcels;
@@ -53,6 +54,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
 
 /**
  * Created by nanelia on 27/2/18.
@@ -88,6 +90,8 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
     private String currentCheckPointBeacon;
     private int checkPointEntry;
 
+    private boolean reload;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -96,8 +100,6 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
         setContentView(R.layout.activity_checkpoints);
 
         ButterKnife.bind(this);
-
-        workTimeHandler = new Handler();
 
         regions.add(new Region("iot04", Identifier.parse("0x02696f74736d757367303407"),
                 null, null )); //Working
@@ -117,16 +119,6 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSION_REQUEST_FINE_LOCATION);
         }
-
-        retrieveCurrentCheckPointBeacon();
-
-
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        sSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-
-        sensorManager.registerListener(this, sSensor, SensorManager.SENSOR_DELAY_FASTEST);
-
-
 
         initUI();
 
@@ -168,6 +160,15 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
     }
 
     private void initUI() {
+        workTimeHandler = new Handler();
+
+        retrieveCurrentCheckPointBeacon();
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+
+        sensorManager.registerListener(this, sSensor, SensorManager.SENSOR_DELAY_FASTEST);
+
         textTitle.setText(route.getName());
         textPoint.setText(route.getCheckpoints().get(0).getPoints());
         textSteps.setText((int) steps + "");
@@ -181,6 +182,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+        //Later do update if boolean true
     }
 
     private void loadData() {
@@ -223,7 +225,6 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
             final long minsLeft = workTime / 60;
             final long secsLeft = workTime % 60;
 
-
             textMinutes.setText(String.format("%02d", minsLeft));
             textSeconds.setText(String.format("%02d", secsLeft));
 
@@ -234,15 +235,14 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
 
     @Subscribe
     public void onEvent(CompleteCheckPointEvent event) {
-        //TODO
-
         final RouteInterface routeInterface = WalkInTheParkRetrofit
                 .getInstance()
                 .create(RouteInterface.class);
 
-        CheckpointDetails checkpointDetails = new CheckpointDetails(route.get_id(),"12345","12345", Long.toString(steps), Integer.toString(workTime));
+        CheckpointDetails checkpointDetails = new CheckpointDetails(route.get_id(),
+                "12345","12345", Long.toString(steps),
+                Integer.toString(workTime));
         Call<Route> call = routeInterface.checkpointComplete(checkpointDetails);
-
     }
 
     @OnClick(R.id.buttonLeft)
@@ -280,6 +280,10 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
                                     , route.getCheckpoints().get(checkPointEntry)
                                                     .getFound_description())
                                     .show(getSupportFragmentManager(),"dialog_checkpoint");
+                            CheckpointDetails cpd = new CheckpointDetails(route.get_id(),
+                                    Integer.toString(checkPointEntry)
+                                    ,"1" , Long.toString(steps), Integer.toString(workTime));
+                            EventBus.getDefault().post(new CompleteCheckPointEvent(cpd));
                         }
                     }
                 }
@@ -304,7 +308,6 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
             value = (int) values[0];
         }
 
-
         if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
             steps++;
         }
@@ -314,13 +317,18 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
         sensorManager.unregisterListener(this, sSensor);
+        super.onStop();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 }
