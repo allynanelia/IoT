@@ -26,8 +26,11 @@ import com.example.walkinthepark.R;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.walkPark.walkinthepark.Constants;
 import com.walkPark.walkinthepark.adapters.CheckPointAdapter;
+import com.walkPark.walkinthepark.backend.RouteInterface;
+import com.walkPark.walkinthepark.backend.WalkInTheParkRetrofit;
 import com.walkPark.walkinthepark.events.CompleteCheckPointEvent;
 import com.walkPark.walkinthepark.models.CheckPoint;
+import com.walkPark.walkinthepark.models.CheckpointDetails;
 import com.walkPark.walkinthepark.models.Route;
 
 import org.altbeacon.beacon.Beacon;
@@ -48,6 +51,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
 
 /**
  * Created by nanelia on 27/2/18.
@@ -199,6 +203,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
             final long minsLeft = workTime / 3600;
             final long secsLeft = workTime / 60;
 
+
             textMinutes.setText(String.format("%02d", minsLeft));
             textSeconds.setText(String.format("%02d", secsLeft));
 
@@ -209,7 +214,13 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
 
     @Subscribe
     public void onEvent(CompleteCheckPointEvent event) {
-        //todo
+
+        final RouteInterface routeInterface = WalkInTheParkRetrofit
+                .getInstance()
+                .create(RouteInterface.class);
+
+        CheckpointDetails checkpointDetails = new CheckpointDetails(route.get_id(),"12345","12345", Long.toString(steps), Integer.toString(workTime));
+        Call<Route> call = routeInterface.checkpointComplete(checkpointDetails);
         
     }
 
