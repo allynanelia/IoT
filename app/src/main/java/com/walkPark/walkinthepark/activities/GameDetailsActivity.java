@@ -38,7 +38,6 @@ public class GameDetailsActivity extends BaseActivity {
     @BindView(R.id.info) TextView info;
     @BindView(R.id.steps) TextView steps;
 
-
     private Route route;
 
     @Override
@@ -71,13 +70,9 @@ public class GameDetailsActivity extends BaseActivity {
         steps.setText(route.getEstimated_steps() + " steps");
 
         if (route.getCheckpoints().get(0).getId().equals("1")) {
-            if (route.getCheckpoints().get(0).getStatus().equals("0")) {
-                startButton.setText("Start");
-            } else {
-                startButton.setText("Resume");
-            }
-        } else {
             startButton.setText("Resume");
+        } else {
+            startButton.setText("Start");
         }
 
     }

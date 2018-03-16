@@ -7,13 +7,4 @@ import com.walkPark.walkinthepark.models.CheckpointDetails;
  */
 
 public class CompleteCheckPointEvent {
-    private final CheckpointDetails checkPointDetails;
-
-    public CompleteCheckPointEvent(CheckpointDetails checkPointDetails) {
-        this.checkPointDetails = checkPointDetails;
-    }
-
-    public CheckpointDetails getCheckPointDetails() {
-        return checkPointDetails;
-    }
 }

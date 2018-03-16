@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -34,6 +35,7 @@ import com.walkPark.walkinthepark.events.CompleteCheckPointEvent;
 import com.walkPark.walkinthepark.models.CheckPoint;
 import com.walkPark.walkinthepark.models.CheckpointDetails;
 import com.walkPark.walkinthepark.models.Route;
+import com.walkPark.walkinthepark.models.RouteCheckPointResponse;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -55,6 +57,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 /**
  * Created by nanelia on 27/2/18.
@@ -80,15 +85,20 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
     public BeaconManager beaconManager;
 
     private static final int PERMISSION_REQUEST_FINE_LOCATION = 456;
-
     private ArrayList<Region> regions = new ArrayList<>();
 
+    private Region region;
     private SensorManager sensorManager;
     private Sensor sSensor;
     private long steps = 0;
 
     private String currentCheckPointBeacon;
-    private int checkPointEntry;
+
+    private String checkPointEntry;
+
+    private int position;
+
+    private final String TAG = getClass().getName();
 
     private boolean reload;
 
@@ -102,7 +112,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
         ButterKnife.bind(this);
 
         regions.add(new Region("iot04", Identifier.parse("0x02696f74736d757367303407"),
-                null, null )); //Working
+                        null, null )); //Working
         regions.add(new Region("iot45", Identifier.parse("696F74736D7534352020"),
                 null, null)); //Testing
         regions.add(new Region("iot46", Identifier.parse("696F74736D7573673436"),
@@ -121,7 +131,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
         }
 
         initUI();
-
+        loadNewBeacon();
         loadData();
     }
 
@@ -152,23 +162,50 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
         for (int i = 0;  i < route.getCheckpoints().size(); i++) {
             CheckPoint cp = route.getCheckpoints().get(i);
             if (cp.getStatus().equals("1")) {
-                currentCheckPointBeacon = ""; //cp.getBeaconID;
-                checkPointEntry = i;
+                currentCheckPointBeacon = cp.getBeacon_instance_id();
+                checkPointEntry = cp.getId();
+                position = i;
                 break;
             }
         }
     }
 
-    private void initUI() {
-        workTimeHandler = new Handler();
+    private void reloadUI() {
+        CheckpointActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                workTimeHandler = new Handler();
+                textTitle.setText(route.getName());
+                textPoint.setText(route.getCheckpoints().get(0).getPoints());
+                textSteps.setText((int) steps + "");
 
+                double counterDValue = calculateCheckPointsDone(route);
+                Double d = new Double(counterDValue);
+                int i = d.intValue();
+                progressDuration.setProgress(i);
+
+                adapter = new CheckPointAdapter(CheckpointActivity.this, route.getCheckpoints());
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(CheckpointActivity.this));
+                recyclerView.setAdapter(adapter);
+            }
+        });
+    }
+
+    private void loadNewBeacon() {
         retrieveCurrentCheckPointBeacon();
-
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-
         sensorManager.registerListener(this, sSensor, SensorManager.SENSOR_DELAY_FASTEST);
 
+        if (reload) {
+            adapter.setCheckPointList(route.getCheckpoints());
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    private void initUI() {
+        workTimeHandler = new Handler();
         textTitle.setText(route.getName());
         textPoint.setText(route.getCheckpoints().get(0).getPoints());
         textSteps.setText((int) steps + "");
@@ -235,14 +272,73 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
 
     @Subscribe
     public void onEvent(CompleteCheckPointEvent event) {
+        CheckpointDetails cpd = new CheckpointDetails(route.get_id(),
+                checkPointEntry
+                ,"1" , Long.toString(steps), Integer.toString(workTime));
         final RouteInterface routeInterface = WalkInTheParkRetrofit
-                .getInstance()
-                .create(RouteInterface.class);
+               .getInstance()
+               .create(RouteInterface.class);
 
-        CheckpointDetails checkpointDetails = new CheckpointDetails(route.get_id(),
-                "12345","12345", Long.toString(steps),
-                Integer.toString(workTime));
-        Call<Route> call = routeInterface.checkpointComplete(checkpointDetails);
+       Call<RouteCheckPointResponse> call = routeInterface
+               .checkpointComplete(cpd);
+       call.enqueue(new Callback<RouteCheckPointResponse>() {
+           @Override
+           public void onResponse(Call<RouteCheckPointResponse> call, Response<RouteCheckPointResponse> response) {
+                if (response.isSuccessful()) {
+                    reload = true;
+                    route = response.body().getRoute();
+                    String status = response.body().getStatus();
+                    if (status.equals("1")) {
+                        startActivity(new Intent(CheckpointActivity.this,
+                                MainActivity.class));
+                        finish();
+                    } else {
+                        reloadUI();
+                        loadNewBeacon();
+                        loadData();
+                        recallRangeNotifier();
+                    }
+                } else {
+                    Toast.makeText(CheckpointActivity.this, "Error loading",
+                            Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, response.errorBody().toString());
+                }
+           }
+
+           @Override
+           public void onFailure(Call<RouteCheckPointResponse> call, Throwable t) {
+               Toast.makeText(CheckpointActivity.this, "Error loading API",
+                       Toast.LENGTH_SHORT).show();
+               t.printStackTrace();
+           }
+       });
+    }
+
+    public void recallRangeNotifier() {
+        beaconManager.addRangeNotifier(new RangeNotifier() {
+            @Override
+            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                if (beacons.size() > 0) {
+                    for (Beacon beacon : beacons) {
+                        String beaconID = beacon.getId1().toString();
+                        Log.i("Success beacon", "ID = " + beaconID
+                                + " and i found a beacon >" + currentCheckPointBeacon + "<");
+                        if (beaconID.equals(currentCheckPointBeacon) && beacon.getDistance() < 3.0) {
+                            Log.i("Came in here", "Hello");
+                            //Currently set at 3m
+                            CheckPointDialog
+                                    .newInstance(route.getCheckpoints()
+                                                    .get(position).getImage_url_found()
+                                            , route.getCheckpoints().get(position)
+                                                    .getFound_description())
+                                    .show(getSupportFragmentManager(),"dialog_checkpoint");
+                            EventBus.getDefault().post(new CompleteCheckPointEvent());
+                            beaconManager.removeRangeNotifier(this);
+                        }
+                    }
+                }
+            }
+        });
     }
 
     @OnClick(R.id.buttonLeft)
@@ -270,20 +366,18 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
                     for (Beacon beacon : beacons) {
                         String beaconID = beacon.getId1().toString();
                         Log.i("Success beacon", "ID = " + beaconID
-                                + " and it's distance is " + beacon.getDistance() + " meters aways "
-                                + " its current size is > " + beacons.size());
-                        if (beaconID.equals(currentCheckPointBeacon) && beacon.getDistance() < 5.0) {
-                            //Currently set at 5m
+                                + " and i found a beacon >" + currentCheckPointBeacon + "<");
+                        if (beaconID.equals(currentCheckPointBeacon) && beacon.getDistance() < 3.0) {
+                            //Currently set at 3m
+                            Log.i("Came in here", "Hello");
                             CheckPointDialog
                                     .newInstance(route.getCheckpoints()
-                                                    .get(checkPointEntry).getImage_url_found()
-                                    , route.getCheckpoints().get(checkPointEntry)
+                                                    .get(position).getImage_url_found()
+                                    , route.getCheckpoints().get(position)
                                                     .getFound_description())
                                     .show(getSupportFragmentManager(),"dialog_checkpoint");
-                            CheckpointDetails cpd = new CheckpointDetails(route.get_id(),
-                                    Integer.toString(checkPointEntry)
-                                    ,"1" , Long.toString(steps), Integer.toString(workTime));
-                            EventBus.getDefault().post(new CompleteCheckPointEvent(cpd));
+                            EventBus.getDefault().post(new CompleteCheckPointEvent());
+                            beaconManager.removeRangeNotifier(this);
                         }
                     }
                 }

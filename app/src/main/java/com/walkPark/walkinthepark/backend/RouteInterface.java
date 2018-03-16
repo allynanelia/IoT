@@ -1,6 +1,7 @@
 package com.walkPark.walkinthepark.backend;
 
 import com.walkPark.walkinthepark.models.CheckpointDetails;
+import com.walkPark.walkinthepark.models.RouteCheckPointResponse;
 import com.walkPark.walkinthepark.models.RouteResponse;
 import com.walkPark.walkinthepark.models.Route;
 
@@ -18,8 +19,6 @@ public interface RouteInterface {
     @GET("routes/player/{id}")
     Call<RouteResponse> getAllRoutes(@Path("id") int playerID);
 
-
-
-    @POST("api/player/checkpoint/status")
-    Call<Route> checkpointComplete(@Body CheckpointDetails checkpointDetails);
+    @POST("player/checkpoint")
+    Call<RouteCheckPointResponse> checkpointComplete(@Body CheckpointDetails checkpointDetails);
 }
