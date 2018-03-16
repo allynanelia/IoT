@@ -17,18 +17,17 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.walkinthepark.R;
-import com.google.gson.internal.bind.ArrayTypeAdapter;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.roger.catloadinglibrary.CatLoadingView;
-import com.walkPark.walkinthepark.adapters.GameListAdapter;
 import com.walkPark.walkinthepark.adapters.LeaderboardAdapter;
+import com.walkPark.walkinthepark.backend.LeaderBoardInterface;
 import com.walkPark.walkinthepark.backend.RouteInterface;
 import com.walkPark.walkinthepark.backend.WalkInTheParkRetrofit;
+import com.walkPark.walkinthepark.models.Leaderboard;
+import com.walkPark.walkinthepark.models.LeaderboardResponse;
 import com.walkPark.walkinthepark.models.Route;
 import com.walkPark.walkinthepark.models.RouteResponse;
 import com.walkPark.walkinthepark.models.UserInfo;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +44,18 @@ public class LeaderboardFragment extends Fragment {
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.name) TextView tvTopName;
     @BindView(R.id.rank) TextView tvTopRank;
+    @BindView(R.id.steps_num) TextView tvStepsNum;
+    @BindView(R.id.steps) TextView tvSteps;
     @BindView(R.id.spinner) MaterialSpinner spinner;
+    @BindView(R.id.route_name) TextView tvRouteName;
+    @BindView(R.id.text) TextView tvText;
+    @BindView(R.id.position) TextView tvPosition;
 
     CatLoadingView mView;
 
     private LeaderboardAdapter adapter;
-    private List<UserInfo> leaderBoardList = new ArrayList<>();
-    private List<String> spinnerList = new ArrayList<>();
+    private List<Route> routeList = new ArrayList<>();
+    private List<String> routeNameList = new ArrayList<>();
     private SparseArray<List<UserInfo>> userListByRoutes = new SparseArray<>();
     private final String TAG = getClass().getName();
     private Unbinder unbinder;
@@ -75,12 +79,9 @@ public class LeaderboardFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                initData();
+                initData1();
             }
         }, 1000);
-        //initData();
-
-        //initUI();
 
         return root;
     }
@@ -102,21 +103,26 @@ public class LeaderboardFragment extends Fragment {
     }
 
     private void initUI() {
+        tvPosition.setVisibility(View.VISIBLE);
+        tvTopRank.setVisibility(View.VISIBLE);
+        tvSteps.setVisibility(View.VISIBLE);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        //progressBar.setVisibility(View.GONE);
         if (adapter == null) {
-            adapter = new LeaderboardAdapter(Glide.with(this), leaderBoardList);
+            adapter = new LeaderboardAdapter(Glide.with(this), userListByRoutes.get(1));
+            List<UserInfo> userList = userListByRoutes.get(1);
+            tvStepsNum.setText(userList.get(0).getPoints());
+            tvTopName.setText(userList.get(0).getPlayer_name());
             recyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         } else {
-            adapter.setUserList(leaderBoardList);
+            adapter.setUserList(userListByRoutes.get(1));
             adapter.notifyDataSetChanged();
         }
         mView.dismiss();
     }
 
-    private void initData() {
+    private void initData1() {
         final RouteInterface routeInterface = WalkInTheParkRetrofit
                 .getInstance()
                 .create(RouteInterface.class);
@@ -126,7 +132,22 @@ public class LeaderboardFragment extends Fragment {
             @Override
             public void onResponse(Call<RouteResponse> call, Response<RouteResponse> response) {
                 if (response.isSuccessful()) {
-                    initUI();
+                    routeList.addAll(response.body().getRoute());
+                    for(Route r: routeList) {
+                        routeNameList.add(r.getName());
+                    }
+                    spinner.setItems(routeNameList);
+                    tvRouteName.setText(routeNameList.get(0));
+                    tvText.setText("Top walkers on route:");
+                    spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+
+                        @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                            Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+                        }
+                    });
+
+                    initData2();
+
                 } else {
                     Toast.makeText(getContext(), "Error loading",
                             Toast.LENGTH_SHORT).show();
@@ -143,24 +164,35 @@ public class LeaderboardFragment extends Fragment {
         });
     }
 
-    private void initMockData(){
+    private void initData2(){
+        final LeaderBoardInterface leaderBoardInterface = WalkInTheParkRetrofit
+                .getInstance()
+                .create(LeaderBoardInterface.class);
 
-        spinner.setItems("SMU", "Fort Canning", "Little India", "Botanic Gardens", "Chinatown");
-        spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        Call<LeaderboardResponse> call2 = leaderBoardInterface.getLeaderboard();
+        call2.enqueue(new Callback<LeaderboardResponse>() {
+            @Override
+            public void onResponse(Call<LeaderboardResponse> call, Response<LeaderboardResponse> response) {
+                if (response.isSuccessful()) {
+                    List<Leaderboard> leaderboardList = response.body().getLeaderboard();
+                    for(Leaderboard i: leaderboardList) {
+                        userListByRoutes.append(Integer.parseInt(i.getRoute_id()), i.getPlayers());
+                    }
+                    initUI();
+                } else {
+                    Toast.makeText(getContext(), "Error loading",
+                            Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, response.errorBody().toString());
+                }
+            }
 
-            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+            @Override
+            public void onFailure(Call<LeaderboardResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "Error loading API",
+                        Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
             }
         });
-
-        leaderBoardList = new ArrayList<>();
-        UserInfo ui = new UserInfo();
-        ui.setUser_name("James");
-        ui.setUser_step("10000");
-        leaderBoardList.add(ui);
-
     }
-    private void populateSpinner(){
 
-    }
 }

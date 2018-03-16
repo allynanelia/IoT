@@ -128,9 +128,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initFragments() {
-        fragmentList.add(LeaderboardFragment.newInstance(null)); // Leaderboard
+        fragmentList.add(HomeFragment.newInstance(null)); // Leaderboard
         fragmentList.add(HomeFragment.newInstance(null)); // Routes
-        fragmentList.add(HomeFragment.newInstance(null)); // Account Settings
+        fragmentList.add(LeaderboardFragment.newInstance(null)); // Account Settings
 
         fragmentNameList.add(getString(R.string.fragment_leaderboard));
         fragmentNameList.add(getString(R.string.fragment_routes));

@@ -6,15 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.RequestManager;
 import com.example.walkinthepark.R;
 import com.walkPark.walkinthepark.dialogs.CheckPointDialog;
-import com.walkPark.walkinthepark.models.CheckPoint;
 import com.walkPark.walkinthepark.models.UserInfo;
 
 import java.util.List;
@@ -53,10 +49,10 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
             holder.stepsNum.setText(userList.get(position).getUser_step());
 
             holder.level.setVisibility(View.VISIBLE);
-            holder.level.setText(userList.get(position).getUser_anything()); //level of player
+            holder.level.setText(userList.get(position).getPoints()); //level of player
 
             holder.name.setVisibility(View.VISIBLE);
-            holder.name.setText(userList.get(position).getUser_name());
+            holder.name.setText(userList.get(position).getPlayer_name());
         }
     }
 
