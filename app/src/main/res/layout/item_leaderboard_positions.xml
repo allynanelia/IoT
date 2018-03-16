@@ -21,7 +21,7 @@
         android:textStyle="bold"
         android:paddingStart="@dimen/dp_20"
         android:paddingLeft="@dimen/dp_20"
-        tools:text="2"
+        android:text="2"
     />
 
     <View
@@ -48,17 +48,7 @@
             android:textColor="@color/black"
             android:textSize="30sp"
             tools:ignore="MissingPrefix"
-            tools:text="Ai Chai" />
-
-        <TextView
-            android:id="@+id/level"
-            fontPath="fonts/DINNextLTPro-Bold.otf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            tools:ignore="MissingPrefix"
-            tools:text="Zai Kia" />
+            android:text="Ai Chai" />
 
     </LinearLayout>
 
@@ -91,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:textSize="15sp"
                 android:textColor="@color/black"
-                tools:text="12,000"
+                android:text="12,000"
                 fontPath="fonts/DINNextLTPro-Bold.otf"
                 tools:ignore="MissingPrefix"
                 />
@@ -103,7 +93,7 @@
                 android:layout_gravity="center"
                 android:textSize="10sp"
                 android:textColor="@color/black"
-                tools:text="STEPS"
+                android:text="POINTS"
                 fontPath="fonts/DINNextLTPro-Bold.otf"
                 tools:ignore="MissingPrefix"
                 />

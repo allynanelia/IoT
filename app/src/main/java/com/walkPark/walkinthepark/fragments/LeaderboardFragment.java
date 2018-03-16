@@ -53,6 +53,7 @@ public class LeaderboardFragment extends Fragment {
 
     CatLoadingView mView;
 
+    private LinearLayoutManager layoutManager;
     private LeaderboardAdapter adapter;
     private List<Route> routeList = new ArrayList<>();
     private List<String> routeNameList = new ArrayList<>();
@@ -104,21 +105,19 @@ public class LeaderboardFragment extends Fragment {
 
     private void initUI() {
         tvPosition.setVisibility(View.VISIBLE);
-        tvTopRank.setVisibility(View.VISIBLE);
         tvSteps.setVisibility(View.VISIBLE);
+
+        List<UserInfo> userList = userListByRoutes.get(1);
+        tvStepsNum.setText(userList.get(0).getPoints());
+        tvTopName.setText(userList.get(0).getPlayer_name());
+        userList.remove(1);
+
+        adapter = new LeaderboardAdapter(getContext(), userList);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        if (adapter == null) {
-            adapter = new LeaderboardAdapter(Glide.with(this), userListByRoutes.get(1));
-            List<UserInfo> userList = userListByRoutes.get(1);
-            tvStepsNum.setText(userList.get(0).getPoints());
-            tvTopName.setText(userList.get(0).getPlayer_name());
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        } else {
-            adapter.setUserList(userListByRoutes.get(1));
-            adapter.notifyDataSetChanged();
-        }
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
         mView.dismiss();
     }
 
