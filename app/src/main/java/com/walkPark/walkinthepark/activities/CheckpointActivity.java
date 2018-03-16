@@ -47,6 +47,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.jetbrains.annotations.Nullable;
 import org.parceler.Parcels;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -60,7 +61,7 @@ import retrofit2.Call;
  * Created by nanelia on 27/2/18.
  */
 
-public class CheckpointActivity extends BaseActivity implements BeaconConsumer, SensorEventListener {
+public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.textTitle) TextView textTitle;
@@ -84,8 +85,15 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
     private ArrayList<Region> regions = new ArrayList<>();
 
     private SensorManager sensorManager;
-    private Sensor sSensor;
+    private SensorEventListener sensorEventListenerLA;
+    private SensorEventListener sensorEventListenerSD;
+    private Sensor detectorSensor;
+    private Sensor linearASensor;
     private long steps = 0;
+    private long lastTime = 0;
+    private double initalSpeed = 0.0;
+    private float lastX, lastY, lastZ;
+    private ArrayList<Double> speeds = new ArrayList<>();
 
     private String currentCheckPointBeacon;
     private int checkPointEntry;
@@ -165,9 +173,71 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
         retrieveCurrentCheckPointBeacon();
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        sSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
 
-        sensorManager.registerListener(this, sSensor, SensorManager.SENSOR_DELAY_FASTEST);
+        //linear accelerometer
+        sensorEventListenerLA = new SensorEventListener() {
+
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
+                long currentTime = System.currentTimeMillis();
+                if ((currentTime - lastTime) > 1000) {
+                    long diffTime = (currentTime - lastTime) /1000;
+                    lastTime = currentTime;
+                    double speedX = initalSpeed + x*diffTime;
+                    double speedY = initalSpeed + y*diffTime;
+                    double speedZ = initalSpeed + z*diffTime;
+
+                    double speed = Math.sqrt(speedX*speedX+speedY*speedY+speedZ*speedZ);
+
+                        speeds.add(speed);
+                        String s = Double.toString(speed);
+                        Toast.makeText(getApplicationContext(), s,
+                                Toast.LENGTH_SHORT).show();
+
+                    initalSpeed = speed;
+                    lastX = x;
+                    lastY = y;
+                    lastZ = z;
+
+                }
+            }
+
+                @Override
+                public void onAccuracyChanged (Sensor sensor,int accuracy){
+                }
+
+        };
+
+        sensorManager.registerListener(sensorEventListenerLA, sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_FASTEST);
+
+        //step detector
+        sensorEventListenerSD = new SensorEventListener() {
+
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                float[] values = event.values;
+                int value = -1;
+
+                if (values.length > 0) {
+                    value = (int) values[0];
+                }
+
+                steps++;
+
+                textSteps.setText((int) steps + "");
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+            }
+        };
+
+        sensorManager.registerListener(sensorEventListenerSD, sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR), SensorManager.SENSOR_DELAY_FASTEST);
+
 
         textTitle.setText(route.getName());
         textPoint.setText(route.getCheckpoints().get(0).getPoints());
@@ -194,6 +264,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
     protected void onDestroy() {
         super.onDestroy();
         beaconManager.unbind(this);
+        Toast.makeText(getApplicationContext(),"Speed: " + Double.toString(calculateAvgSpeed()),Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -217,6 +288,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:0-3=beac,i:4-19,i:20-21,i:22-23,p:24-24"));
         beaconManager.bind(this);
+
     }
 
     private Runnable rCountdown = new Runnable() {
@@ -235,6 +307,9 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
 
     @Subscribe
     public void onEvent(CompleteCheckPointEvent event) {
+
+        double speed = calculateAvgSpeed();
+
         final RouteInterface routeInterface = WalkInTheParkRetrofit
                 .getInstance()
                 .create(RouteInterface.class);
@@ -298,31 +373,25 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer, 
         } catch (RemoteException e) {   }
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        Sensor sensor = event.sensor;
-        float[] values = event.values;
-        int value = -1;
-
-        if (values.length > 0) {
-            value = (int) values[0];
+    public double calculateAvgSpeed() {
+        double avgSpeed = 0;
+        for(int i = 0; i < speeds.size(); i++) {
+            avgSpeed += speeds.get(i);
         }
 
-        if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
-            steps++;
-        }
+        avgSpeed = avgSpeed / speeds.size();
+        speeds.clear();
+        return avgSpeed;
 
-        textSteps.setText((int) steps + "");
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
     @Override
     protected void onStop() {
         EventBus.getDefault().unregister(this);
-        sensorManager.unregisterListener(this, sSensor);
+        sensorManager.unregisterListener(sensorEventListenerLA);
+        sensorManager.unregisterListener(sensorEventListenerSD);
+
+
         super.onStop();
     }
 
