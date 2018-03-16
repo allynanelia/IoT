@@ -7,5 +7,6 @@ package com.walkPark.walkinthepark;
 public class Constants {
     public static final String INTENT_GAME_SELECTED = "GAME_SELECTED";
     public static final String INTENT_CHECKPOINTS_RETURN = "CHECKPOINTS_RETURNED";
-    public static final String CHECKPOINT = "CHECKPOINT";
+    public static final String CHECKPOINT_IMAGE = "CHECKPOINT_IMAGE";
+    public static final String CHECKPOINT_DESC = "CHECKPOINT_DESC";
 }
