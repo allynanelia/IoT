@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.walkinthepark.R;
 
 import com.walkPark.walkinthepark.dialogs.CheckPointDialog;
+import com.walkPark.walkinthepark.events.CompleteCheckPointEvent;
 import com.walkPark.walkinthepark.models.CheckPoint;
 
 
@@ -117,14 +118,7 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.Vi
             buttonCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Not sure how to check, trying luck to use event bus.
-                    if (true) {
-                        showDialog(checkPointList.get(getAdapterPosition()).getImage_url_found(),
-                                checkPointList.get(getAdapterPosition()).getFound_description());
-                    } else {
-                        showDialog(checkPointList.get(getAdapterPosition()).getImage_url_hint(),
-                                checkPointList.get(getAdapterPosition()).getHint_description());
-                    }
+                    EventBus.getDefault().post(new CompleteCheckPointEvent());
                 }
             });
 

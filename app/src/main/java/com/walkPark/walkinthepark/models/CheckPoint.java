@@ -16,12 +16,27 @@ public class CheckPoint {
     String found_description;
     String steps;
     String points;
-    String start_time;
-    String end_time;
+    String time_taken;
     String status;
-
+    String beacon_instance_id;
 
     public CheckPoint() {
+    }
+
+    public String getTime_taken() {
+        return time_taken;
+    }
+
+    public void setTime_taken(String time_taken) {
+        this.time_taken = time_taken;
+    }
+
+    public String getBeacon_instance_id() {
+        return beacon_instance_id;
+    }
+
+    public void setBeacon_instance_id(String beacon_instance_id) {
+        this.beacon_instance_id = beacon_instance_id;
     }
 
     public String getId() {
@@ -86,22 +101,6 @@ public class CheckPoint {
 
     public void setPoints(String points) {
         this.points = points;
-    }
-
-    public String getStart_time() {
-        return start_time;
-    }
-
-    public void setStart_time(String start_time) {
-        this.start_time = start_time;
-    }
-
-    public String getEnd_time() {
-        return end_time;
-    }
-
-    public void setEnd_time(String end_time) {
-        this.end_time = end_time;
     }
 
     public String getStatus() {
