@@ -95,9 +95,10 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     private Sensor detectorSensor;
     private Sensor linearASensor;
     private long steps = 0;
+    private long initialSteps = 0;
     private long lastTime = 0;
     private double initalSpeed = 0.0;
-    private float lastX, lastY, lastZ;
+    private float lastX = 0, lastY = 0, lastZ = 0;
     private ArrayList<Double> speeds = new ArrayList<>();
 
     private String currentCheckPointBeacon;
@@ -217,16 +218,16 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                 if ((currentTime - lastTime) > 1000) {
                     long diffTime = (currentTime - lastTime) /1000;
                     lastTime = currentTime;
-                    double speedX = initalSpeed + x*diffTime;
-                    double speedY = initalSpeed + y*diffTime;
-                    double speedZ = initalSpeed + z*diffTime;
+                    double speedX = initalSpeed + (x-lastX)*diffTime;
+                    double speedY = initalSpeed + (y-lastY)*diffTime;
+                    double speedZ = initalSpeed + (z-lastZ)*diffTime;
 
                     double speed = Math.sqrt(speedX*speedX+speedY*speedY+speedZ*speedZ);
 
                         speeds.add(speed);
                         String s = Double.toString(speed);
-                        Toast.makeText(getApplicationContext(), s,
-                                Toast.LENGTH_SHORT).show();
+                      /*  Toast.makeText(getApplicationContext(), s,
+                                Toast.LENGTH_SHORT).show(); */
 
                     initalSpeed = speed;
                     lastX = x;
@@ -303,7 +304,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     protected void onDestroy() {
         super.onDestroy();
         beaconManager.unbind(this);
-        Toast.makeText(getApplicationContext(),"Speed: " + Double.toString(calculateAvgSpeed()),Toast.LENGTH_SHORT).show();
+     /*   Toast.makeText(getApplicationContext(),"Speed: " + Double.toString(calculateAvgSpeed()),Toast.LENGTH_SHORT).show(); */
     }
 
     @Override
@@ -347,7 +348,9 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     public void onEvent(CompleteCheckPointEvent event) {
         CheckpointDetails cpd = new CheckpointDetails(route.get_id(),
                 checkPointEntry
-                ,"1" , Long.toString(steps), Integer.toString(workTime));
+                ,"1" , Long.toString(steps-initialSteps), Integer.toString(workTime));
+
+        initialSteps = steps-initialSteps;
 
         double speed = calculateAvgSpeed();
 
