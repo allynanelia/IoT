@@ -21,6 +21,7 @@
     <color name="offwhite">#f5f5f5</color>
 
     <color name="navy_blue">#000080</color>
+    <color name="dark_purple">#3A2F5A</color>
 
     <color name="black">#000000</color>
     <color name="transparent">#00ffffff</color>
@@ -33,6 +34,7 @@
 
     <color name="yellow">#FFE84C</color>
     <color name="blue">#9DDAD2</color>
+    <color name="light_blue">#9AC8E6</color>
 
     <color name="buttonBlue1">#0B84DE</color>
     <color name="buttonBlue2">#0869B1</color>

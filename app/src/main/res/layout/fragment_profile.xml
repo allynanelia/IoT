@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/gameImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/dark_purple">
+
+        <TextView
+            android:id="@+id/tvHello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_32"
+            android:gravity="left"
+            android:layout_above="@id/tvName"
+            android:text="Hello"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            fontPath="fonts/DINNextLTPro-Regular.otf"
+            tools:ignore="MissingPrefix"
+            />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_32"
+            android:layout_centerVertical="true"
+            android:gravity="left"
+            android:text="Khi Gai Gai"
+            android:textColor="@color/white"
+            android:textSize="36sp"
+            fontPath="fonts/DINNextLTPro-Bold.otf"
+            tools:ignore="MissingPrefix"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gameImage"
+        android:layout_marginLeft="@dimen/margin_32"
+        android:layout_marginRight="@dimen/margin_32"
+        android:layout_marginTop="@dimen/margin_32">
+
+       <RelativeLayout
+           android:id="@+id/steps_layout"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+
+           <LinearLayout
+               android:id="@+id/steps"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="@dimen/margin_24"
+                   android:textSize="23sp"
+                   android:textColor="@color/black"
+                   android:text="Steps"
+                   fontPath="fonts/DINNextLTPro-Regular.otf"
+                   android:textStyle="bold"
+                   tools:ignore="MissingPrefix"
+                   />
+               <ImageView
+                   android:layout_width="40dp"
+                   android:layout_height="40dp"
+                   android:layout_marginTop="@dimen/margin_16"
+                   android:background="@drawable/ic_slipper_icon"
+                   />
+
+           </LinearLayout>
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/steps"
+               android:text="25,000"
+               android:textSize="40sp"
+               android:textColor="@color/light_blue"
+               fontPath="fonts/DINNextLTPro-Bold.otf"
+               android:textStyle="bold"
+               tools:ignore="MissingPrefix"
+               />
+       </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/margin_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/calories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_24"
+                    android:textSize="23sp"
+                    android:textColor="@color/black"
+                    android:text="Calories Burned"
+                    fontPath="fonts/DINNextLTPro-Regular.otf"
+                    android:textStyle="bold"
+                    tools:ignore="MissingPrefix"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvCaloriesBurned"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/calories"
+                android:text="1,800 cal"
+                android:textSize="40sp"
+                android:textColor="@color/light_blue"
+                fontPath="fonts/DINNextLTPro-Bold.otf"
+                android:textStyle="bold"
+                tools:ignore="MissingPrefix"
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/layout1"
+        android:layout_marginLeft="@dimen/margin_32"
+        android:layout_marginRight="@dimen/margin_32"
+        android:layout_marginTop="@dimen/margin_32">
+
+        <RelativeLayout
+            android:id="@+id/points_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/points"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_24"
+                android:textSize="23sp"
+                android:textColor="@color/black"
+                android:text="Points"
+                fontPath="fonts/DINNextLTPro-Regular.otf"
+                android:textStyle="bold"
+                tools:ignore="MissingPrefix"
+                />
+
+            <TextView
+                android:id="@+id/tvPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/points"
+                android:text="1200"
+                android:textSize="40sp"
+                android:textColor="@color/light_blue"
+                fontPath="fonts/DINNextLTPro-Bold.otf"
+                android:textStyle="bold"
+                tools:ignore="MissingPrefix"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_16">
+
+            <LinearLayout
+                android:id="@+id/tvTimeSpent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_24"
+                    android:textSize="23sp"
+                    android:textColor="@color/black"
+                    android:text="Time Spent"
+                    fontPath="fonts/DINNextLTPro-Regular.otf"
+                    android:textStyle="bold"
+                    tools:ignore="MissingPrefix"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/time_spent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvTimeSpent"
+                android:text="01:20hrs"
+                android:textSize="40sp"
+                android:textColor="@color/light_blue"
+                fontPath="fonts/DINNextLTPro-Bold.otf"
+                android:textStyle="bold"
+                tools:ignore="MissingPrefix"
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout3"
+        android:layout_below="@+id/layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_32"
+        android:layout_marginRight="@dimen/margin_32">
+
+        <TextView
+            android:id="@+id/completed_routes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_24"
+            android:textSize="23sp"
+            android:textColor="@color/black"
+            android:text="Completed"
+            fontPath="fonts/DINNextLTPro-Regular.otf"
+            android:textStyle="bold"
+            tools:ignore="MissingPrefix"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/completed_routes">
+
+            <TextView
+                android:id="@+id/tvCompletedRoutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3 routes"
+                android:textSize="40sp"
+                android:textColor="@color/light_blue"
+                fontPath="fonts/DINNextLTPro-Bold.otf"
+                android:textStyle="bold"
+                tools:ignore="MissingPrefix"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/tvCompletedRoutes"
+                android:layout_marginLeft="@dimen/margin_8"
+                android:layout_alignBaseline="@+id/tvCompletedRoutes"
+                android:text="View>>"
+                android:textStyle="italic"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

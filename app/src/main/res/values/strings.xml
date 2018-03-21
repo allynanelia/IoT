@@ -9,6 +9,7 @@
 
     <string name="app_bottom_bar_leaderboard">Leaderboard</string>
     <string name="app_bottom_bar_route">Routes</string>
+    <string name="app_bottom_bar_group">Group</string>
     <string name="app_bottom_bar_account">Account</string>
 
 

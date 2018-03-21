@@ -1,9 +1,7 @@
 package com.walkPark.walkinthepark.activities;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -15,12 +13,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +27,7 @@ import com.walkPark.walkinthepark.backend.RouteInterface;
 import com.walkPark.walkinthepark.backend.WalkInTheParkRetrofit;
 import com.walkPark.walkinthepark.dialogs.CheckPointDialog;
 import com.walkPark.walkinthepark.events.CompleteCheckPointEvent;
+import com.walkPark.walkinthepark.events.GiveUpCheckPointEvent;
 import com.walkPark.walkinthepark.models.CheckPoint;
 import com.walkPark.walkinthepark.models.CheckpointDetails;
 import com.walkPark.walkinthepark.models.Route;
@@ -49,7 +45,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.jetbrains.annotations.Nullable;
 import org.parceler.Parcels;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -344,10 +339,10 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     };
 
     @Subscribe
-    public void onEvent(CompleteCheckPointEvent event) {
+    public void onEvent(GiveUpCheckPointEvent event) {
         CheckpointDetails cpd = new CheckpointDetails(route.get_id(),
                 checkPointEntry
-                ,"1" , Long.toString(steps), Integer.toString(workTime));
+                ,"1" , Long.toString(steps), Integer.toString(workTime),true);
 
         double speed = calculateAvgSpeed();
 
@@ -388,6 +383,53 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                t.printStackTrace();
            }
        });
+    }
+
+    @Subscribe
+    public void onEvent(CompleteCheckPointEvent event) {
+        CheckpointDetails cpd = new CheckpointDetails(route.get_id(),
+                checkPointEntry
+                ,"1" , Long.toString(steps), Integer.toString(workTime),false);
+
+        double speed = calculateAvgSpeed();
+
+        final RouteInterface routeInterface = WalkInTheParkRetrofit
+                .getInstance()
+                .create(RouteInterface.class);
+
+        Call<RouteCheckPointResponse> call = routeInterface
+                .checkpointComplete(cpd);
+        call.enqueue(new Callback<RouteCheckPointResponse>() {
+            @Override
+            public void onResponse(Call<RouteCheckPointResponse> call, Response<RouteCheckPointResponse> response) {
+                if (response.isSuccessful()) {
+                    reload = true;
+                    route = response.body().getRoute();
+                    String status = response.body().getStatus();
+                    if (status.equals("1")) {
+                        startActivity(new Intent(CheckpointActivity.this,
+                                MainActivity.class));
+                        finish();
+                    } else {
+                        reloadUI();
+                        loadNewBeacon();
+                        loadData();
+                        recallRangeNotifier();
+                    }
+                } else {
+                    Toast.makeText(CheckpointActivity.this, "Error loading",
+                            Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, response.errorBody().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RouteCheckPointResponse> call, Throwable t) {
+                Toast.makeText(CheckpointActivity.this, "Error loading API",
+                        Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
     }
 
     public void recallRangeNotifier() {
@@ -452,7 +494,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                                     , route.getCheckpoints().get(position)
                                                     .getFound_description())
                                     .show(getSupportFragmentManager(),"dialog_checkpoint");
-                            EventBus.getDefault().post(new CompleteCheckPointEvent());
+                            EventBus.getDefault().post(new GiveUpCheckPointEvent());
                             beaconManager.removeRangeNotifier(this);
                         }
                     }

@@ -1,10 +1,6 @@
 package com.walkPark.walkinthepark.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +14,7 @@ import android.widget.Toast;
 import com.example.walkinthepark.R;
 
 import com.walkPark.walkinthepark.dialogs.CheckPointDialog;
-import com.walkPark.walkinthepark.events.CompleteCheckPointEvent;
+import com.walkPark.walkinthepark.events.GiveUpCheckPointEvent;
 import com.walkPark.walkinthepark.models.CheckPoint;
 
 
@@ -118,7 +114,7 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.Vi
             buttonCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    EventBus.getDefault().post(new CompleteCheckPointEvent());
+                    EventBus.getDefault().post(new GiveUpCheckPointEvent());
                 }
             });
 
