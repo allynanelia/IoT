@@ -451,7 +451,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                                     .newInstance(route.getCheckpoints()
                                                     .get(position).getImage_url_found()
                                             , route.getCheckpoints().get(position)
-                                                    .getFound_description())
+                                                    .getFound_description(), "FUN FACT")
                                     .show(getSupportFragmentManager(),"dialog_checkpoint");
                             EventBus.getDefault().post(new CompleteCheckPointEvent());
                             beaconManager.removeRangeNotifier(this);
@@ -495,7 +495,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                                     .newInstance(route.getCheckpoints()
                                                     .get(position).getImage_url_found()
                                     , route.getCheckpoints().get(position)
-                                                    .getFound_description())
+                                                    .getFound_description(), "FUN FACT")
                                     .show(getSupportFragmentManager(),"dialog_checkpoint");
                             EventBus.getDefault().post(new GiveUpCheckPointEvent());
                             beaconManager.removeRangeNotifier(this);

@@ -10,14 +10,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="@dimen/margin_32"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:text="hint"
+        android:textStyle="bold"
+        android:gravity="center"
+        />
+
     <ImageView
         android:id="@+id/imageHintOrSuccess"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="350dp"
         android:layout_marginLeft="@dimen/margin_8"
         android:layout_marginRight="@dimen/margin_8"
-        android:layout_marginTop="@dimen/margin_32"
         tools:background="@color/gray"
+        android:layout_below="@+id/dialog_title"
         />
 
     <TextView

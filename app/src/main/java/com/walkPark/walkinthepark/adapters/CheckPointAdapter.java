@@ -19,6 +19,7 @@ import com.walkPark.walkinthepark.models.CheckPoint;
 
 
 import org.greenrobot.eventbus.EventBus;
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -122,7 +123,7 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.Vi
                 @Override
                 public void onClick(View view) {
                     showDialog(checkPointList.get(getAdapterPosition()).getImage_url_hint(),
-                            checkPointList.get(getAdapterPosition()).getHint_description());
+                            checkPointList.get(getAdapterPosition()).getHint_description(), "HINT");
                 }
             });
 
@@ -130,12 +131,12 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.Vi
                 @Override
                 public void onClick(View view) {
                     showDialog(checkPointList.get(getAdapterPosition()).getImage_url_found(),
-                            checkPointList.get(getAdapterPosition()).getFound_description());
+                            checkPointList.get(getAdapterPosition()).getFound_description(), "FUN FACT");
                 }
             });
         }
-        public void showDialog(String image, String desc) {
-            CheckPointDialog.newInstance(image, desc)
+        public void showDialog(String image, String desc, String type) {
+            CheckPointDialog.newInstance(image, desc, type)
                     .show(((AppCompatActivity)context).getSupportFragmentManager() ,
                     "dialog_checkpoint");
         }

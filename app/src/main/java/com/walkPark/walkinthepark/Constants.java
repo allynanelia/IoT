@@ -9,4 +9,5 @@ public class Constants {
     public static final String INTENT_CHECKPOINTS_RETURN = "CHECKPOINTS_RETURNED";
     public static final String CHECKPOINT_IMAGE = "CHECKPOINT_IMAGE";
     public static final String CHECKPOINT_DESC = "CHECKPOINT_DESC";
+    public static final String CHECKPOINT_TYPE = "CHECKPOINT_TYPE";
 }

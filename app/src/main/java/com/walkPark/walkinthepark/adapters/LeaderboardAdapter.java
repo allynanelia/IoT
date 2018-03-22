@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
 import com.example.walkinthepark.R;
+import com.walkPark.walkinthepark.Prefs;
 import com.walkPark.walkinthepark.dialogs.CheckPointDialog;
 import com.walkPark.walkinthepark.models.UserInfo;
 
@@ -52,7 +53,11 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
             holder.stepsNum.setText(user.getPoints());
 
             holder.name.setVisibility(View.VISIBLE);
-            holder.name.setText(user.getPlayer_name());
+            if(user.getPlayer_id().equals(Prefs.getUserProfile().getPlayer_id())){
+                holder.name.setText("YOU");
+            } else {
+                holder.name.setText(user.getPlayer_name());
+            }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

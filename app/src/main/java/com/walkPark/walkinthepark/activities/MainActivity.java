@@ -1,6 +1,8 @@
 package com.walkPark.walkinthepark.activities;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -24,6 +26,8 @@ import com.walkPark.walkinthepark.adapters.PlayerIDAdapter;
 import com.walkPark.walkinthepark.events.GameTriggerEvent;
 import com.walkPark.walkinthepark.fragments.HomeFragment;
 import com.walkPark.walkinthepark.fragments.LeaderboardFragment;
+import com.walkPark.walkinthepark.fragments.ProfileFragment;
+import com.walkPark.walkinthepark.models.Profile;
 import com.walkPark.walkinthepark.models.UserInfo;
 
 import org.greenrobot.eventbus.EventBus;
@@ -137,6 +141,16 @@ public class MainActivity extends BaseActivity {
         imageRoute.setImageDrawable(ContextCompat
                 .getDrawable(MainActivity.this, R.drawable.ic_routes_active));
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Please remember to switch on your Bluetooth!")
+                .setTitle("Reminder")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //dismiss
+                    }
+                });
+        builder.create().show();
+
     }
 
     private void initFragments() {
@@ -144,7 +158,7 @@ public class MainActivity extends BaseActivity {
         Bundle homeFragmentBundle = new Bundle();
         homeFragmentBundle.putString("userID", selectedUserID);
 
-        fragmentList.add(HomeFragment.newInstance(homeFragmentBundle)); // Routes
+        fragmentList.add(ProfileFragment.newInstance(null)); // Routes
         fragmentList.add(HomeFragment.newInstance(homeFragmentBundle)); // Account Settings
         fragmentList.add(LeaderboardFragment.newInstance(null)); // Leaderboard
 
