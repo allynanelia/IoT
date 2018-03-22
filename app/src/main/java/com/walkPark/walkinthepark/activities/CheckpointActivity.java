@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.walkinthepark.R;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.walkPark.walkinthepark.Constants;
+import com.walkPark.walkinthepark.Prefs;
 import com.walkPark.walkinthepark.adapters.CheckPointAdapter;
 import com.walkPark.walkinthepark.backend.RouteInterface;
 import com.walkPark.walkinthepark.backend.WalkInTheParkRetrofit;
@@ -343,7 +344,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     public void onEvent(GiveUpCheckPointEvent event) {
         CheckpointDetails cpd = new CheckpointDetails(route.get_id(),
                 checkPointEntry
-                ,"1" , Long.toString(steps), Integer.toString(workTime),true);
+                ,Prefs.getUserProfile().getPlayer_id() , Long.toString(steps), Integer.toString(workTime),true);
 
         double speed = calculateAvgSpeed();
 
@@ -362,7 +363,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                     String status = response.body().getStatus();
                     if (status.equals("1")) {
                         startActivity(new Intent(CheckpointActivity.this,
-                                MainActivity.class));
+                                CompleteRouteActivity.class));
                         finish();
                     } else {
                         reloadUI();
@@ -390,7 +391,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     public void onEvent(CompleteCheckPointEvent event) {
         CheckpointDetails cpd = new CheckpointDetails(route.get_id(),
                 checkPointEntry
-                ,"1" , Long.toString(steps-initialSteps), Integer.toString(workTime),false);
+                , Prefs.getUserProfile().getPlayer_id() , Long.toString(steps-initialSteps), Integer.toString(workTime),false);
 
         initialSteps = steps-initialSteps;
 
@@ -410,8 +411,9 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                     route = response.body().getRoute();
                     String status = response.body().getStatus();
                     if (status.equals("1")) {
+                        //route ends
                         startActivity(new Intent(CheckpointActivity.this,
-                                MainActivity.class));
+                                CompleteRouteActivity.class));
                         finish();
                     } else {
                         reloadUI();

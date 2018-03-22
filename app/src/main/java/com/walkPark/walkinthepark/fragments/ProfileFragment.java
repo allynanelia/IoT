@@ -136,7 +136,7 @@ public class ProfileFragment extends Fragment {
             tvPoints.setText("0 cal");
         }
         if(player.getTotal_steps_taken()!=null){
-            tvSteps.setText(player.getTotal_steps_taken());
+            tvSteps.setText(Integer.toString(player.getTotal_steps_taken()));
         } else {
             tvSteps.setText("0");
         }
@@ -148,7 +148,7 @@ public class ProfileFragment extends Fragment {
             final long mins = (long) time / 60;
             final long secs = (long) time % 60;
 
-            tvTimeSpent.setText(String.format("%02d", hours)+":"+String.format("%02d", mins)+"hrs");
+            tvTimeSpent.setText(String.format("%02d", hours)+":"+String.format("%02d", mins)+":"+String.format("%02d", secs));
         } else {
             tvTimeSpent.setText("00:00hrs");
         }

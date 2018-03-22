@@ -61,11 +61,11 @@
         android:layout_below="@+id/route_name"
         android:background="@drawable/separator_white_horizontal"
         />
-    <android.support.v4.widget.SwipeRefreshLayout
+   <!-- <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"> -->
 
         <RelativeLayout
             android:id="@+id/rootView"
@@ -201,6 +201,6 @@
             android:paddingBottom="@dimen/padding_8"
             android:paddingTop="@dimen/padding_8"
             android:scrollbars="none" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <!-- </android.support.v4.widget.SwipeRefreshLayout> -->
 
 </LinearLayout>

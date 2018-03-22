@@ -55,6 +55,12 @@
             android:windowSoftInputMode="stateHidden"
             />
 
+        <activity
+            android:name="com.walkPark.walkinthepark.activities.CompleteRouteActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            />
+
     </application>
 
 </manifest>

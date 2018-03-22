@@ -54,7 +54,7 @@ public class LeaderboardFragment extends Fragment {
     @BindView(R.id.text) TextView tvText;
     @BindView(R.id.position) TextView tvPosition;
     @BindView(R.id.rootView) RelativeLayout topPosition;
-    @BindView(R.id.swiperefresh) SwipeRefreshLayout swipe;
+    //@BindView(R.id.swiperefresh) SwipeRefreshLayout swipe;
 
     CatLoadingView mView;
 
@@ -86,7 +86,9 @@ public class LeaderboardFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 initData1();
+
             }
         }, 1000);
 
@@ -118,7 +120,7 @@ public class LeaderboardFragment extends Fragment {
         int id = 1;
         for(int i = 0; i<userListByRouteNames.size(); i++) {
             String s = userListByRouteNames.get(i);
-            if(s.equals(route)){
+            if(route!=null && s!=null && s.equals(route)){
                 id=userListByRouteNames.keyAt(i);
             }
         }
@@ -155,6 +157,7 @@ public class LeaderboardFragment extends Fragment {
             @Override
             public void onResponse(Call<RouteResponse> call, Response<RouteResponse> response) {
                 if (response.isSuccessful()) {
+                    routeList = new ArrayList<>();
                     routeList.addAll(response.body().getRoute());
                     for(Route r: routeList) {
                         routeNameList.add(r.getName());
@@ -186,7 +189,7 @@ public class LeaderboardFragment extends Fragment {
             }
         });
 
-        swipe.setOnRefreshListener(
+        /*swipe.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
@@ -194,7 +197,7 @@ public class LeaderboardFragment extends Fragment {
                         swipe.setRefreshing(false);
                     }
                 }
-        );
+        );*/
     }
 
     private void initData2(){
