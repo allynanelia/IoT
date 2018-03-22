@@ -3,6 +3,8 @@ package com.walkPark.walkinthepark.dialogs;
 
 
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -42,6 +44,8 @@ public class CheckPointDialog extends DialogFragment {
     private String image;
     private String desc;
     private String type;
+    private SoundPool congratsSoundPool;
+    private int clickSound;
 
     public static CheckPointDialog newInstance(String image, String desc, String type) {
         Bundle args = new Bundle();
@@ -82,7 +86,10 @@ public class CheckPointDialog extends DialogFragment {
     @Override
     public void onDestroyView() {
         unbinder.unbind();
+        congratsSoundPool.stop(clickSound);
+        congratsSoundPool.release();
         super.onDestroyView();
+
     }
 
     private void initUI() {
@@ -128,5 +135,17 @@ public class CheckPointDialog extends DialogFragment {
                 dismiss();
             }
         });
+
+        if(type == "FUN FACT") {
+            congratsSoundPool = (new SoundPool.Builder()).setMaxStreams(10).build();
+            clickSound = congratsSoundPool.load(getContext(), R.raw.clap, 1);
+            congratsSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                @Override
+                public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                    congratsSoundPool.play(clickSound, 0.99F, 0.99F, 0, 0, 1.0F);
+                }
+            });
+
+        }
     }
 }
