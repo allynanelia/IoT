@@ -1,31 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/id_layout"
-    android:orientation="horizontal"
-    android:layout_gravity="center"
-    android:gravity="center_vertical"
-    android:paddingLeft="@dimen/margin_64"
-    android:paddingRight="@dimen/margin_64">
+    android:id="@+id/rootView"
+    android:layout_margin="@dimen/margin_4"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:gravity="center"
+    android:background="@color/blue_dark">
 
-    <ImageView
-        android:id="@+id/image_view"
+    <RelativeLayout
+        android:id="@+id/wrapper"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_account_inactive"
-        android:layout_marginRight="@dimen/margin_16"
-        android:layout_marginLeft="@dimen/margin_16"/>
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageBorder"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/circle_gray_border"
+            />
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_my_profile"
+            />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/text_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textSize="20sp"
+        android:layout_marginLeft="@dimen/margin_4"
+        android:layout_toRightOf="@id/wrapper"
+        android:layout_centerVertical="true"
         android:text="Player ID: 1"
+        fontPath="fonts/DINNextLTPro-Bold.otf"
+        tools:ignore="MissingPrefix"
         />
 
-</LinearLayout>
+</com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>

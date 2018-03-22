@@ -30,4 +30,8 @@ public class Prefs {
     public static void setUser(UserInfo userIf) {
         user = userIf;
     }
+
+    public static String getSmallThumbnail() {
+        return "https://media.licdn.com/dms/image/C4E03AQHAV0nHBJSqYA/profile-displayphoto-shrink_800_800/0?e=1526929200&v=alpha&t=TdOf9aKvIzTwGIX8ockVPegWdbPfIrRsJe_Agj2qVE4";
+    }
 }
