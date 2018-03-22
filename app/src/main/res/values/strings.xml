@@ -12,6 +12,13 @@
     <string name="app_bottom_bar_group">Group</string>
     <string name="app_bottom_bar_account">Account</string>
 
+    <string name="app_bottom_button">Back to main menu</string>
+
+    <string name="complete_route_total_time">Total\ntime elapsed</string>
+    <string name="complete_route_points">Total\nPoints</string>
+    <string name="route_completed_hrs">Hrs</string>
+    <string name="route_completed_mins">Mins</string>
+    <string name="route_completed_secs">Secs</string>
 
     <string name="toast_permission_granted">Permission granted, please try again</string>
     <string name="toast_permission_denied">WalkInThePark requires permission to continue!</string>

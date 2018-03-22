@@ -28,10 +28,11 @@
     <color name="gray">#a0a0a0</color>
     <color name="gray_light">#EEEEEE</color>
     <color name="black_transparent">#CC000000</color>
-
+    <color name="text_gray">#9E9E9E</color>
+    <color name="gray_dark">#9E9E9E</color>
     <color name="pink_dark">#FF1493</color>
     <color name="pink_light">#FFC0CB</color>
-
+    <color name="blue_dark">#2F3B5C</color>
     <color name="yellow">#FFE84C</color>
     <color name="blue">#9DDAD2</color>
     <color name="light_blue">#9AC8E6</color>

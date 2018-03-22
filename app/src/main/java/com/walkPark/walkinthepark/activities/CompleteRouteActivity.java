@@ -25,7 +25,7 @@ import nl.dionsegijn.konfetti.models.Size;
 public class CompleteRouteActivity extends BaseActivity {
 
     @BindView(R.id.viewKonfetti) KonfettiView viewKonfetti;
-    @BindView(R.id.backToMainPage) Button backToMain;
+    //@BindView(R.id.backToMainPage) Button backToMain;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,12 +49,12 @@ public class CompleteRouteActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.backToMainPage)
-    public void goHome(){
-        startActivity(new Intent(CompleteRouteActivity.this,
-                MainActivity.class));
-        finish();
-    }
+//    @OnClick(R.id.backToMainPage)
+//    public void goHome(){
+//        startActivity(new Intent(CompleteRouteActivity.this,
+//                MainActivity.class));
+//        finish();
+//    }
 
 
 

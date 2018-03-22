@@ -2,38 +2,323 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/black">
 
-    <nl.dionsegijn.konfetti.KonfettiView
-        android:id="@+id/viewKonfetti"
+    <RelativeLayout
+        android:id="@+id/layoutToolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="?actionBarSize"
+        android:elevation="@dimen/elevation_default">
+    </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CONGRATULATIONS"
-        android:textStyle="italic"
-        android:textSize="40dp"
-        android:layout_centerInParent="true"
-        android:textColor="@color/green_light"
-        fontPath="fonts/DINNextLTPro-Bold.otf"
-        tools:ignore="MissingPrefix"
-        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttonMenu"
+        android:layout_below="@+id/layoutToolbar"
+        android:paddingLeft="@dimen/padding_16"
+        android:paddingRight="@dimen/padding_16"
+        android:paddingBottom="@dimen/padding_16">
+
+        <RelativeLayout
+            android:id="@+id/layoutRouteCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_job_completed_top">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_job_completed"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fontPath="fonts/DINNextLTPro-Bold.otf"
+                tools:ignore="MissingPrefix"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_centerInParent="true"
+                android:text="Route Completed"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/layoutRouteCompleted"
+            android:orientation="vertical"
+            android:background="@drawable/background_job_completed">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5">
+
+                    <TextView
+                        android:id="@+id/textTotalTimeElapsed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="true"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:text="@string/complete_route_total_time"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_gray"
+                        fontPath="fonts/DINNextLTPro-Bold.otf"
+                        tools:ignore="MissingPrefix"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_marginBottom="@dimen/margin_16"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_below="@id/textTotalTimeElapsed">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/textHours"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="08"
+                                android:textSize="30sp"
+                                android:textColor="@color/black"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/route_completed_hrs"
+                                android:textAllCaps="true"
+                                android:textSize="10sp"
+                                android:textColor="@color/text_gray"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"
+                                android:textSize="30sp"
+                                android:textColor="@color/black"
+                                android:gravity="center"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/textMins"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="36"
+                                android:textSize="30sp"
+                                android:textColor="@color/black"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/route_completed_mins"
+                                android:textAllCaps="true"
+                                android:textSize="10sp"
+                                android:textColor="@color/text_gray"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"
+                                android:textSize="30sp"
+                                android:textColor="@color/black"
+                                android:gravity="center"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/textSecs"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="41"
+                                android:textSize="30sp"
+                                android:textColor="@color/black"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/route_completed_secs"
+                                android:textAllCaps="true"
+                                android:textSize="10sp"
+                                android:textColor="@color/text_gray"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray_dark"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5">
+
+                    <TextView
+                        android:id="@+id/steps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="true"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:text="Total Steps"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_gray"
+                        fontPath="fonts/DINNextLTPro-Bold.otf"
+                        tools:ignore="MissingPrefix"
+                        />
+
+                    <TextView
+                        android:id="@+id/textTotalSteps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/steps"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="30sp"
+                        android:textColor="@color/black"
+                        tools:text="10,000 steps"
+                        fontPath="fonts/OpenSans-Bold.ttf"
+                        tools:ignore="MissingPrefix"
+                        />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray_dark"
+                />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:textAllCaps="true"
+                android:text="Total Points"
+                android:textSize="20sp"
+                android:textColor="@color/text_gray"
+                fontPath="fonts/OpenSans-Bold.ttf"
+                tools:ignore="MissingPrefix"
+                />
+
+            <TextView
+                android:id="@+id/textTotalPoints"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_marginRight="@dimen/margin_16"
+                android:gravity="center"
+                android:textSize="40sp"
+                android:text="20,000 points"
+                android:textColor="@color/blue_dark"
+                fontPath="fonts/OpenSans-Bold.ttf"
+                tools:ignore="MissingPrefix"
+                />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:src="@drawable/circle_black"
+            android:layout_marginLeft="-4dp"
+            android:layout_marginTop="-4dp"
+            android:layout_below="@id/layoutRouteCompleted"
+            />
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:src="@drawable/circle_black"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="-4dp"
+            android:layout_marginTop="-4dp"
+            android:layout_below="@id/layoutRouteCompleted"
+            />
+
+    </RelativeLayout>
 
     <Button
-        android:id="@+id/backToMainPage"
+        android:id="@+id/buttonMenu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_height="54dp"
         android:layout_alignParentBottom="true"
-        style="@style/WalkInTheParkBottomBlueButton"
-        android:textSize="20sp"
-        fontPath="fonts/DINNextLTPro-Bold.otf"
-        tools:ignore="MissingPrefix"
-        android:text="Back to Home"
-        />
+        android:text="@string/app_bottom_button"
+        style="@style/WalkInTheParkBlueButton"/>
 
 </RelativeLayout>
