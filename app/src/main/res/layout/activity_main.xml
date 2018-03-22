@@ -24,6 +24,15 @@
                 android:text="WalkInThePark"
                 tools:ignore="MissingPrefix" />
 
+            <ImageView
+                android:id="@+id/infoButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="@dimen/margin_8"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_info"/>
+
         </RelativeLayout>
 
     <View

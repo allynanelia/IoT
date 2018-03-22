@@ -62,7 +62,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.textRoute) TextView textRoute;
 
 
-    private boolean doubleBackToExitPressedOnce = false;
+
     private List<Fragment> fragmentList = new ArrayList<>();
     private List<String> fragmentNameList = new ArrayList<>();
 
@@ -110,24 +110,6 @@ public class MainActivity extends BaseActivity {
         super.onStop();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Tap back again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce=false;
-            }
-        }, 2000);
-    }
-
     private void initUI() {
         changeFragment(1);
         textRoute.setTypeface(boldTypeface);
@@ -140,16 +122,6 @@ public class MainActivity extends BaseActivity {
                 .getDrawable(MainActivity.this, R.drawable.ic_leaderboard_inactive));
         imageRoute.setImageDrawable(ContextCompat
                 .getDrawable(MainActivity.this, R.drawable.ic_routes_active));
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Please remember to switch on your Bluetooth!")
-                .setTitle("Reminder")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //dismiss
-                    }
-                });
-        builder.create().show();
 
     }
 
@@ -205,6 +177,20 @@ public class MainActivity extends BaseActivity {
                 ContextCompat.getColor(MainActivity.this, R.color.pink_dark));
         textRoute.setTextColor(
                 ContextCompat.getColor(MainActivity.this, R.color.pink_dark));
+    }
+
+    @OnClick(R.id.infoButton)
+    public void info() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("A ribbon with recommended are routes that " +
+                "are specifically recommended for you!")
+                .setTitle("Notics")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //dismiss
+                    }
+                });
+        builder.create().show();
     }
 
     @OnClick(R.id.buttonRoute)

@@ -1,6 +1,8 @@
 package com.walkPark.walkinthepark.activities;
 
 import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothHeadset;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -94,6 +96,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     private long initialSteps = 0;
     private long lastTime = 0;
     private double initalSpeed = 0.0;
+    private final static int REQUEST_ENABLE_BT = 1;
     private float lastX = 0, lastY = 0, lastZ = 0;
     private ArrayList<Double> speeds = new ArrayList<>();
 
@@ -102,6 +105,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     private String checkPointEntry;
 
     private int position;
+    BluetoothHeadset mBluetoothHeadset;
 
     private final String TAG = getClass().getName();
 
@@ -129,6 +133,11 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
 
         route = Parcels.unwrap(getIntent()
                 .getParcelableExtra(Constants.INTENT_CHECKPOINTS_RETURN));
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
