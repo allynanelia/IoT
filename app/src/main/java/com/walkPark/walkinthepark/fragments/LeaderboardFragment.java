@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.walkinthepark.R;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.roger.catloadinglibrary.CatLoadingView;
+import com.walkPark.walkinthepark.Prefs;
 import com.walkPark.walkinthepark.adapters.LeaderboardAdapter;
 import com.walkPark.walkinthepark.backend.LeaderBoardInterface;
 import com.walkPark.walkinthepark.backend.RouteInterface;
@@ -50,6 +53,8 @@ public class LeaderboardFragment extends Fragment {
     @BindView(R.id.route_name) TextView tvRouteName;
     @BindView(R.id.text) TextView tvText;
     @BindView(R.id.position) TextView tvPosition;
+    @BindView(R.id.rootView) RelativeLayout topPosition;
+    //@BindView(R.id.swiperefresh) SwipeRefreshLayout swipe;
 
     CatLoadingView mView;
 
@@ -58,6 +63,7 @@ public class LeaderboardFragment extends Fragment {
     private List<Route> routeList = new ArrayList<>();
     private List<String> routeNameList = new ArrayList<>();
     private SparseArray<List<UserInfo>> userListByRoutes = new SparseArray<>();
+    private SparseArray<String> userListByRouteNames = new SparseArray<>();
     private final String TAG = getClass().getName();
     private Unbinder unbinder;
 
@@ -80,7 +86,9 @@ public class LeaderboardFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 initData1();
+
             }
         }, 1000);
 
@@ -103,21 +111,39 @@ public class LeaderboardFragment extends Fragment {
         super.onPause();
     }
 
-    private void initUI() {
+    private void initUI(String route) {
         tvPosition.setVisibility(View.VISIBLE);
         tvSteps.setVisibility(View.VISIBLE);
 
-        List<UserInfo> userList = userListByRoutes.get(1);
-        tvStepsNum.setText(userList.get(0).getPoints());
-        tvTopName.setText(userList.get(0).getPlayer_name());
-        userList.remove(0);
 
-        adapter = new LeaderboardAdapter(getContext(), userList);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
 
+        int id = 1;
+        for(int i = 0; i<userListByRouteNames.size(); i++) {
+            String s = userListByRouteNames.get(i);
+            if(route!=null && s!=null && s.equals(route)){
+                id=userListByRouteNames.keyAt(i);
+            }
+        }
+
+        tvRouteName.setText(route);
+        List<UserInfo> userList = userListByRoutes.get(id);
+
+        if(userList!=null) {
+            topPosition.setVisibility(View.VISIBLE);
+            tvStepsNum.setText(userList.get(0).getPoints());
+            if (userList.get(0).getPlayer_id().equals(Prefs.getUserProfile().getPlayer_id())) {
+                tvTopName.setText("YOU");
+            } else {
+                tvTopName.setText(userList.get(0).getPlayer_name());
+            }
+            userList.remove(0);
+
+            adapter = new LeaderboardAdapter(getContext(), userList);
+            recyclerView.setHasFixedSize(true);
+            layoutManager = new LinearLayoutManager(getContext());
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(adapter);
+        }
         mView.dismiss();
     }
 
@@ -131,6 +157,7 @@ public class LeaderboardFragment extends Fragment {
             @Override
             public void onResponse(Call<RouteResponse> call, Response<RouteResponse> response) {
                 if (response.isSuccessful()) {
+                    routeList = new ArrayList<>();
                     routeList.addAll(response.body().getRoute());
                     for(Route r: routeList) {
                         routeNameList.add(r.getName());
@@ -140,7 +167,8 @@ public class LeaderboardFragment extends Fragment {
                     spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
                         @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                            Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+                            //Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+                            initUI(item);
                         }
                     });
 
@@ -160,6 +188,16 @@ public class LeaderboardFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+
+        /*swipe.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        initData2();
+                        swipe.setRefreshing(false);
+                    }
+                }
+        );*/
     }
 
     private void initData2(){
@@ -175,8 +213,9 @@ public class LeaderboardFragment extends Fragment {
                     List<Leaderboard> leaderboardList = response.body().getLeaderboard();
                     for(Leaderboard i: leaderboardList) {
                         userListByRoutes.append(Integer.parseInt(i.getRoute_id()), i.getPlayers());
+                        userListByRouteNames.append(Integer.parseInt(i.getRoute_id()), i.getRoute_name());
                     }
-                    initUI();
+                    initUI("Around SMU");
                 } else {
                     Toast.makeText(getContext(), "Error loading",
                             Toast.LENGTH_SHORT).show();

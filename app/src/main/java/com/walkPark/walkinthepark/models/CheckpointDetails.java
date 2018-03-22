@@ -12,13 +12,15 @@ public class CheckpointDetails {
     String player_id;
     String steps;
     String time_taken;
+    boolean has_given_up;
 
-    public CheckpointDetails(String route_id, String checkpoint_id, String player_id, String steps, String time_taken) {
+    public CheckpointDetails(String route_id, String checkpoint_id, String player_id, String steps, String time_taken, boolean has_given_up) {
         this.route_id = route_id;
         this.checkpoint_id = checkpoint_id;
         this.player_id = player_id;
         this.steps = steps;
         this.time_taken = time_taken;
+        this.has_given_up = has_given_up;
     }
 
     public String getRoute_id() {
@@ -59,5 +61,13 @@ public class CheckpointDetails {
 
     public void setPlayer_id(String player_id) {
         this.player_id = player_id;
+    }
+
+    public boolean getHas_given_up() {
+        return has_given_up;
+    }
+
+    public void setHas_given_up(boolean has_given_up) {
+        this.has_given_up = has_given_up;
     }
 }

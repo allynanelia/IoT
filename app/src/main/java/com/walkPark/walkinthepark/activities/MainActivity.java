@@ -1,22 +1,33 @@
 package com.walkPark.walkinthepark.activities;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.walkinthepark.R;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ListHolder;
+import com.orhanobut.dialogplus.OnItemClickListener;
 import com.walkPark.walkinthepark.Constants;
 import com.walkPark.walkinthepark.Prefs;
+import com.walkPark.walkinthepark.adapters.PlayerIDAdapter;
 import com.walkPark.walkinthepark.events.GameTriggerEvent;
 import com.walkPark.walkinthepark.fragments.HomeFragment;
 import com.walkPark.walkinthepark.fragments.LeaderboardFragment;
+import com.walkPark.walkinthepark.fragments.ProfileFragment;
+import com.walkPark.walkinthepark.models.Profile;
 import com.walkPark.walkinthepark.models.UserInfo;
 
 import org.greenrobot.eventbus.EventBus;
@@ -56,6 +67,7 @@ public class MainActivity extends BaseActivity {
     private List<String> fragmentNameList = new ArrayList<>();
 
     private UserInfo user;
+    private String selectedUserID;
 
     private final String TAG = getClass().getName();
 
@@ -71,15 +83,19 @@ public class MainActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
+        selectedUserID = Parcels.unwrap(getIntent().getParcelableExtra("PlayerID"));
+        initFragments();
+        initUI();
+
         user = Prefs.getUserProfile();
+        user.setPlayer_id(selectedUserID);
+        Prefs.setUser(user);
+
         //Setup font
         boldTypeface = TypefaceUtils.load(getAssets(), "fonts/DINNextLTPro-Bold.otf");
         lightTypeface = TypefaceUtils.load(getAssets(), "fonts/DINNextLTPro-Medium.otf");
         regularTypeface = TypefaceUtils.load(getAssets(), "fonts/DINNextLTPro-Regular.otf");
 
-        initFragments();
-
-        initUI();
     }
 
     @Override
@@ -125,12 +141,26 @@ public class MainActivity extends BaseActivity {
         imageRoute.setImageDrawable(ContextCompat
                 .getDrawable(MainActivity.this, R.drawable.ic_routes_active));
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Please remember to switch on your Bluetooth!")
+                .setTitle("Reminder")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //dismiss
+                    }
+                });
+        builder.create().show();
+
     }
 
     private void initFragments() {
-        fragmentList.add(HomeFragment.newInstance(null)); // Leaderboard
-        fragmentList.add(HomeFragment.newInstance(null)); // Routes
-        fragmentList.add(LeaderboardFragment.newInstance(null)); // Account Settings
+
+        Bundle homeFragmentBundle = new Bundle();
+        homeFragmentBundle.putString("userID", selectedUserID);
+
+        fragmentList.add(ProfileFragment.newInstance(null)); // Routes
+        fragmentList.add(HomeFragment.newInstance(homeFragmentBundle)); // Account Settings
+        fragmentList.add(LeaderboardFragment.newInstance(null)); // Leaderboard
 
         fragmentNameList.add(getString(R.string.fragment_leaderboard));
         fragmentNameList.add(getString(R.string.fragment_routes));
@@ -140,7 +170,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        user = Prefs.getUserProfile();
     }
 
     private void changeFragment(int position) {

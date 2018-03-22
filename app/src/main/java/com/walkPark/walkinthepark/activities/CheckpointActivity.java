@@ -22,11 +22,13 @@ import android.widget.Toast;
 import com.example.walkinthepark.R;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.walkPark.walkinthepark.Constants;
+import com.walkPark.walkinthepark.Prefs;
 import com.walkPark.walkinthepark.adapters.CheckPointAdapter;
 import com.walkPark.walkinthepark.backend.RouteInterface;
 import com.walkPark.walkinthepark.backend.WalkInTheParkRetrofit;
 import com.walkPark.walkinthepark.dialogs.CheckPointDialog;
 import com.walkPark.walkinthepark.events.CompleteCheckPointEvent;
+import com.walkPark.walkinthepark.events.GiveUpCheckPointEvent;
 import com.walkPark.walkinthepark.models.CheckPoint;
 import com.walkPark.walkinthepark.models.CheckpointDetails;
 import com.walkPark.walkinthepark.models.Route;
@@ -44,7 +46,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.jetbrains.annotations.Nullable;
 import org.parceler.Parcels;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -72,6 +73,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     @BindView(R.id.textSteps) TextView textSteps;
 
     private CheckPointAdapter adapter;
+    private List<CheckPoint> checkPoints = new ArrayList<>();
     private Route route;
 
     private int workTime;
@@ -89,9 +91,10 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     private Sensor detectorSensor;
     private Sensor linearASensor;
     private long steps = 0;
+    private long initialSteps = 0;
     private long lastTime = 0;
     private double initalSpeed = 0.0;
-    private float lastX, lastY, lastZ;
+    private float lastX = 0, lastY = 0, lastZ = 0;
     private ArrayList<Double> speeds = new ArrayList<>();
 
     private String currentCheckPointBeacon;
@@ -138,9 +141,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[],
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_FINE_LOCATION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -156,8 +157,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                             setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
                     beaconManager.bind(this);
                 } else {
-                    // Alert the user that this application requires
-                    // the location permission to perform the scan.
+                    // Alert the user that this application requires the location permission to perform the scan.
                 }
             }
         }
@@ -189,11 +189,9 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                 int i = d.intValue();
                 progressDuration.setProgress(i);
 
-                adapter = new CheckPointAdapter(CheckpointActivity.this,
-                        route.getCheckpoints());
+                adapter = new CheckPointAdapter(CheckpointActivity.this, route.getCheckpoints());
                 recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(
-                        CheckpointActivity.this));
+                recyclerView.setLayoutManager(new LinearLayoutManager(CheckpointActivity.this));
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -216,16 +214,16 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                 if ((currentTime - lastTime) > 1000) {
                     long diffTime = (currentTime - lastTime) /1000;
                     lastTime = currentTime;
-                    double speedX = initalSpeed + x*diffTime;
-                    double speedY = initalSpeed + y*diffTime;
-                    double speedZ = initalSpeed + z*diffTime;
+                    double speedX = initalSpeed + (x-lastX)*diffTime;
+                    double speedY = initalSpeed + (y-lastY)*diffTime;
+                    double speedZ = initalSpeed + (z-lastZ)*diffTime;
 
                     double speed = Math.sqrt(speedX*speedX+speedY*speedY+speedZ*speedZ);
 
                         speeds.add(speed);
                         String s = Double.toString(speed);
-                        Toast.makeText(getApplicationContext(), s,
-                                Toast.LENGTH_SHORT).show();
+                      /*  Toast.makeText(getApplicationContext(), s,
+                                Toast.LENGTH_SHORT).show(); */
 
                     initalSpeed = speed;
                     lastX = x;
@@ -269,75 +267,6 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
         sensorManager.registerListener(sensorEventListenerSD, sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR), SensorManager.SENSOR_DELAY_FASTEST);
 
 
-        //linear accelerometer
-        sensorEventListenerLA = new SensorEventListener() {
-
-            @Override
-            public void onSensorChanged(SensorEvent event) {
-                float x = event.values[0];
-                float y = event.values[1];
-                float z = event.values[2];
-                long currentTime = System.currentTimeMillis();
-                if ((currentTime - lastTime) > 1000) {
-                    long diffTime = (currentTime - lastTime) /1000;
-                    lastTime = currentTime;
-                    double speedX = initalSpeed + x*diffTime;
-                    double speedY = initalSpeed + y*diffTime;
-                    double speedZ = initalSpeed + z*diffTime;
-
-                    double speed = Math.sqrt(speedX*speedX+speedY*speedY+speedZ*speedZ);
-
-                        speeds.add(speed);
-                        String s = Double.toString(speed);
-                        Toast.makeText(getApplicationContext(), s,
-                                Toast.LENGTH_SHORT).show();
-
-                    initalSpeed = speed;
-                    lastX = x;
-                    lastY = y;
-                    lastZ = z;
-
-                }
-            }
-
-                @Override
-                public void onAccuracyChanged (Sensor sensor,int accuracy){
-                }
-
-        };
-
-        sensorManager.registerListener(sensorEventListenerLA,
-                sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION),
-                SensorManager.SENSOR_DELAY_FASTEST);
-
-        //step detector
-        sensorEventListenerSD = new SensorEventListener() {
-
-            @Override
-            public void onSensorChanged(SensorEvent event) {
-                float[] values = event.values;
-                int value = -1;
-
-                if (values.length > 0) {
-                    value = (int) values[0];
-                }
-
-                steps++;
-
-                textSteps.setText((int) steps + "");
-            }
-
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-            }
-        };
-
-        sensorManager.registerListener(sensorEventListenerSD,
-                sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR),
-                SensorManager.SENSOR_DELAY_FASTEST);
-
-
         if (reload) {
             adapter.setCheckPointList(route.getCheckpoints());
             adapter.notifyDataSetChanged();
@@ -371,7 +300,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     protected void onDestroy() {
         super.onDestroy();
         beaconManager.unbind(this);
-        Toast.makeText(getApplicationContext(),"Speed: " + Double.toString(calculateAvgSpeed()),Toast.LENGTH_SHORT).show();
+     /*   Toast.makeText(getApplicationContext(),"Speed: " + Double.toString(calculateAvgSpeed()),Toast.LENGTH_SHORT).show(); */
     }
 
     @Override
@@ -412,13 +341,12 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     };
 
     @Subscribe
-    public void onEvent(CompleteCheckPointEvent event) {
-
-        double speed = calculateAvgSpeed();
-
+    public void onEvent(GiveUpCheckPointEvent event) {
         CheckpointDetails cpd = new CheckpointDetails(route.get_id(),
                 checkPointEntry
-                ,"1" , Long.toString(steps), Integer.toString(workTime));
+                ,Prefs.getUserProfile().getPlayer_id() , Long.toString(steps), Integer.toString(workTime),true);
+
+        double speed = calculateAvgSpeed();
 
         final RouteInterface routeInterface = WalkInTheParkRetrofit
                .getInstance()
@@ -435,7 +363,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                     String status = response.body().getStatus();
                     if (status.equals("1")) {
                         startActivity(new Intent(CheckpointActivity.this,
-                                MainActivity.class));
+                                CompleteRouteActivity.class));
                         finish();
                     } else {
                         reloadUI();
@@ -459,6 +387,56 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
        });
     }
 
+    @Subscribe
+    public void onEvent(CompleteCheckPointEvent event) {
+        CheckpointDetails cpd = new CheckpointDetails(route.get_id(),
+                checkPointEntry
+                , Prefs.getUserProfile().getPlayer_id() , Long.toString(steps-initialSteps), Integer.toString(workTime),false);
+
+        initialSteps = steps-initialSteps;
+
+        double speed = calculateAvgSpeed();
+
+        final RouteInterface routeInterface = WalkInTheParkRetrofit
+                .getInstance()
+                .create(RouteInterface.class);
+
+        Call<RouteCheckPointResponse> call = routeInterface
+                .checkpointComplete(cpd);
+        call.enqueue(new Callback<RouteCheckPointResponse>() {
+            @Override
+            public void onResponse(Call<RouteCheckPointResponse> call, Response<RouteCheckPointResponse> response) {
+                if (response.isSuccessful()) {
+                    reload = true;
+                    route = response.body().getRoute();
+                    String status = response.body().getStatus();
+                    if (status.equals("1")) {
+                        //route ends
+                        startActivity(new Intent(CheckpointActivity.this,
+                                CompleteRouteActivity.class));
+                        finish();
+                    } else {
+                        reloadUI();
+                        loadNewBeacon();
+                        loadData();
+                        recallRangeNotifier();
+                    }
+                } else {
+                    Toast.makeText(CheckpointActivity.this, "Error loading",
+                            Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, response.errorBody().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RouteCheckPointResponse> call, Throwable t) {
+                Toast.makeText(CheckpointActivity.this, "Error loading API",
+                        Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
+    }
+
     public void recallRangeNotifier() {
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
@@ -475,7 +453,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                                     .newInstance(route.getCheckpoints()
                                                     .get(position).getImage_url_found()
                                             , route.getCheckpoints().get(position)
-                                                    .getFound_description())
+                                                    .getFound_description(), "FUN FACT")
                                     .show(getSupportFragmentManager(),"dialog_checkpoint");
                             EventBus.getDefault().post(new CompleteCheckPointEvent());
                             beaconManager.removeRangeNotifier(this);
@@ -519,9 +497,9 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                                     .newInstance(route.getCheckpoints()
                                                     .get(position).getImage_url_found()
                                     , route.getCheckpoints().get(position)
-                                                    .getFound_description())
+                                                    .getFound_description(), "FUN FACT")
                                     .show(getSupportFragmentManager(),"dialog_checkpoint");
-                            EventBus.getDefault().post(new CompleteCheckPointEvent());
+                            EventBus.getDefault().post(new GiveUpCheckPointEvent());
                             beaconManager.removeRangeNotifier(this);
                         }
                     }
@@ -539,18 +517,23 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
 
     public double calculateAvgSpeed() {
         double avgSpeed = 0;
-        for (int i = 0; i < speeds.size(); i++) {
+        for(int i = 0; i < speeds.size(); i++) {
             avgSpeed += speeds.get(i);
         }
+
         avgSpeed = avgSpeed / speeds.size();
         speeds.clear();
         return avgSpeed;
+
     }
+
     @Override
     protected void onStop() {
         EventBus.getDefault().unregister(this);
         sensorManager.unregisterListener(sensorEventListenerLA);
         sensorManager.unregisterListener(sensorEventListenerSD);
+
+
         super.onStop();
     }
 

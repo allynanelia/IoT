@@ -35,16 +35,19 @@ public class CheckPointDialog extends DialogFragment {
     @BindView(R.id.imageHintOrSuccess) ImageView imageHintOrSuccess;
     @BindView(R.id.textHintOrSuccess) TextView textHintOrSuccess;
     @BindView(R.id.viewKonfetti) KonfettiView viewKonfetti;
+    @BindView(R.id.dialog_title) TextView dialogTitle;
 
     private Unbinder unbinder;
     private final String TAG = getClass().getName();
     private String image;
     private String desc;
+    private String type;
 
-    public static CheckPointDialog newInstance(String image, String desc) {
+    public static CheckPointDialog newInstance(String image, String desc, String type) {
         Bundle args = new Bundle();
         args.putString(Constants.CHECKPOINT_IMAGE, image);
         args.putString(Constants.CHECKPOINT_DESC, desc);
+        args.putString(Constants.CHECKPOINT_TYPE, type);
         CheckPointDialog fragment = new CheckPointDialog();
         fragment.setArguments(args);
         return fragment;
@@ -68,6 +71,7 @@ public class CheckPointDialog extends DialogFragment {
         if (getArguments() != null) {
             image = getArguments().getString(Constants.CHECKPOINT_IMAGE);
             desc = getArguments().getString(Constants.CHECKPOINT_DESC);
+            type = getArguments().getString(Constants.CHECKPOINT_TYPE);
         }
 
         initUI();
@@ -107,6 +111,7 @@ public class CheckPointDialog extends DialogFragment {
                     }
                 }
                 textHintOrSuccess.setText(desc);
+                dialogTitle.setText(type);
             }
         }, 1000);
 

@@ -45,14 +45,16 @@ public class HomeFragment extends Fragment {
 
     CatLoadingView mView;
 
-    private List<Route> routeList = new ArrayList<>();
+    private List<Route> routeList;
     private final String TAG = getClass().getName();
     private GameListAdapter adapter;
     private Unbinder unbinder;
+    private static String userID;
 
     public static HomeFragment newInstance(Bundle args) {
         HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
+        userID = args.getString("userID");
         return fragment;
     }
 
@@ -88,6 +90,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        //initUI();
         //EventBus.getDefault().register(this);
     }
 
@@ -106,7 +109,8 @@ public class HomeFragment extends Fragment {
             recyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         } else {
-            adapter.setRouteList(routeList);
+            adapter = new GameListAdapter(Glide.with(this), routeList);
+            recyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
         mView.dismiss();
@@ -117,11 +121,12 @@ public class HomeFragment extends Fragment {
                 .getInstance()
                 .create(RouteInterface.class);
 
-        Call<RouteResponse> call = routeInterface.getAllRoutes(1);
+        Call<RouteResponse> call = routeInterface.getAllRoutes(Integer.parseInt(userID));
         call.enqueue(new Callback<RouteResponse>() {
             @Override
             public void onResponse(Call<RouteResponse> call, Response<RouteResponse> response) {
                 if (response.isSuccessful()) {
+                    routeList = new ArrayList<>();
                     routeList.addAll(response.body().getRoute());
                     initUI();
                 } else {

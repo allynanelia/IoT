@@ -69,7 +69,7 @@ public class GameDetailsActivity extends BaseActivity {
         info.setText(route.getDescription());
         steps.setText(route.getEstimated_steps() + " steps");
 
-        if (route.getCheckpoints().get(0).getId().equals("1")) {
+        if (route.getCheckpoints().get(0).getStatus().equals("1")) {
             startButton.setText("Resume");
         } else {
             startButton.setText("Start");
