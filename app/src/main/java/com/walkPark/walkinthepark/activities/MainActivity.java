@@ -182,9 +182,9 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.infoButton)
     public void info() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("A ribbon with recommended are routes that " +
-                "are specifically recommended for you!")
-                .setTitle("Notics")
+        builder.setMessage("To meet your fitness goal, we recommend you to complete all the " +
+                "routes marked with a ribbon. Good luck!")
+                .setTitle("Notice")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //dismiss

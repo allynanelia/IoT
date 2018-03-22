@@ -208,7 +208,33 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
 
     private void loadNewBeacon() {
         retrieveCurrentCheckPointBeacon();
+        loadSensors();
 
+        if (reload) {
+            adapter.setCheckPointList(route.getCheckpoints());
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    private void initUI() {
+        workTimeHandler = new Handler();
+        textTitle.setText(route.getName());
+        textPoint.setText(route.getCheckpoints().get(0).getPoints());
+        textSteps.setText((int) steps + "");
+
+        double counterDValue = calculateCheckPointsDone(route);
+        Double d = new Double(counterDValue);
+        int i = d.intValue();
+        progressDuration.setProgress(i);
+
+        adapter = new CheckPointAdapter(CheckpointActivity.this, route.getCheckpoints());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        //Later do update if boolean true
+    }
+
+    private void loadSensors() {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         //linear accelerometer
@@ -229,8 +255,8 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
 
                     double speed = Math.sqrt(speedX*speedX+speedY*speedY+speedZ*speedZ);
 
-                        speeds.add(speed);
-                        String s = Double.toString(speed);
+                    speeds.add(speed);
+                    String s = Double.toString(speed);
                       /*  Toast.makeText(getApplicationContext(), s,
                                 Toast.LENGTH_SHORT).show(); */
 
@@ -242,9 +268,9 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                 }
             }
 
-                @Override
-                public void onAccuracyChanged (Sensor sensor,int accuracy){
-                }
+            @Override
+            public void onAccuracyChanged (Sensor sensor,int accuracy){
+            }
 
         };
 
@@ -275,29 +301,6 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
 
         sensorManager.registerListener(sensorEventListenerSD, sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR), SensorManager.SENSOR_DELAY_FASTEST);
 
-
-        if (reload) {
-            adapter.setCheckPointList(route.getCheckpoints());
-            adapter.notifyDataSetChanged();
-        }
-    }
-
-    private void initUI() {
-        workTimeHandler = new Handler();
-        textTitle.setText(route.getName());
-        textPoint.setText(route.getCheckpoints().get(0).getPoints());
-        textSteps.setText((int) steps + "");
-
-        double counterDValue = calculateCheckPointsDone(route);
-        Double d = new Double(counterDValue);
-        int i = d.intValue();
-        progressDuration.setProgress(i);
-
-        adapter = new CheckPointAdapter(CheckpointActivity.this, route.getCheckpoints());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-        //Later do update if boolean true
     }
 
     private void loadData() {
@@ -316,6 +319,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     protected void onPause() {
         super.onPause();
         if (beaconManager.isBound(this)) beaconManager.setBackgroundMode(true);
+
     }
 
     @Override
@@ -333,6 +337,8 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:0-3=beac,i:4-19,i:20-21,i:22-23,p:24-24"));
         beaconManager.bind(this);
+
+        loadSensors();
     }
 
     private Runnable rCountdown = new Runnable() {
