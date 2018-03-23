@@ -1,6 +1,8 @@
 package com.walkPark.walkinthepark.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -115,7 +117,21 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.Vi
             buttonCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    EventBus.getDefault().post(new GiveUpCheckPointEvent());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Are you sure to give up?")
+                            .setTitle("Give Up")
+                            .setCancelable(false);
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            EventBus.getDefault().post(new GiveUpCheckPointEvent());
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
                 }
             });
 

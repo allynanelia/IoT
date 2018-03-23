@@ -94,16 +94,18 @@ public class CheckPointDialog extends DialogFragment {
 
     private void initUI() {
         buttonClose.setVisibility(View.GONE);
-        viewKonfetti.build()
-                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
-                .setDirection(0.0, 359.0)
-                .setSpeed(1f, 5f)
-                .setFadeOutEnabled(true)
-                .setTimeToLive(2000L)
-                .addShapes(Shape.RECT, Shape.CIRCLE)
-                .addSizes(new Size(12, 5f))
-                .setPosition(-50f, viewKonfetti.getWidth() + 50f, -50f, -50f)
-                .stream(300, 5000L);
+        if(type.equals("YOU'VE FOUND IT!")) {
+            viewKonfetti.build()
+                    .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                    .setDirection(0.0, 359.0)
+                    .setSpeed(1f, 5f)
+                    .setFadeOutEnabled(true)
+                    .setTimeToLive(2000L)
+                    .addShapes(Shape.RECT, Shape.CIRCLE)
+                    .addSizes(new Size(12, 5f))
+                    .setPosition(-50f, viewKonfetti.getWidth() + 50f, -50f, -50f)
+                    .stream(300, 5000L);
+        }
 
         new Handler().postDelayed(new Runnable() {
             @Override
