@@ -132,6 +132,7 @@ public class CheckPointAdapter extends RecyclerView.Adapter<CheckPointAdapter.Vi
                         }
                     });
                     AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             });
 

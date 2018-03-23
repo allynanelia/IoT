@@ -26,7 +26,9 @@ import nl.dionsegijn.konfetti.models.Size;
 
 public class CompleteRouteActivity extends BaseActivity {
 
-    @BindView(R.id.textSecs) TextView timeTaken;
+    @BindView(R.id.textHours) TextView timeHours;
+    @BindView(R.id.textMins) TextView timeMins;
+    @BindView(R.id.textSecs) TextView timeSecs;
     @BindView(R.id.textTotalSteps) TextView stepsTaken;
     @BindView(R.id.textTotalPoints) TextView totalPoints;
     @BindView(R.id.buttonMenu) Button backToMain;
@@ -48,8 +50,8 @@ public class CompleteRouteActivity extends BaseActivity {
     }
 
     public void initUI() {
-        stepsTaken.setText(route.getTotal_steps());
-        totalPoints.setText(route.getTotal_steps());
+        stepsTaken.setText(Integer.toString(route.getTotal_steps()));
+        totalPoints.setText(Integer.toString(route.getTotal_steps()));
 
         if(route.getTotal_time_taken()!=null) {
 
@@ -58,9 +60,13 @@ public class CompleteRouteActivity extends BaseActivity {
             final long mins = (long) time / 60;
             final long secs = (long) time % 60;
 
-            timeTaken.setText(String.format("%02d", hours)+":"+String.format("%02d", mins)+":"+String.format("%02d", secs));
+            timeHours.setText(String.format("%02d", hours));
+            timeMins.setText(String.format("%02d", mins));
+            timeSecs.setText(String.format("%02d", secs));
         } else {
-            timeTaken.setText("00:00:00");
+            timeHours.setText("00");
+            timeMins.setText("00");
+            timeSecs.setText("00");
         }
     }
     @OnClick(R.id.buttonMenu)
