@@ -377,8 +377,9 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                     route = response.body().getRoute();
                     String status = response.body().getStatus();
                     if (status.equals("1")) {
-                        startActivity(new Intent(CheckpointActivity.this,
-                                CompleteRouteActivity.class));
+                        Intent intent = new Intent(CheckpointActivity.this, CompleteRouteActivity.class);
+                        intent.putExtra(Constants.ROUTE_END, Parcels.wrap(route));
+                        startActivity(intent);
                         finish();
                     } else {
                         reloadUI();
@@ -427,8 +428,9 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                     String status = response.body().getStatus();
                     if (status.equals("1")) {
                         //route ends
-                        startActivity(new Intent(CheckpointActivity.this,
-                                CompleteRouteActivity.class));
+                        Intent intent = new Intent(CheckpointActivity.this, CompleteRouteActivity.class);
+                        intent.putExtra(Constants.ROUTE_END, Parcels.wrap(route));
+                        startActivity(intent);
                         finish();
                     } else {
                         reloadUI();

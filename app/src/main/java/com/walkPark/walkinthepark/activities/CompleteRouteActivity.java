@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.walkinthepark.R;
 import com.walkPark.walkinthepark.Constants;
+import com.walkPark.walkinthepark.models.Route;
 
 import org.parceler.Parcels;
 
@@ -24,8 +26,12 @@ import nl.dionsegijn.konfetti.models.Size;
 
 public class CompleteRouteActivity extends BaseActivity {
 
-    @BindView(R.id.viewKonfetti) KonfettiView viewKonfetti;
-    //@BindView(R.id.backToMainPage) Button backToMain;
+    @BindView(R.id.textSecs) TextView timeTaken;
+    @BindView(R.id.textTotalSteps) TextView stepsTaken;
+    @BindView(R.id.textTotalPoints) TextView totalPoints;
+    @BindView(R.id.buttonMenu) Button backToMain;
+
+    private Route route;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,26 +41,34 @@ public class CompleteRouteActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
-        viewKonfetti.build()
-                .addColors(Color.YELLOW, Color.GREEN, Color.RED)
-                .setDirection(0.0, 359.0)
-                .setSpeed(1f, 5f)
-                .setFadeOutEnabled(true)
-                .setTimeToLive(2000L)
-                .addShapes(Shape.RECT, Shape.CIRCLE)
-                .addSizes(new Size(12, 5f))
-                .setPosition(-50f, viewKonfetti.getWidth() + 50f, -50f, -50f)
-                .stream(300, 5000L);
+        route = Parcels.unwrap(getIntent()
+                .getParcelableExtra(Constants.ROUTE_END));
 
-
+        initUI();
     }
 
-//    @OnClick(R.id.backToMainPage)
-//    public void goHome(){
-//        startActivity(new Intent(CompleteRouteActivity.this,
-//                MainActivity.class));
-//        finish();
-//    }
+    public void initUI() {
+        stepsTaken.setText(route.getTotal_steps());
+        totalPoints.setText(route.getTotal_steps());
+
+        if(route.getTotal_time_taken()!=null) {
+
+            int time = route.getTotal_time_taken();
+            final long hours = (long) time / 3600;
+            final long mins = (long) time / 60;
+            final long secs = (long) time % 60;
+
+            timeTaken.setText(String.format("%02d", hours)+":"+String.format("%02d", mins)+":"+String.format("%02d", secs));
+        } else {
+            timeTaken.setText("00:00:00");
+        }
+    }
+    @OnClick(R.id.buttonMenu)
+    public void goHome(){
+        startActivity(new Intent(CompleteRouteActivity.this,
+                MainActivity.class));
+        finish();
+   }
 
 
 

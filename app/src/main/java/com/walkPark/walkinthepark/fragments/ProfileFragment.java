@@ -150,7 +150,7 @@ public class ProfileFragment extends Fragment {
 
             tvTimeSpent.setText(String.format("%02d", hours)+":"+String.format("%02d", mins)+":"+String.format("%02d", secs));
         } else {
-            tvTimeSpent.setText("00:00hrs");
+            tvTimeSpent.setText("00:00:00");
         }
 
         mView.dismiss();

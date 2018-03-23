@@ -15,6 +15,9 @@ public class Route {
     String description;
     String estimated_steps;
     List<CheckPoint> checkpoints;
+    int total_points;
+    int total_steps;
+    int total_time_taken;
 
     public Route() {}
 
@@ -64,5 +67,37 @@ public class Route {
 
     public void setCheckpoints(List<CheckPoint> checkpoints) {
         this.checkpoints = checkpoints;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getTotal_points() {
+        return total_points;
+    }
+
+    public void setTotal_points(int total_points) {
+        this.total_points = total_points;
+    }
+
+    public int getTotal_steps() {
+        return total_steps;
+    }
+
+    public void setTotal_steps(int total_steps) {
+        this.total_steps = total_steps;
+    }
+
+    public Integer getTotal_time_taken() {
+        return total_time_taken;
+    }
+
+    public void setTotal_time_taken(int total_time_taken) {
+        this.total_time_taken = total_time_taken;
     }
 }
