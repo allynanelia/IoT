@@ -138,7 +138,7 @@ public class CheckPointDialog extends DialogFragment {
             }
         });
 
-        if(type == "FUN FACT") {
+        if(type.equals("YOU'VE FOUND IT!")) {
             congratsSoundPool = (new SoundPool.Builder()).setMaxStreams(10).build();
             clickSound = congratsSoundPool.load(getContext(), R.raw.clap, 1);
             congratsSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
