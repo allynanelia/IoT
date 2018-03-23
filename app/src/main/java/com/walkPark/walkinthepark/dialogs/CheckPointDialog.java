@@ -86,10 +86,7 @@ public class CheckPointDialog extends DialogFragment {
     @Override
     public void onDestroyView() {
         unbinder.unbind();
-        congratsSoundPool.stop(clickSound);
-        congratsSoundPool.release();
         super.onDestroyView();
-
     }
 
     private void initUI() {
@@ -134,6 +131,8 @@ public class CheckPointDialog extends DialogFragment {
         buttonClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                congratsSoundPool.stop(clickSound);
+                congratsSoundPool.release();
                 dismiss();
             }
         });
@@ -147,7 +146,6 @@ public class CheckPointDialog extends DialogFragment {
                     congratsSoundPool.play(clickSound, 0.99F, 0.99F, 0, 0, 1.0F);
                 }
             });
-
         }
     }
 }
