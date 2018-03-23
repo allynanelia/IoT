@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.walkinthepark.R;
 import com.roger.catloadinglibrary.CatLoadingView;
+import com.walkPark.walkinthepark.Prefs;
 import com.walkPark.walkinthepark.adapters.GameListAdapter;
 import com.walkPark.walkinthepark.backend.RouteInterface;
 import com.walkPark.walkinthepark.backend.WalkInTheParkRetrofit;
@@ -120,7 +121,9 @@ public class HomeFragment extends Fragment {
         final RouteInterface routeInterface = WalkInTheParkRetrofit
                 .getInstance()
                 .create(RouteInterface.class);
-
+        if(userID==null){
+            Prefs.getUserProfile().getPlayer_id();
+        }
         Call<RouteResponse> call = routeInterface.getAllRoutes(Integer.parseInt(userID));
         call.enqueue(new Callback<RouteResponse>() {
             @Override

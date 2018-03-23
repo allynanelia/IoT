@@ -83,13 +83,10 @@ public class MainActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
-        selectedUserID = Parcels.unwrap(getIntent().getParcelableExtra("PlayerID"));
+        selectedUserID = Prefs.getUserProfile().getPlayer_id();
+        //Parcels.unwrap(getIntent().getParcelableExtra("PlayerID"));
         initFragments();
         initUI();
-
-        user = Prefs.getUserProfile();
-        user.setPlayer_id(selectedUserID);
-        Prefs.setUser(user);
 
         //Setup font
         boldTypeface = TypefaceUtils.load(getAssets(), "fonts/DINNextLTPro-Bold.otf");
