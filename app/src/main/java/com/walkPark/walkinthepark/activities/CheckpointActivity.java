@@ -18,6 +18,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.animation.CycleInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,6 +75,8 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     @BindView(R.id.textMinutes) TextView textMinutes;
     @BindView(R.id.textSeconds) TextView textSeconds;
     @BindView(R.id.textSteps) TextView textSteps;
+    @BindView(R.id.imageShake) ImageView imageShake;
+
 
     private CheckPointAdapter adapter;
     private List<CheckPoint> checkPoints = new ArrayList<>();
@@ -110,6 +114,21 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
     private final String TAG = getClass().getName();
 
     private boolean reload;
+
+    Runnable runnableWobbleSeven = new Runnable() {
+        @Override
+        public void run() {
+            if (imageShake != null) {
+                imageShake.animate()
+                        .rotationBy(10f)
+                        .setInterpolator(new CycleInterpolator(2))
+                        .setDuration(2000L)
+                        .setStartDelay(500L)
+                        .withEndAction(runnableWobbleSeven)
+                        .start();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -218,6 +237,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
 
     private void initUI() {
         workTimeHandler = new Handler();
+        new Handler().post(runnableWobbleSeven);
         textTitle.setText(route.getName());
         textPoint.setText(route.getCheckpoints().get(0).getPoints());
         textSteps.setText((int) steps + "");

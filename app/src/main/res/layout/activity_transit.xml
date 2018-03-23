@@ -11,6 +11,7 @@
         android:id="@+id/layoutTopBar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
+        android:elevation="@dimen/elevation_default"
         android:background="@color/white">
 
         <TextView

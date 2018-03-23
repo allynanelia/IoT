@@ -139,9 +139,6 @@
                     android:textSize="10sp"
                     />
 
-
-
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -177,15 +174,20 @@
                     android:textColor="@color/white"
                     android:text="Number of steps taken"
                     android:textSize="14sp" />
+
             </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutPoints"
+            android:layout_marginTop="64dp"
+            android:layout_centerHorizontal="true">
 
             <com.github.lzyzsd.circleprogress.ArcProgress
                 android:id="@+id/progressDuration"
                 android:layout_height="180dp"
                 android:layout_width="180dp"
-                android:layout_marginTop="64dp"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/layoutPoints"
                 app:arc_stroke_width="14dp"
                 app:arc_max="100"
                 app:arc_progress="70"
@@ -194,6 +196,19 @@
                 app:arc_unfinished_color="@color/white"
                 app:arc_text_color="@android:color/white"
                 />
+
+            <ImageView
+                android:id="@+id/imageShake"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="120dp"
+                android:background="@drawable/ic_my_jobs_sel"
+                />
+
+        </RelativeLayout>
+
+
 
         </RelativeLayout>
 
