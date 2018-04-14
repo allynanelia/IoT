@@ -1,5 +1,7 @@
 package com.walkPark.walkinthepark.models;
 
+import java.util.List;
+
 /**
  * Created by singy on 3/22/2018.
  */
@@ -15,7 +17,11 @@ public class Profile {
     private Integer total_steps_taken;
     private Double total_time_taken;
     private Double total_points;
-    private Integer total_calories;
+    private Integer total_calories_burned;
+    private Integer monthly_steps_left;
+    private Integer current_month_total_steps;
+    private List<WeeklySteps> weekly_steps;
+
 
     public Profile(){}
 
@@ -100,10 +106,34 @@ public class Profile {
     }
 
     public Integer getTotal_calories() {
-        return total_calories;
+        return total_calories_burned;
     }
 
     public void setTotal_calories(int total_calories) {
-        this.total_calories = total_calories;
+        this.total_calories_burned = total_calories;
+    }
+
+    public Integer getMonthly_steps_lefts() {
+        return monthly_steps_left;
+    }
+
+    public void setMonthly_steps_lefts(Integer monthly_steps_lefts) {
+        this.monthly_steps_left = monthly_steps_lefts;
+    }
+
+    public List<WeeklySteps> getWeekly_steps() {
+        return weekly_steps;
+    }
+
+    public void setWeekly_steps(List<WeeklySteps> weekly_steps) {
+        this.weekly_steps = weekly_steps;
+    }
+
+    public Integer getCurrent_month_total_steps() {
+        return current_month_total_steps;
+    }
+
+    public void setCurrent_month_total_steps(Integer current_month_total_steps) {
+        this.current_month_total_steps = current_month_total_steps;
     }
 }

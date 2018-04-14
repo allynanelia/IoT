@@ -6,6 +6,7 @@
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp_5"
     android:background="@color/white"
     app:corner_radius="16dp">
 

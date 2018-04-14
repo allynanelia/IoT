@@ -49,4 +49,5 @@ dependencies {
     compile 'nl.dionsegijn:konfetti:1.1.0'
     compile 'com.orhanobut:dialogplus:1.11@aar'
     compile 'com.github.mohanmanu484:RibbonView:1.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }

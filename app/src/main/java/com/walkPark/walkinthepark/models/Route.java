@@ -15,6 +15,7 @@ public class Route {
     String description;
     String estimated_steps;
     List<CheckPoint> checkpoints;
+    boolean is_recommended;
     int total_points;
     int total_steps;
     int total_time_taken;
@@ -99,5 +100,13 @@ public class Route {
 
     public void setTotal_time_taken(int total_time_taken) {
         this.total_time_taken = total_time_taken;
+    }
+
+    public boolean getIs_recommended() {
+        return is_recommended;
+    }
+
+    public void setIs_recommended(boolean is_recommended) {
+        this.is_recommended = is_recommended;
     }
 }
