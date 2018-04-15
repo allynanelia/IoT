@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.walkinthepark.R;
+import com.walkPark.walkinthepark.R;
 import com.walkPark.walkinthepark.Prefs;
 import com.walkPark.walkinthepark.activities.MainActivity;
 import com.walkPark.walkinthepark.events.GiveUpCheckPointEvent;

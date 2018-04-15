@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.example.walkinthepark.R;
+import com.walkPark.walkinthepark.R;
 import com.rajeefmk.runtimepermissionhandler.PermissionUtils;
 import com.rajeefmk.runtimepermissionhandler.PermissionsApi;
 

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "812548025578",
+    "firebase_url": "https://fluid-amulet-197309.firebaseio.com",
+    "project_id": "fluid-amulet-197309",
+    "storage_bucket": "fluid-amulet-197309.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812548025578:android:b3d05d91fa005f68",
+        "android_client_info": {
+          "package_name": "com.walkPark.walkinthepark"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812548025578-5j9kq40e54nsm229hg2skdg2t0ir6u15.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc0USaPJdvJnXfY8wgKj29bVPVJRQAUS0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.walkinthepark.R;
+import com.walkPark.walkinthepark.R;
 import com.walkPark.walkinthepark.WalkInTheParkGson;
 import com.walkPark.walkinthepark.backend.RouteInterface;
 import com.walkPark.walkinthepark.backend.WalkInTheParkRetrofit;
