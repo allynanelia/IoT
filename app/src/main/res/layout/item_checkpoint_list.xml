@@ -63,7 +63,7 @@
                 android:layout_height="50dp"
                 android:visibility="visible"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/ic_check_btn"
+                android:src="@drawable/ic_give_up"
                 />
 
             <ImageView

@@ -197,9 +197,9 @@ public class ProfileFragment extends Fragment {
         }
 
         if(player.getCurrent_month_total_steps()!=null) {
-            currentSteps.setText(Integer.toString(player.getMonthly_steps_lefts()-player.getCurrent_month_total_steps()));
+            currentSteps.setText(Integer.toString(player.getCurrent_month_total_steps()));
         } else {
-            currentSteps.setText(Integer.toString(player.getMonthly_steps_lefts()-player.getCurrent_month_total_steps()));
+            currentSteps.setText("0");
         }
         initBarChart();
 
@@ -207,9 +207,9 @@ public class ProfileFragment extends Fragment {
     }
 
     private void initBarChart(){
-        mChart.setBackgroundColor(Color.parseColor("#732C7B"));
+        mChart.setBackgroundColor(Color.WHITE); //Color.parseColor("#732C7B")
         mChart.setExtraTopOffset(-10f);
-        mChart.setExtraBottomOffset(20f);
+        mChart.setExtraBottomOffset(10f);
         mChart.setExtraLeftOffset(30f);
         mChart.setExtraRightOffset(30f);
 
@@ -276,7 +276,7 @@ public class ProfileFragment extends Fragment {
         ArrayList<BarEntry> values = new ArrayList<BarEntry>();
         List<Integer> colors = new ArrayList<Integer>();
 
-        int purple = Color.rgb(255, 255, 255);
+        int purple = Color.rgb(115, 44, 123);
 
         for (int i = 0; i < dataList.size(); i++) {
 
