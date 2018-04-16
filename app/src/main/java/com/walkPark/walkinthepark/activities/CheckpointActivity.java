@@ -325,7 +325,9 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
 
     private void loadData() {
         workTime = 0;
-        workTimeHandler.post(rCountdown);
+        if(!reload) {
+            workTimeHandler.post(rCountdown);
+        }
     }
 
     @Override
@@ -404,7 +406,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                     } else {
                         reloadUI();
                         loadNewBeacon();
-                        loadData();
+                        //loadData();
                         recallRangeNotifier();
                     }
                 } else {
@@ -455,7 +457,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                     } else {
                         reloadUI();
                         loadNewBeacon();
-                        loadData();
+                        //loadData();
                         recallRangeNotifier();
                     }
                 } else {
