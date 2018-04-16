@@ -23,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.walkinthepark.R;
+import com.walkPark.walkinthepark.R;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.walkPark.walkinthepark.Constants;
 import com.walkPark.walkinthepark.Prefs;
@@ -379,11 +379,12 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
 
     @Subscribe
     public void onEvent(GiveUpCheckPointEvent event) {
-        CheckpointDetails cpd = new CheckpointDetails(route.get_id(),
-                checkPointEntry
-                ,Prefs.getUserProfile().getPlayer_id() , Long.toString(steps), Integer.toString(workTime),true);
 
         double speed = calculateAvgSpeed();
+
+        CheckpointDetails cpd = new CheckpointDetails(route.get_id(),
+                checkPointEntry
+                ,Prefs.getUserProfile().getPlayer_id() , Long.toString(steps), Integer.toString(workTime),Double.toString(speed), true);
 
         final RouteInterface routeInterface = WalkInTheParkRetrofit
                .getInstance()
@@ -427,13 +428,14 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
 
     @Subscribe
     public void onEvent(CompleteCheckPointEvent event) {
-        CheckpointDetails cpd = new CheckpointDetails(route.get_id(),
-                checkPointEntry
-                , Prefs.getUserProfile().getPlayer_id() , Long.toString(steps-initialSteps), Integer.toString(workTime),false);
-
-        initialSteps = steps-initialSteps;
 
         double speed = calculateAvgSpeed();
+
+        CheckpointDetails cpd = new CheckpointDetails(route.get_id(),
+                checkPointEntry
+                , Prefs.getUserProfile().getPlayer_id() , Long.toString(steps-initialSteps), Integer.toString(workTime), Double.toString(speed), false);
+
+        initialSteps = steps-initialSteps;
 
         final RouteInterface routeInterface = WalkInTheParkRetrofit
                 .getInstance()

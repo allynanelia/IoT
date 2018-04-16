@@ -9,7 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.RequestManager;
-import com.example.walkinthepark.R;
+import com.mohan.ribbonview.RibbonView;
+import com.walkPark.walkinthepark.R;
 import com.walkPark.walkinthepark.events.GameTriggerEvent;
 import com.walkPark.walkinthepark.models.Route;
 
@@ -53,6 +54,9 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
                     .centerCrop().into(holder.image);
             holder.text.setVisibility(View.VISIBLE);
             holder.text.setText(routeList.get(position).getName());
+            if(routeList.get(position).getIs_recommended()){
+                holder.ribbon.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -68,6 +72,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         @BindView(R.id.rootView) View rootView;
         @BindView(R.id.image) ImageView image;
         @BindView(R.id.text) TextView text;
+        @BindView(R.id.ribbonView2) RibbonView ribbon;
 
         public ViewHolder(View itemView) {
             super(itemView);

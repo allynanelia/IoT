@@ -2,9 +2,12 @@ package com.walkPark.walkinthepark.activities;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -16,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.walkinthepark.R;
+import com.walkPark.walkinthepark.R;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ListHolder;
 import com.orhanobut.dialogplus.OnItemClickListener;
@@ -24,11 +27,14 @@ import com.walkPark.walkinthepark.Constants;
 import com.walkPark.walkinthepark.Prefs;
 import com.walkPark.walkinthepark.adapters.PlayerIDAdapter;
 import com.walkPark.walkinthepark.events.GameTriggerEvent;
+import com.walkPark.walkinthepark.events.PushNotificationEvent;
 import com.walkPark.walkinthepark.fragments.HomeFragment;
 import com.walkPark.walkinthepark.fragments.LeaderboardFragment;
 import com.walkPark.walkinthepark.fragments.ProfileFragment;
+import com.walkPark.walkinthepark.models.Leaderboard;
 import com.walkPark.walkinthepark.models.Profile;
 import com.walkPark.walkinthepark.models.UserInfo;
+import com.walkPark.walkinthepark.services.IotFirebaseMessagingService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -61,6 +67,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.textLeaderboard) TextView textLeaderboard;
     @BindView(R.id.textRoute) TextView textRoute;
 
+    @BindView(R.id.infoButton) ImageView infoButton;
 
 
     private List<Fragment> fragmentList = new ArrayList<>();
@@ -83,18 +90,17 @@ public class MainActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
-        selectedUserID = Parcels.unwrap(getIntent().getParcelableExtra("PlayerID"));
+        selectedUserID = Prefs.getUserProfile().getPlayer_id();
+        //Parcels.unwrap(getIntent().getParcelableExtra("PlayerID"));
         initFragments();
         initUI();
-
-        user = Prefs.getUserProfile();
-        user.setPlayer_id(selectedUserID);
-        Prefs.setUser(user);
 
         //Setup font
         boldTypeface = TypefaceUtils.load(getAssets(), "fonts/DINNextLTPro-Bold.otf");
         lightTypeface = TypefaceUtils.load(getAssets(), "fonts/DINNextLTPro-Medium.otf");
         regularTypeface = TypefaceUtils.load(getAssets(), "fonts/DINNextLTPro-Regular.otf");
+
+
 
     }
 
@@ -171,6 +177,9 @@ public class MainActivity extends BaseActivity {
         textLeaderboard.setTypeface(regularTypeface);
         textRoute.setTypeface(regularTypeface);
 
+        textTitle.setText("Profile");
+        infoButton.setVisibility(View.INVISIBLE);
+
         textAccount.setTextColor(
                 ContextCompat.getColor(MainActivity.this, R.color.black));
         textLeaderboard.setTextColor(
@@ -206,6 +215,9 @@ public class MainActivity extends BaseActivity {
                 ContextCompat.getDrawable(MainActivity.this,
                         R.drawable.ic_leaderboard_inactive));
 
+        textTitle.setText("WalkInThePark");
+        infoButton.setVisibility(View.VISIBLE);
+
         textAccount.setTypeface(regularTypeface);
         textLeaderboard.setTypeface(regularTypeface);
         textRoute.setTypeface(boldTypeface);
@@ -231,6 +243,9 @@ public class MainActivity extends BaseActivity {
                 ContextCompat.getDrawable(MainActivity.this,
                         R.drawable.ic_leaderboard_active));
 
+        textTitle.setText("Leaderboard");
+        infoButton.setVisibility(View.INVISIBLE);
+
         textAccount.setTypeface(regularTypeface);
         textLeaderboard.setTypeface(boldTypeface);
         textRoute.setTypeface(regularTypeface);
@@ -248,5 +263,10 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(MainActivity.this, GameDetailsActivity.class);
         intent.putExtra(Constants.INTENT_GAME_SELECTED, Parcels.wrap(event.getRoute()));
         startActivity(intent);
+    }
+
+    @Subscribe
+    public void onEvent(PushNotificationEvent event) {
+
     }
 }

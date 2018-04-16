@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.walkinthepark.R;
+import com.walkPark.walkinthepark.R;
 import com.walkPark.walkinthepark.Constants;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,7 +45,7 @@ public class CheckPointDialog extends DialogFragment {
     private String desc;
     private String type;
     private SoundPool congratsSoundPool;
-    private int clickSound;
+    private Integer clickSound;
 
     public static CheckPointDialog newInstance(String image, String desc, String type) {
         Bundle args = new Bundle();
@@ -86,7 +86,12 @@ public class CheckPointDialog extends DialogFragment {
     @Override
     public void onDestroyView() {
         unbinder.unbind();
+        if(congratsSoundPool!=null && clickSound != null) {
+            congratsSoundPool.stop(clickSound);
+            congratsSoundPool.release();
+        }
         super.onDestroyView();
+
     }
 
     private void initUI() {
@@ -116,8 +121,10 @@ public class CheckPointDialog extends DialogFragment {
                                 .into(imageHintOrSuccess);
                     }
                 }
-                textHintOrSuccess.setText(desc);
-                dialogTitle.setText(type);
+                if(textHintOrSuccess!=null) {
+                    textHintOrSuccess.setText(desc);
+                    dialogTitle.setText(type);
+                }
             }
         }, 1000);
 
@@ -131,8 +138,6 @@ public class CheckPointDialog extends DialogFragment {
         buttonClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                congratsSoundPool.stop(clickSound);
-                congratsSoundPool.release();
                 dismiss();
             }
         });

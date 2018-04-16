@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.walkinthepark.R;
+import com.walkPark.walkinthepark.R;
 
 import com.walkPark.walkinthepark.dialogs.CheckPointDialog;
 import com.walkPark.walkinthepark.events.GiveUpCheckPointEvent;

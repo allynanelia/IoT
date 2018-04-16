@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.walkinthepark.R;
+import com.walkPark.walkinthepark.R;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ListHolder;
 import com.orhanobut.dialogplus.OnItemClickListener;
@@ -20,6 +20,7 @@ import com.walkPark.walkinthepark.adapters.GameListAdapter;
 import com.walkPark.walkinthepark.adapters.PlayerIDAdapter;
 import com.walkPark.walkinthepark.events.GameTriggerEvent;
 import com.walkPark.walkinthepark.events.SelectIDEvent;
+import com.walkPark.walkinthepark.models.UserInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -97,6 +98,10 @@ public class TransitActivity extends BaseActivity {
 
     @Subscribe
     public void onEvent(SelectIDEvent event) {
+        UserInfo user = Prefs.getUserProfile();
+        user.setPlayer_id(Integer.toString(event.getPlayerID()));
+        Prefs.setUser(user);
+
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("PlayerID", Parcels.wrap(Integer.toString(event.getPlayerID())));
         startActivity(intent);

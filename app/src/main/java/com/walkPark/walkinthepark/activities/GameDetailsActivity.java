@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.example.walkinthepark.R;
+import com.walkPark.walkinthepark.R;
 import com.walkPark.walkinthepark.Constants;
 import com.walkPark.walkinthepark.models.CheckPoint;
 import com.walkPark.walkinthepark.models.Route;
@@ -69,10 +69,10 @@ public class GameDetailsActivity extends BaseActivity {
         info.setText(route.getDescription());
         steps.setText(route.getEstimated_steps() + " steps");
 
-        if (route.getCheckpoints().get(0).getStatus().equals("1")) {
-            startButton.setText("Resume");
-        } else {
+        if (Integer.parseInt(route.getStatus())==0) { //new routes
             startButton.setText("Start");
+        } else {
+            startButton.setText("Resume");
         }
 
     }

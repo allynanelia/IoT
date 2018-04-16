@@ -1,24 +1,19 @@
 package com.walkPark.walkinthepark.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.walkinthepark.R;
 import com.walkPark.walkinthepark.Constants;
+import com.walkPark.walkinthepark.R;
 import com.walkPark.walkinthepark.models.Route;
 
 import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-import nl.dionsegijn.konfetti.KonfettiView;
-import nl.dionsegijn.konfetti.models.Shape;
-import nl.dionsegijn.konfetti.models.Size;
 
 /**
  * Created by singy on 3/22/2018.

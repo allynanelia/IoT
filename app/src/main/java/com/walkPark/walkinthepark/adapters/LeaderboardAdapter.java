@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
-import com.example.walkinthepark.R;
+import com.walkPark.walkinthepark.R;
 import com.walkPark.walkinthepark.Prefs;
 import com.walkPark.walkinthepark.dialogs.CheckPointDialog;
 import com.walkPark.walkinthepark.models.UserInfo;
@@ -58,12 +58,15 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
             } else {
                 holder.name.setText(user.getPlayer_name());
             }
+
+            holder.boardPosition.setText(Integer.toString(position+2));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.steps_num) TextView stepsNum;
         @BindView(R.id.name) TextView name;
+        @BindView(R.id.position) TextView boardPosition;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="com.github.iammert:ScalingLayout-1.2">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ScalingLayout-1.2.aar/e9c73b79e37956d24952912ed07827b1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ScalingLayout-1.2.aar/e9c73b79e37956d24952912ed07827b1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ScalingLayout-1.2.aar/f9cf49356277a59be66ec5cc4c6bb502/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ScalingLayout-1.2.aar/f9cf49356277a59be66ec5cc4c6bb502/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
