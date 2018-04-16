@@ -58,15 +58,15 @@ import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
 
-    @BindView(R.id.image) ImageView profile;
-    @BindView(R.id.barChart) BarChart mChart;
-    @BindView(R.id.currentMonth) TextView currentMonth;
-    @BindView(R.id.currentSteps) TextView currentSteps;
-    @BindView(R.id.totalSteps) TextView totalSteps;
-    @BindView(R.id.caloriesBurned) TextView caloriesBurned;
-    @BindView(R.id.name) TextView name;
-    @BindView(R.id.height) TextView height;
-    @BindView(R.id.weight) TextView weight;
+//    @BindView(R.id.image) ImageView profile;
+//    @BindView(R.id.barChart) BarChart mChart;
+//    @BindView(R.id.currentMonth) TextView currentMonth;
+//    @BindView(R.id.currentSteps) TextView currentSteps;
+//    @BindView(R.id.totalSteps) TextView totalSteps;
+//    @BindView(R.id.caloriesBurned) TextView caloriesBurned;
+//    @BindView(R.id.name) TextView name;
+//    @BindView(R.id.height) TextView height;
+//    @BindView(R.id.weight) TextView weight;
 
     CatLoadingView mView;
 
@@ -153,151 +153,151 @@ public class ProfileFragment extends Fragment {
     }
 
     public void initUI() {
-        name.setText(player.getName());
-        Glide.with(this)
-                .load(Prefs.getSmallThumbnail())
-                .asBitmap()
-                .into(profile);
-
-        if(player.getTotal_calories()!=null) {
-            caloriesBurned.setText(Integer.toString(player.getTotal_calories()));
-        } else {
-            caloriesBurned.setText("0");
-        }
-        if(player.getHeight()!=null) {
-            height.setText(Double.toString(player.getHeight()));
-        } else {
-            height.setText("NA");
-        }
-        if(player.getHeight()!=null) {
-            weight.setText(Double.toString(player.getWeight()));
-        } else {
-            weight.setText("NA");
-        }
-
-        SimpleDateFormat df = new SimpleDateFormat("MMMM");
-        currentMonth.setText(df.format(new Date()));
-
-        if(player.getMonthly_steps_lefts()!=null) {
-            totalSteps.setText(Integer.toString(player.getMonthly_steps_lefts()));
-        } else {
-            totalSteps.setText("0");
-        }
-
-        if(player.getCurrent_month_total_steps()!=null) {
-            currentSteps.setText(Integer.toString(player.getCurrent_month_total_steps()));
-        } else {
-            currentSteps.setText("0");
-        }
-        initBarChart();
-
-        mView.dismiss();
+//        name.setText(player.getName());
+//        Glide.with(this)
+//                .load(Prefs.getSmallThumbnail())
+//                .asBitmap()
+//                .into(profile);
+//
+//        if(player.getTotal_calories()!=null) {
+//            caloriesBurned.setText(Integer.toString(player.getTotal_calories()));
+//        } else {
+//            caloriesBurned.setText("0");
+//        }
+//        if(player.getHeight()!=null) {
+//            height.setText(Double.toString(player.getHeight()));
+//        } else {
+//            height.setText("NA");
+//        }
+//        if(player.getHeight()!=null) {
+//            weight.setText(Double.toString(player.getWeight()));
+//        } else {
+//            weight.setText("NA");
+//        }
+//
+//        SimpleDateFormat df = new SimpleDateFormat("MMMM");
+//        currentMonth.setText(df.format(new Date()));
+//
+//        if(player.getMonthly_steps_lefts()!=null) {
+//            totalSteps.setText(Integer.toString(player.getMonthly_steps_lefts()));
+//        } else {
+//            totalSteps.setText("0");
+//        }
+//
+//        if(player.getCurrent_month_total_steps()!=null) {
+//            currentSteps.setText(Integer.toString(player.getCurrent_month_total_steps()));
+//        } else {
+//            currentSteps.setText("0");
+//        }
+//        initBarChart();
+//
+//        mView.dismiss();
     }
 
     private void initBarChart(){
-        mChart.setBackgroundColor(Color.WHITE); //Color.parseColor("#732C7B")
-        mChart.setExtraTopOffset(-10f);
-        mChart.setExtraBottomOffset(10f);
-        mChart.setExtraLeftOffset(30f);
-        mChart.setExtraRightOffset(30f);
-
-        mChart.setDrawBarShadow(false);
-        mChart.setDrawValueAboveBar(true);
-
-        mChart.getDescription().setEnabled(false);
-
-        // scaling can now only be done on x- and y-axis separately
-        mChart.setPinchZoom(false);
-
-        mChart.setDrawGridBackground(false);
-
-        XAxis xAxis = mChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setDrawAxisLine(false);
-        xAxis.setTextColor(Color.LTGRAY);
-        xAxis.setTextSize(12f);
-        xAxis.setLabelCount(7);
-        xAxis.setAvoidFirstLastClipping(false);
-        xAxis.setCenterAxisLabels(true);
-        xAxis.setGranularity(1f);
-
-        YAxis left = mChart.getAxisLeft();
-        left.setDrawLabels(false);
-        left.setSpaceTop(15f);
-        left.setSpaceBottom(15f);
-        left.setDrawAxisLine(false);
-        left.setDrawGridLines(false);
-        left.setDrawZeroLine(true); // draw a zero line
-        left.setZeroLineColor(Color.GRAY);
-        left.setZeroLineWidth(0.7f);
-        left.setTextColor(Color.LTGRAY);
-        mChart.getAxisRight().setEnabled(false);
-        mChart.getLegend().setEnabled(false);
-
-        // THIS IS THE ORIGINAL DATA YOU WANT TO PLOT
-        final List<Data> data = new ArrayList<>();
-        SimpleDateFormat df = new SimpleDateFormat("d-MMM");
-        SimpleDateFormat apiDF = new SimpleDateFormat("yyyy-MM-dd");
-
-        weeklyStepsList.size();
-        for(int i = 0; i<weeklyStepsList.size(); i++) {
-            String date = "";
-            try{
-                date = df.format(apiDF.parse(weeklyStepsList.get(i).getDate()));
-            } catch (ParseException e) {
-
-            }
-            data.add(new Data(i, weeklyStepsList.get(i).getSteps(), date));
-        }
-
-        xAxis.setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                return data.get(Math.min(Math.max((int) value, 0), data.size()-1)).xAxisValue;
-            }
-        });
-
-        setData(data);
+//        mChart.setBackgroundColor(Color.WHITE); //Color.parseColor("#732C7B")
+//        mChart.setExtraTopOffset(-10f);
+//        mChart.setExtraBottomOffset(10f);
+//        mChart.setExtraLeftOffset(30f);
+//        mChart.setExtraRightOffset(30f);
+//
+//        mChart.setDrawBarShadow(false);
+//        mChart.setDrawValueAboveBar(true);
+//
+//        mChart.getDescription().setEnabled(false);
+//
+//        // scaling can now only be done on x- and y-axis separately
+//        mChart.setPinchZoom(false);
+//
+//        mChart.setDrawGridBackground(false);
+//
+//        XAxis xAxis = mChart.getXAxis();
+//        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+//        xAxis.setDrawGridLines(false);
+//        xAxis.setDrawAxisLine(false);
+//        xAxis.setTextColor(Color.LTGRAY);
+//        xAxis.setTextSize(12f);
+//        xAxis.setLabelCount(7);
+//        xAxis.setAvoidFirstLastClipping(false);
+//        xAxis.setCenterAxisLabels(true);
+//        xAxis.setGranularity(1f);
+//
+//        YAxis left = mChart.getAxisLeft();
+//        left.setDrawLabels(false);
+//        left.setSpaceTop(15f);
+//        left.setSpaceBottom(15f);
+//        left.setDrawAxisLine(false);
+//        left.setDrawGridLines(false);
+//        left.setDrawZeroLine(true); // draw a zero line
+//        left.setZeroLineColor(Color.GRAY);
+//        left.setZeroLineWidth(0.7f);
+//        left.setTextColor(Color.LTGRAY);
+//        mChart.getAxisRight().setEnabled(false);
+//        mChart.getLegend().setEnabled(false);
+//
+//        // THIS IS THE ORIGINAL DATA YOU WANT TO PLOT
+//        final List<Data> data = new ArrayList<>();
+//        SimpleDateFormat df = new SimpleDateFormat("d-MMM");
+//        SimpleDateFormat apiDF = new SimpleDateFormat("yyyy-MM-dd");
+//
+//        weeklyStepsList.size();
+//        for(int i = 0; i<weeklyStepsList.size(); i++) {
+//            String date = "";
+//            try{
+//                date = df.format(apiDF.parse(weeklyStepsList.get(i).getDate()));
+//            } catch (ParseException e) {
+//
+//            }
+//            data.add(new Data(i, weeklyStepsList.get(i).getSteps(), date));
+//        }
+//
+//        xAxis.setValueFormatter(new IAxisValueFormatter() {
+//            @Override
+//            public String getFormattedValue(float value, AxisBase axis) {
+//                return data.get(Math.min(Math.max((int) value, 0), data.size()-1)).xAxisValue;
+//            }
+//        });
+//
+//        setData(data);
     }
 
     private void setData(List<Data> dataList) {
 
-        ArrayList<BarEntry> values = new ArrayList<BarEntry>();
-        List<Integer> colors = new ArrayList<Integer>();
-
-        int purple = Color.rgb(115, 44, 123);
-
-        for (int i = 0; i < dataList.size(); i++) {
-
-            Data d = dataList.get(i);
-            BarEntry entry = new BarEntry(d.xValue, d.yValue);
-            values.add(entry);
-
-            colors.add(purple);
-
-        }
-
-        BarDataSet set;
-
-        if (mChart.getData() != null &&
-                mChart.getData().getDataSetCount() > 0) {
-            set = (BarDataSet)mChart.getData().getDataSetByIndex(0);
-            set.setValues(values);
-            mChart.getData().notifyDataChanged();
-            mChart.notifyDataSetChanged();
-        } else {
-            set = new BarDataSet(values, "Values");
-            set.setColors(colors);
-            set.setValueTextColors(colors);
-
-            BarData data = new BarData(set);
-            data.setValueTextSize(13f);
-            data.setBarWidth(0.8f);
-            data.setValueFormatter(new ValueFormatter());
-            mChart.setData(data);
-            mChart.invalidate();
-        }
+//        ArrayList<BarEntry> values = new ArrayList<BarEntry>();
+//        List<Integer> colors = new ArrayList<Integer>();
+//
+//        int purple = Color.rgb(115, 44, 123);
+//
+//        for (int i = 0; i < dataList.size(); i++) {
+//
+//            Data d = dataList.get(i);
+//            BarEntry entry = new BarEntry(d.xValue, d.yValue);
+//            values.add(entry);
+//
+//            colors.add(purple);
+//
+//        }
+//
+//        BarDataSet set;
+//
+//        if (mChart.getData() != null &&
+//                mChart.getData().getDataSetCount() > 0) {
+//            set = (BarDataSet)mChart.getData().getDataSetByIndex(0);
+//            set.setValues(values);
+//            mChart.getData().notifyDataChanged();
+//            mChart.notifyDataSetChanged();
+//        } else {
+//            set = new BarDataSet(values, "Values");
+//            set.setColors(colors);
+//            set.setValueTextColors(colors);
+//
+//            BarData data = new BarData(set);
+//            data.setValueTextSize(13f);
+//            data.setBarWidth(0.8f);
+//            data.setValueFormatter(new ValueFormatter());
+//            mChart.setData(data);
+//            mChart.invalidate();
+//        }
     }
 
     private class Data {
