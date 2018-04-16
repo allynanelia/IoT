@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.RequestManager;
-import com.example.walkinthepark.R;
 import com.mohan.ribbonview.RibbonView;
 import com.walkPark.walkinthepark.R;
 import com.walkPark.walkinthepark.events.GameTriggerEvent;

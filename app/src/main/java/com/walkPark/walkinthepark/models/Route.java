@@ -19,6 +19,7 @@ public class Route {
     int total_points;
     int total_steps;
     int total_time_taken;
+    String status;
 
     public Route() {}
 
@@ -108,5 +109,13 @@ public class Route {
 
     public void setIs_recommended(boolean is_recommended) {
         this.is_recommended = is_recommended;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

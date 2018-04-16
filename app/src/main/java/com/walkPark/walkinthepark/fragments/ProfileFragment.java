@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.walkPark.walkinthepark.R;
 import com.bumptech.glide.Glide;
-import com.example.walkinthepark.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -64,9 +63,7 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.currentMonth) TextView currentMonth;
     @BindView(R.id.currentSteps) TextView currentSteps;
     @BindView(R.id.totalSteps) TextView totalSteps;
-    @BindView(R.id.stepCount) TextView stepCount;
-    @BindView(R.id.calorieCount) TextView calorieCount;
-    @BindView(R.id.pointsCount) TextView pointsCount;
+    @BindView(R.id.caloriesBurned) TextView caloriesBurned;
     @BindView(R.id.name) TextView name;
     @BindView(R.id.height) TextView height;
     @BindView(R.id.weight) TextView weight;
@@ -163,19 +160,9 @@ public class ProfileFragment extends Fragment {
                 .into(profile);
 
         if(player.getTotal_calories()!=null) {
-            calorieCount.setText(Integer.toString(player.getTotal_calories()));
+            caloriesBurned.setText(Integer.toString(player.getTotal_calories()));
         } else {
-            calorieCount.setText("0");
-        }
-        if(player.getTotal_points()!=null){
-            pointsCount.setText(Double.toString(player.getTotal_points()));
-        } else {
-            pointsCount.setText("0");
-        }
-        if(player.getTotal_steps_taken()!=null){
-            stepCount.setText(Integer.toString(player.getTotal_steps_taken()));
-        } else {
-            stepCount.setText("0");
+            caloriesBurned.setText("0");
         }
         if(player.getHeight()!=null) {
             height.setText(Double.toString(player.getHeight()));
@@ -230,7 +217,8 @@ public class ProfileFragment extends Fragment {
         xAxis.setDrawAxisLine(false);
         xAxis.setTextColor(Color.LTGRAY);
         xAxis.setTextSize(12f);
-        xAxis.setLabelCount(5);
+        xAxis.setLabelCount(7);
+        xAxis.setAvoidFirstLastClipping(false);
         xAxis.setCenterAxisLabels(true);
         xAxis.setGranularity(1f);
 
@@ -252,6 +240,7 @@ public class ProfileFragment extends Fragment {
         SimpleDateFormat df = new SimpleDateFormat("d-MMM");
         SimpleDateFormat apiDF = new SimpleDateFormat("yyyy-MM-dd");
 
+        weeklyStepsList.size();
         for(int i = 0; i<weeklyStepsList.size(); i++) {
             String date = "";
             try{

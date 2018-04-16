@@ -1,5 +1,7 @@
 package com.walkPark.walkinthepark.models;
 
+import android.support.annotation.IntegerRes;
+
 import java.util.List;
 
 /**
@@ -16,7 +18,7 @@ public class Profile {
     private Double height;
     private Integer total_steps_taken;
     private Double total_time_taken;
-    private Double total_points;
+    private Integer total_points;
     private Integer total_calories_burned;
     private Integer monthly_steps_left;
     private Integer current_month_total_steps;
@@ -97,11 +99,11 @@ public class Profile {
         this.total_time_taken = total_time_taken;
     }
 
-    public Double getTotal_points() {
+    public Integer getTotal_points() {
         return total_points;
     }
 
-    public void setTotal_points(double total_points) {
+    public void setTotal_points(int total_points) {
         this.total_points = total_points;
     }
 

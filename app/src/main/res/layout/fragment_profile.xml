@@ -145,172 +145,10 @@
 
     </RelativeLayout>
 
-    <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
-        android:id="@+id/indivStats"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/gameImage"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
-        android:layout_marginTop="@dimen/neg_margin_24"
-        android:background="@color/light_blue"
-        app:corner_radius="14dp">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/ic_slipper"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="@dimen/margin_16"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_slipper_icon"
-                />
-
-            <LinearLayout
-                android:id="@+id/steps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_centerInParent="true"
-                android:layout_toEndOf="@id/ic_slipper">
-
-                <TextView
-                    android:id="@+id/stepCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2500"
-                    android:textSize="28sp"
-                    android:textColor="@color/black"
-                    fontPath="fonts/DINNextLTPro-Bold.otf"
-                    android:textStyle="bold"
-                    tools:ignore="MissingPrefix"
-                    />
-
-                <TextView
-                    android:id="@+id/tvSteps"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="steps"
-                    android:textSize="15sp"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="@dimen/neg_margin_8"
-                    fontPath="fonts/DINNextLTPro-Regular.otf"
-                    android:textStyle="bold"
-                    tools:ignore="MissingPrefix"
-                    />
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/ic_calories"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginTop="@dimen/margin_16"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_chocolate_bar"
-                android:layout_toRightOf="@+id/steps"
-                />
-
-            <LinearLayout
-                android:id="@+id/calories"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_centerInParent="true"
-                android:layout_toEndOf="@id/ic_calories">
-
-                <TextView
-                    android:id="@+id/calorieCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="20"
-                    android:textSize="28sp"
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/black"
-                    fontPath="fonts/DINNextLTPro-Bold.otf"
-                    android:textStyle="bold"
-                    tools:ignore="MissingPrefix"
-                    />
-
-                <TextView
-                    android:id="@+id/tvCalories"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="calories"
-                    android:textSize="15sp"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="@dimen/neg_margin_8"
-                    fontPath="fonts/DINNextLTPro-Regular.otf"
-                    android:textStyle="bold"
-                    tools:ignore="MissingPrefix"
-                    />
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/ic_points"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginTop="@dimen/margin_16"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_crown"
-                android:layout_toRightOf="@+id/calories"
-                />
-
-            <LinearLayout
-            android:id="@+id/points"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toEndOf="@id/ic_points"
-            android:layout_centerInParent="true">
-
-            <TextView
-                android:id="@+id/pointsCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="120"
-                android:textSize="28sp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/black"
-                fontPath="fonts/DINNextLTPro-Bold.otf"
-                android:textStyle="bold"
-                tools:ignore="MissingPrefix"
-                />
-
-            <TextView
-                android:id="@+id/tvPoints"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="points"
-                android:textSize="15sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="@dimen/neg_margin_8"
-                fontPath="fonts/DINNextLTPro-Regular.otf"
-                android:textStyle="bold"
-                tools:ignore="MissingPrefix"
-                />
-
-        </LinearLayout>
-
-        </RelativeLayout>
-
-    </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/indivStats"
+        android:layout_below="@+id/gameImage"
         android:layout_marginTop="@dimen/dp_10">
 
         <RelativeLayout
@@ -415,6 +253,42 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_below="@id/stepsToTake"
             />
+
+            <RelativeLayout
+                android:id="@+id/caloriesBurnedLayout"
+                android:layout_below="@id/barChart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvCaloriesBurned"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Monthly Calories Burned:"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    fontPath="fonts/DINNextLTPro-Bold.otf"
+                    android:textStyle="bold"
+                    tools:ignore="MissingPrefix"
+                    />
+
+                <TextView
+                    android:id="@+id/caloriesBurned"
+                    android:layout_below="@id/tvCaloriesBurned"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="75"
+                    android:textSize="35sp"
+                    android:textColor="@color/purple_grey"
+                    fontPath="fonts/DINNextLTPro-Bold.otf"
+                    android:textStyle="bold"
+                    tools:ignore="MissingPrefix"
+                    />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

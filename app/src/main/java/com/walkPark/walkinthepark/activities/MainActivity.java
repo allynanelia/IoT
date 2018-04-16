@@ -31,6 +31,7 @@ import com.walkPark.walkinthepark.events.PushNotificationEvent;
 import com.walkPark.walkinthepark.fragments.HomeFragment;
 import com.walkPark.walkinthepark.fragments.LeaderboardFragment;
 import com.walkPark.walkinthepark.fragments.ProfileFragment;
+import com.walkPark.walkinthepark.models.Leaderboard;
 import com.walkPark.walkinthepark.models.Profile;
 import com.walkPark.walkinthepark.models.UserInfo;
 import com.walkPark.walkinthepark.services.IotFirebaseMessagingService;
@@ -66,6 +67,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.textLeaderboard) TextView textLeaderboard;
     @BindView(R.id.textRoute) TextView textRoute;
 
+    @BindView(R.id.infoButton) ImageView infoButton;
 
 
     private List<Fragment> fragmentList = new ArrayList<>();
@@ -175,6 +177,9 @@ public class MainActivity extends BaseActivity {
         textLeaderboard.setTypeface(regularTypeface);
         textRoute.setTypeface(regularTypeface);
 
+        textTitle.setText("Profile");
+        infoButton.setVisibility(View.INVISIBLE);
+
         textAccount.setTextColor(
                 ContextCompat.getColor(MainActivity.this, R.color.black));
         textLeaderboard.setTextColor(
@@ -210,6 +215,9 @@ public class MainActivity extends BaseActivity {
                 ContextCompat.getDrawable(MainActivity.this,
                         R.drawable.ic_leaderboard_inactive));
 
+        textTitle.setText("WalkInThePark");
+        infoButton.setVisibility(View.VISIBLE);
+
         textAccount.setTypeface(regularTypeface);
         textLeaderboard.setTypeface(regularTypeface);
         textRoute.setTypeface(boldTypeface);
@@ -234,6 +242,9 @@ public class MainActivity extends BaseActivity {
         imageLeaderboard.setImageDrawable(
                 ContextCompat.getDrawable(MainActivity.this,
                         R.drawable.ic_leaderboard_active));
+
+        textTitle.setText("Leaderboard");
+        infoButton.setVisibility(View.INVISIBLE);
 
         textAccount.setTypeface(regularTypeface);
         textLeaderboard.setTypeface(boldTypeface);
