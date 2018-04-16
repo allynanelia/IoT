@@ -99,9 +99,6 @@ public class MainActivity extends BaseActivity {
         boldTypeface = TypefaceUtils.load(getAssets(), "fonts/DINNextLTPro-Bold.otf");
         lightTypeface = TypefaceUtils.load(getAssets(), "fonts/DINNextLTPro-Medium.otf");
         regularTypeface = TypefaceUtils.load(getAssets(), "fonts/DINNextLTPro-Regular.otf");
-
-
-
     }
 
     @Override
