@@ -399,7 +399,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                     reload = true;
                     route = response.body().getRoute();
                     String status = response.body().getStatus();
-                    if (status.equals("1")) {
+                    if (status.equals("2")) {
                         Intent intent = new Intent(CheckpointActivity.this, CompleteRouteActivity.class);
                         intent.putExtra(Constants.ROUTE_END, Parcels.wrap(route));
                         startActivity(intent);
@@ -450,7 +450,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                     reload = true;
                     route = response.body().getRoute();
                     String status = response.body().getStatus();
-                    if (status.equals("1")) {
+                    if (status.equals("2")) {
                         //route ends
                         Intent intent = new Intent(CheckpointActivity.this, CompleteRouteActivity.class);
                         intent.putExtra(Constants.ROUTE_END, Parcels.wrap(route));
@@ -540,7 +540,7 @@ public class CheckpointActivity extends BaseActivity implements BeaconConsumer {
                                     , route.getCheckpoints().get(position)
                                                     .getFound_description(), "YOU'VE FOUND IT!")
                                     .show(getSupportFragmentManager(),"dialog_checkpoint");
-                            EventBus.getDefault().post(new GiveUpCheckPointEvent());
+                            EventBus.getDefault().post(new CompleteCheckPointEvent());
                             beaconManager.removeRangeNotifier(this);
                         }
                     }
