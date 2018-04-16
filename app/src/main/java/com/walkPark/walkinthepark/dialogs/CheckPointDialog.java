@@ -45,7 +45,7 @@ public class CheckPointDialog extends DialogFragment {
     private String desc;
     private String type;
     private SoundPool congratsSoundPool;
-    private int clickSound;
+    private Integer clickSound;
 
     public static CheckPointDialog newInstance(String image, String desc, String type) {
         Bundle args = new Bundle();
@@ -86,8 +86,10 @@ public class CheckPointDialog extends DialogFragment {
     @Override
     public void onDestroyView() {
         unbinder.unbind();
-        congratsSoundPool.stop(clickSound);
-        congratsSoundPool.release();
+        if(congratsSoundPool!=null && clickSound != null) {
+            congratsSoundPool.stop(clickSound);
+            congratsSoundPool.release();
+        }
         super.onDestroyView();
 
     }
@@ -119,8 +121,10 @@ public class CheckPointDialog extends DialogFragment {
                                 .into(imageHintOrSuccess);
                     }
                 }
-                textHintOrSuccess.setText(desc);
-                dialogTitle.setText(type);
+                if(textHintOrSuccess!=null) {
+                    textHintOrSuccess.setText(desc);
+                    dialogTitle.setText(type);
+                }
             }
         }, 1000);
 

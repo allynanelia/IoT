@@ -31,11 +31,12 @@
     <color name="text_gray">#9E9E9E</color>
     <color name="gray_dark">#9E9E9E</color>
     <color name="pink_dark">#FF1493</color>
+    <color name="purple_grey">#BDAEC6</color>
     <color name="pink_light">#FFC0CB</color>
     <color name="blue_dark">#2F3B5C</color>
     <color name="yellow">#FFE84C</color>
     <color name="blue">#9DDAD2</color>
-    <color name="light_blue">#9AC8E6</color>
+    <color name="light_blue">#9C8AA5</color>
 
     <color name="buttonBlue1">#0B84DE</color>
     <color name="buttonBlue2">#0869B1</color>

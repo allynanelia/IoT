@@ -1,8 +1,10 @@
 <resources>
 
     <dimen name="line_space">2dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
     <dimen name="dp_10">10dp</dimen>
     <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_30">30dp</dimen>
     <dimen name="dp_40">40dp</dimen>
     <dimen name="dp_80">80dp</dimen>
     <dimen name="dp_120">120dp</dimen>
@@ -14,6 +16,7 @@
     <dimen name="margin_16">16dp</dimen>
     <dimen name="neg_margin_16">-16dp</dimen>
     <dimen name="margin_24">24dp</dimen>
+    <dimen name="neg_margin_24">-24dp</dimen>
     <dimen name="margin_32">32dp</dimen>
     <dimen name="margin_64">64dp</dimen>
 
