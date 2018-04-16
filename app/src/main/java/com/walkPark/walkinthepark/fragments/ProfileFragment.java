@@ -60,10 +60,10 @@ public class ProfileFragment extends Fragment {
 
     @BindView(R.id.image) ImageView profile;
     @BindView(R.id.barChart) BarChart mChart;
-    @BindView(R.id.currentMonth) TextView currentMonth;
-    @BindView(R.id.currentSteps) TextView currentSteps;
-    @BindView(R.id.totalSteps) TextView totalSteps;
-    @BindView(R.id.caloriesBurned) TextView caloriesBurned;
+    @BindView(R.id.textMonth) TextView textMonth;
+    @BindView(R.id.textCurrentSteps) TextView textCurrentSteps;
+    @BindView(R.id.textExpectedSteps) TextView textExpectedSteps;
+    @BindView(R.id.textCalories) TextView textCalories;
     @BindView(R.id.name) TextView name;
     @BindView(R.id.height) TextView height;
     @BindView(R.id.weight) TextView weight;
@@ -160,9 +160,9 @@ public class ProfileFragment extends Fragment {
                 .into(profile);
 
         if(player.getTotal_calories()!=null) {
-            caloriesBurned.setText(Integer.toString(player.getTotal_calories()));
+            textCalories.setText(Integer.toString(player.getTotal_calories()));
         } else {
-            caloriesBurned.setText("0");
+            textCalories.setText("0");
         }
         if(player.getHeight()!=null) {
             height.setText(Double.toString(player.getHeight()));
@@ -176,18 +176,18 @@ public class ProfileFragment extends Fragment {
         }
 
         SimpleDateFormat df = new SimpleDateFormat("MMMM");
-        currentMonth.setText(df.format(new Date()));
+        textMonth.setText(df.format(new Date()));
 
         if(player.getMonthly_steps_lefts()!=null) {
-            totalSteps.setText(Integer.toString(player.getMonthly_steps_lefts()));
+            textExpectedSteps.setText(Integer.toString(player.getMonthly_steps_lefts()));
         } else {
-            totalSteps.setText("0");
+            textExpectedSteps.setText("0");
         }
 
         if(player.getCurrent_month_total_steps()!=null) {
-            currentSteps.setText(Integer.toString(player.getCurrent_month_total_steps()));
+            textCurrentSteps.setText(Integer.toString(player.getCurrent_month_total_steps()));
         } else {
-            currentSteps.setText("0");
+            textCurrentSteps.setText("0");
         }
         initBarChart();
 
