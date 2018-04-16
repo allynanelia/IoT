@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.example.walkinthepark"
+        applicationId "com.walkPark.walkinthepark"
         minSdkVersion 23
         targetSdkVersion 26
         versionCode 1
@@ -21,6 +21,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-messaging:12.0.1'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.jakewharton:butterknife:8.5.1'
@@ -49,4 +50,13 @@ dependencies {
     compile 'nl.dionsegijn:konfetti:1.1.0'
     compile 'com.orhanobut:dialogplus:1.11@aar'
     compile 'com.github.mohanmanu484:RibbonView:1.2'
+
+
+
+
+
+
 }
+
+
+apply plugin: 'com.google.gms.google-services'
