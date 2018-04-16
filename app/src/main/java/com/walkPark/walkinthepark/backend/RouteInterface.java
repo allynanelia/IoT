@@ -1,9 +1,11 @@
 package com.walkPark.walkinthepark.backend;
 
 import com.walkPark.walkinthepark.models.CheckpointDetails;
+import com.walkPark.walkinthepark.models.DeviceToken;
 import com.walkPark.walkinthepark.models.RouteCheckPointResponse;
 import com.walkPark.walkinthepark.models.RouteResponse;
 import com.walkPark.walkinthepark.models.Route;
+import com.walkPark.walkinthepark.models.TokenResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -21,4 +23,7 @@ public interface RouteInterface {
 
     @POST("player/checkpoint")
     Call<RouteCheckPointResponse> checkpointComplete(@Body CheckpointDetails checkpointDetails);
+
+    @POST("device/registration")
+    Call<TokenResponse> registerDevice(@Body DeviceToken token);
 }

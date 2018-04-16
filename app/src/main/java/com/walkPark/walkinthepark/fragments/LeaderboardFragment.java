@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.walkinthepark.R;
+import com.walkPark.walkinthepark.R;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.roger.catloadinglibrary.CatLoadingView;
 import com.walkPark.walkinthepark.Prefs;

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.walkPark.walkinthepark.R;
 import com.bumptech.glide.Glide;
 import com.example.walkinthepark.R;
 import com.github.mikephil.charting.charts.BarChart;

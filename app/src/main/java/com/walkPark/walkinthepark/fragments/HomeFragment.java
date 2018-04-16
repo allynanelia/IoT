@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.walkinthepark.R;
+import com.walkPark.walkinthepark.R;
 import com.roger.catloadinglibrary.CatLoadingView;
 import com.walkPark.walkinthepark.Prefs;
 import com.walkPark.walkinthepark.adapters.GameListAdapter;
