@@ -66,6 +66,7 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.textCalories) TextView textCalories;
     @BindView(R.id.name) TextView name;
     @BindView(R.id.height) TextView height;
+    private final String TAG = getClass().getName();
     @BindView(R.id.weight) TextView weight;
 
     CatLoadingView mView;
@@ -178,17 +179,18 @@ public class ProfileFragment extends Fragment {
         SimpleDateFormat df = new SimpleDateFormat("MMMM");
         textMonth.setText(df.format(new Date()));
 
-        if(player.getMonthly_steps_lefts()!=null) {
+        if(player.getMonthly_steps_lefts()!= null) {
             textExpectedSteps.setText(Integer.toString(player.getMonthly_steps_lefts()));
         } else {
             textExpectedSteps.setText("0");
         }
 
-        if(player.getCurrent_month_total_steps()!=null) {
+        if(player.getCurrent_month_total_steps()!= null) {
             textCurrentSteps.setText(Integer.toString(player.getCurrent_month_total_steps()));
         } else {
             textCurrentSteps.setText("0");
         }
+
         initBarChart();
 
         mView.dismiss();
@@ -212,13 +214,13 @@ public class ProfileFragment extends Fragment {
         mChart.setDrawGridBackground(false);
 
         XAxis xAxis = mChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(false);
         xAxis.setTextColor(Color.LTGRAY);
         xAxis.setTextSize(12f);
         xAxis.setLabelCount(7);
-        xAxis.setAvoidFirstLastClipping(false);
+        xAxis.setAvoidFirstLastClipping(true);
         xAxis.setCenterAxisLabels(true);
         xAxis.setGranularity(1f);
 
@@ -234,19 +236,18 @@ public class ProfileFragment extends Fragment {
         left.setTextColor(Color.LTGRAY);
         mChart.getAxisRight().setEnabled(false);
         mChart.getLegend().setEnabled(false);
-
+        mChart.getAxisLeft().setXOffset(16f);
         // THIS IS THE ORIGINAL DATA YOU WANT TO PLOT
         final List<Data> data = new ArrayList<>();
         SimpleDateFormat df = new SimpleDateFormat("d-MMM");
         SimpleDateFormat apiDF = new SimpleDateFormat("yyyy-MM-dd");
 
         weeklyStepsList.size();
-        for(int i = 0; i<weeklyStepsList.size(); i++) {
+        for(int i = 0; i < weeklyStepsList.size(); i++) {
             String date = "";
             try{
                 date = df.format(apiDF.parse(weeklyStepsList.get(i).getDate()));
             } catch (ParseException e) {
-
             }
             data.add(new Data(i, weeklyStepsList.get(i).getSteps(), date));
         }
@@ -254,7 +255,7 @@ public class ProfileFragment extends Fragment {
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return data.get(Math.min(Math.max((int) value, 0), data.size()-1)).xAxisValue;
+                return data.get(Math.min(Math.max((int) value, 0), data.size() -1 )).xAxisValue;
             }
         });
 
@@ -269,13 +270,10 @@ public class ProfileFragment extends Fragment {
         int purple = Color.rgb(115, 44, 123);
 
         for (int i = 0; i < dataList.size(); i++) {
-
             Data d = dataList.get(i);
             BarEntry entry = new BarEntry(d.xValue, d.yValue);
             values.add(entry);
-
             colors.add(purple);
-
         }
 
         BarDataSet set;
