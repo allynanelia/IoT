@@ -66,7 +66,8 @@ public class LeaderboardFragment extends Fragment {
     private SparseArray<String> userListByRouteNames = new SparseArray<>();
     private final String TAG = getClass().getName();
     private Unbinder unbinder;
-
+    // display logic for leaderboard - handling first player being removed from datasource
+    private SparseArray<UserInfo> firstPlayers = new SparseArray<>();; // store first players by routes
     public static LeaderboardFragment newInstance(Bundle args) {
         LeaderboardFragment fragment = new LeaderboardFragment();
         fragment.setArguments(args);
@@ -117,9 +118,9 @@ public class LeaderboardFragment extends Fragment {
 
 
 
-        int id = 1;
+        int id = 0; // Route Id chosen
         for(int i = 0; i<userListByRouteNames.size(); i++) {
-            String s = userListByRouteNames.get(i);
+            String s = userListByRouteNames.get(i + 1);
             if(route!=null && s!=null && s.equals(route)){
                 id=userListByRouteNames.keyAt(i);
             }
@@ -129,20 +130,39 @@ public class LeaderboardFragment extends Fragment {
         List<UserInfo> userList = userListByRoutes.get(id);
 
         if(userList!=null) {
+            if (firstPlayers.size() > 0) { // at first load, nothing inside. skip.
+                UserInfo player = firstPlayers.get(id); // try to get first player of current selected route.
+                if (player != null) { // if null, means App user has not selected that route leaderboard before.
+                    userList.add(0, player); // push first player back onto top of array (STACK)
+                }
+            }
+
+            recyclerView.setVisibility(View.VISIBLE);
             topPosition.setVisibility(View.VISIBLE);
             tvStepsNum.setText(userList.get(0).getPoints());
-            if (userList.get(0).getPlayer_id().equals(Prefs.getUserProfile().getPlayer_id())) {
+
+            UserInfo player = userList.get(0);
+            String playerID = player.getPlayer_id();
+
+            if (playerID.equals(Prefs.getUserProfile().getPlayer_id())) {
                 tvTopName.setText("YOU");
             } else {
                 tvTopName.setText(userList.get(0).getPlayer_name());
             }
-            userList.remove(0);
+            if (firstPlayers.get(id) == null) { // only if doesn't exist
+                firstPlayers.append(id, player);
+
+            }
+            userList.remove(0); // remove once
 
             adapter = new LeaderboardAdapter(getContext(), userList);
             recyclerView.setHasFixedSize(true);
             layoutManager = new LinearLayoutManager(getContext());
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
+        } else {
+            topPosition.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
         }
         mView.dismiss();
     }
@@ -152,7 +172,7 @@ public class LeaderboardFragment extends Fragment {
                 .getInstance()
                 .create(RouteInterface.class);
 
-        Call<RouteResponse> call = routeInterface.getRoutes();
+        Call<RouteResponse> call = routeInterface.getAllRoutes(1);
         call.enqueue(new Callback<RouteResponse>() {
             @Override
             public void onResponse(Call<RouteResponse> call, Response<RouteResponse> response) {
@@ -215,7 +235,8 @@ public class LeaderboardFragment extends Fragment {
                         userListByRoutes.append(Integer.parseInt(i.getRoute_id()), i.getPlayers());
                         userListByRouteNames.append(Integer.parseInt(i.getRoute_id()), i.getRoute_name());
                     }
-                    initUI("Around SMU");
+                    //initUI("Around SMU");
+                    initUI(userListByRouteNames.get(userListByRouteNames.keyAt(0)));
                 } else {
                     Toast.makeText(getContext(), "Error loading",
                             Toast.LENGTH_SHORT).show();

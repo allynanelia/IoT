@@ -52,6 +52,5 @@ dependencies {
     compile 'com.google.firebase:firebase-core:12.0.1'
     compile 'com.google.firebase:firebase-messaging:12.0.1'
     apply plugin: 'com.google.gms.google-services'
-    apply plugin: 'com.google.gms.google-services'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }

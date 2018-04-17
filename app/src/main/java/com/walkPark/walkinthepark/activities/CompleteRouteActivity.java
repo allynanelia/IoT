@@ -46,7 +46,7 @@ public class CompleteRouteActivity extends BaseActivity {
 
     public void initUI() {
         stepsTaken.setText(Integer.toString(route.getTotal_steps()));
-        totalPoints.setText(Integer.toString(route.getTotal_steps()));
+        totalPoints.setText(Integer.toString(route.getTotal_points()));
 
         if(route.getTotal_time_taken()!=null) {
 
