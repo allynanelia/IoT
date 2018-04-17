@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.example.walkinthepark"
+        applicationId "com.walkPark.walkinthepark"
         minSdkVersion 23
         targetSdkVersion 26
         versionCode 1
@@ -52,4 +52,5 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     compile 'com.google.firebase:firebase-core:12.0.1'
     compile 'com.google.firebase:firebase-messaging:12.0.1'
+    apply plugin: 'com.google.gms.google-services'
 }

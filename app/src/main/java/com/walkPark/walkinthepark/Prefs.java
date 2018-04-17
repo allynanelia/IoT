@@ -15,6 +15,7 @@ public class Prefs {
     //notification
     //Env.
     public static UserInfo user;
+    public static String token;
 
     public static UserInfo getUserProfile() {
         //Reminder: Call json service and return immediately.
@@ -25,6 +26,12 @@ public class Prefs {
         } else{
             return user;
         }
+    }
+
+    public static void setToken(String tokens) {token = tokens;}
+
+    public static String getToken() {
+        return token;
     }
 
     public static void setUser(UserInfo userIf) {

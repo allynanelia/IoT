@@ -14,12 +14,15 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.walkPark.walkinthepark.R;
 import com.roger.catloadinglibrary.CatLoadingView;
 import com.walkPark.walkinthepark.Prefs;
 import com.walkPark.walkinthepark.adapters.GameListAdapter;
 import com.walkPark.walkinthepark.backend.RouteInterface;
 import com.walkPark.walkinthepark.backend.WalkInTheParkRetrofit;
+import com.walkPark.walkinthepark.models.DeviceToken;
 import com.walkPark.walkinthepark.models.Route;
 import com.walkPark.walkinthepark.models.RouteResponse;
 
@@ -121,10 +124,14 @@ public class HomeFragment extends Fragment {
         final RouteInterface routeInterface = WalkInTheParkRetrofit
                 .getInstance()
                 .create(RouteInterface.class);
-        if(userID==null){
+        if (userID==null) {
             Prefs.getUserProfile().getPlayer_id();
         }
-        Call<RouteResponse> call = routeInterface.getAllRoutes(Integer.parseInt(userID));
+        FirebaseApp.initializeApp(getContext());
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.e(TAG, " Alert!! " + refreshedToken);
+        Call<RouteResponse> call = routeInterface
+                .getAllRoutesWithToken(Integer.parseInt(userID), new DeviceToken(refreshedToken));
         call.enqueue(new Callback<RouteResponse>() {
             @Override
             public void onResponse(Call<RouteResponse> call, Response<RouteResponse> response) {

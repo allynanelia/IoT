@@ -21,6 +21,10 @@ public interface RouteInterface {
     @GET("routes/player/{id}")
     Call<RouteResponse> getAllRoutes(@Path("id") int playerID);
 
+    @POST("routes/player/{id}")
+    Call<RouteResponse> getAllRoutesWithToken(@Path("id") int playerID,
+                                              @Body DeviceToken token);
+
     @POST("player/checkpoint")
     Call<RouteCheckPointResponse> checkpointComplete(@Body CheckpointDetails checkpointDetails);
 

@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.walkPark.walkinthepark.Prefs;
 import com.walkPark.walkinthepark.backend.RouteInterface;
 import com.walkPark.walkinthepark.backend.WalkInTheParkRetrofit;
 import com.walkPark.walkinthepark.models.DeviceToken;
@@ -46,6 +47,7 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
     }
 
     private void sendRegistrationToServer(String token) {
+        Prefs.setToken(token);
         final RouteInterface routeInterface = WalkInTheParkRetrofit
                 .getInstance()
                 .create(RouteInterface.class);
