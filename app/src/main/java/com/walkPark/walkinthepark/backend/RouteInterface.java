@@ -18,6 +18,9 @@ import retrofit2.http.Path;
  */
 
 public interface RouteInterface {
+    @GET("routes")
+    Call<RouteResponse> getRoutes();
+
     @GET("routes/player/{id}")
     Call<RouteResponse> getAllRoutes(@Path("id") int playerID);
 

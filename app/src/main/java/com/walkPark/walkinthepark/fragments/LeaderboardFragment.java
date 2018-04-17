@@ -152,7 +152,7 @@ public class LeaderboardFragment extends Fragment {
                 .getInstance()
                 .create(RouteInterface.class);
 
-        Call<RouteResponse> call = routeInterface.getAllRoutes(1);
+        Call<RouteResponse> call = routeInterface.getRoutes();
         call.enqueue(new Callback<RouteResponse>() {
             @Override
             public void onResponse(Call<RouteResponse> call, Response<RouteResponse> response) {

@@ -1,5 +1,6 @@
 package com.walkPark.walkinthepark.adapters;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,8 +55,14 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
                     .centerCrop().into(holder.image);
             holder.text.setVisibility(View.VISIBLE);
             holder.text.setText(routeList.get(position).getName());
-            if(routeList.get(position).getIs_recommended()){
+            if(routeList.get(position).getStatus().equals("2")){
+                holder.ribbon.setRibbonFillColor(Color.parseColor("#8ae079"));
+                holder.ribbon.setText("Completed");
                 holder.ribbon.setVisibility(View.VISIBLE);
+            } else if (routeList.get(position).getIs_recommended()){
+                holder.ribbon.setVisibility(View.VISIBLE);
+            } else {
+                holder.ribbon.setVisibility(View.GONE);
             }
         }
     }
